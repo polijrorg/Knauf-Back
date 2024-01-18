@@ -8,6 +8,13 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Module {
+  id         String   @id @default(uuid())
+  name       String
+  image      String
+  created_at DateTime @default(now())
+}
+
 model Users {
   id         String   @id @default(uuid())
   email      String
@@ -18,28 +25,4 @@ model Users {
   active     Boolean
   score      Int
   created_at DateTime @default(now())
-}
-
-model Module {
-  id         String   @id @default(uuid())
-  name       String
-  image      String
-  created_at DateTime @default(now())
-}
-
-model Questions {
-  id         String   @id @default(uuid())
-  question   String
-  created_at DateTime @default(now())
-}
-
-model Answers {
-  id         String   @id @default(uuid())
-  answer     String
-  created_at DateTime @default(now())
-}
-
-model Seen {
-  id   String  @id @default(uuid())
-  seen Boolean
 }

@@ -1,38 +1,22 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import CreateUserService from '@modules/users/services/CreateUserService';
-import DeleteUserService from '@modules/users/services/DeleteUserService';
+import CreateModuleService from '@modules/module/services/CreateModuleService';
+import DeleteUserService from '@modules/module/services/DeleteUserService';
 
 export default class UserController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       name,
-      email,
-      cpf,
-      password,
-      phone,
-      language,
       image,
-      active,
-      score,
     } = req.body;
 
-    const createUser = container.resolve(CreateUserService);
+    const createModule = container.resolve(CreateModuleService);
 
-    const user = await createUser.execute({
+    const user = await createModule.execute({
       name,
-      email,
-      cpf,
-      password,
-      phone,
-      language,
       image,
-      active,
-      score,
     });
-
-    user.password = '###';
 
     return res.status(201).json(user);
   }

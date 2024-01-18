@@ -1,11 +1,6 @@
-model Users {
+model Module {
   id         String   @id @default(uuid())
-  email      String
-  password   String
-  language   String
   name       String
   image      String
-  active     Boolean
-  score      Int
   created_at DateTime @default(now())
 }
