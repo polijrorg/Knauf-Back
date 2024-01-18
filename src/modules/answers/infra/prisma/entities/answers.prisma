@@ -1,0 +1,5 @@
+model Answers {
+  id         String   @id @default(uuid())
+  answer     String
+  created_at DateTime @default(now())
+}
