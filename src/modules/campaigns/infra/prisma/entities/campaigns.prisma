@@ -1,0 +1,8 @@
+model Campaigns {
+  id        String @id @default(uuid())
+  image     String
+  title     String
+  subtitle  String
+  text      String
+  created_at DateTime @default(now())
+}

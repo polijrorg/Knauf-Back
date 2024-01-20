@@ -1,6 +1,5 @@
-model Module {
+model Questions {
   id         String   @id @default(uuid())
-  name       String
-  image      String
+  question   String
   created_at DateTime @default(now())
 }

@@ -1,29 +1,26 @@
 import { inject, injectable } from 'tsyringe';
-// import path from 'path';
 
 import { Module } from '@prisma/client';
+
+// import AppError from '@shared/errors/AppError';
 
 import IModuleRepository from '../repositories/IModuleRepository';
 
 interface IRequest {
-  name: string;
-  image: string;
+  id: string;
 }
 
 @injectable()
-export default class CreateModuleService {
+export default class DeleteModuleService {
   constructor(
     @inject('ModuleRepository')
     private moduleRepository: IModuleRepository,
   ) { }
 
   public async execute({
-    name, image,
+    id,
   }: IRequest): Promise<Module> {
-    const module = await this.moduleRepository.create({
-      name,
-      image,
-    });
+    const module = await this.moduleRepository.delete(id);
 
     return module;
   }

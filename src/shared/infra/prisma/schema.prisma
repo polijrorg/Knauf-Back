@@ -14,10 +14,35 @@ model Answers {
   created_at DateTime @default(now())
 }
 
+model Campaigns {
+  id         String   @id @default(uuid())
+  image      String
+  title      String
+  subtitle   String
+  text       String
+  created_at DateTime @default(now())
+}
+
+model Content {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  linkVideo   String?
+  linkAudio   String?
+  image       String?
+  created_at  DateTime @default(now())
+}
+
 model Module {
   id         String   @id @default(uuid())
   name       String
   image      String
+  created_at DateTime @default(now())
+}
+
+model Questions {
+  id         String   @id @default(uuid())
+  question   String
   created_at DateTime @default(now())
 }
 

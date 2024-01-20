@@ -2,9 +2,9 @@ import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
 import CreateModuleService from '@modules/module/services/CreateModuleService';
-import DeleteUserService from '@modules/module/services/DeleteUserService';
+import DeleteModuleService from '@modules/module/services/DeleteModuleService';
 
-export default class UserController {
+export default class moduleController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       name,
@@ -13,12 +13,12 @@ export default class UserController {
 
     const createModule = container.resolve(CreateModuleService);
 
-    const user = await createModule.execute({
+    const module = await createModule.execute({
       name,
       image,
     });
 
-    return res.status(201).json(user);
+    return res.status(201).json(module);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
@@ -26,12 +26,12 @@ export default class UserController {
       id,
     } = req.body;
 
-    const deleteUser = container.resolve(DeleteUserService);
+    const deleteModule = container.resolve(DeleteModuleService);
 
-    const user = await deleteUser.execute({
+    const module = await deleteModule.execute({
       id,
     });
 
-    return res.status(201).json(user);
+    return res.status(201).json(module);
   }
 }

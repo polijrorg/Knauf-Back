@@ -20,8 +20,8 @@ export default class DeleteAnswersService {
   public async execute({
     id,
   }: IRequest): Promise<Answers> {
-    const user = await this.answersRepository.delete(id);
+    const answer = await this.answersRepository.delete(id);
 
-    return user;
+    return answer;
   }
 }

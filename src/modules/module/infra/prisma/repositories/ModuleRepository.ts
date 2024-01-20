@@ -12,11 +12,11 @@ export default class ModuleRepository implements IModuleRepository {
   }
 
   public async findByID(id: string): Promise<Module | null> {
-    const user = await this.ormRepository.findUnique({
+    const module = await this.ormRepository.findUnique({
       where: { id },
     });
 
-    return user;
+    return module;
   }
 
   public async create(data: ICreateModuleDTO): Promise<Module> {
@@ -26,8 +26,8 @@ export default class ModuleRepository implements IModuleRepository {
   }
 
   public async delete(id: string): Promise<Module> {
-    const user = await this.ormRepository.delete({ where: { id } });
+    const module = await this.ormRepository.delete({ where: { id } });
 
-    return user;
+    return module;
   }
 }
