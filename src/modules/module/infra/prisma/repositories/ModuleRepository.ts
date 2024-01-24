@@ -30,4 +30,16 @@ export default class ModuleRepository implements IModuleRepository {
 
     return module;
   }
+
+  public async findAllModules(): Promise<Module[] | null> {
+    const module = await this.ormRepository.findMany();
+
+    return module;
+  }
+
+  public async updateImage(id: string, newImage: string): Promise<Module> {
+    const module = await this.ormRepository.update({ where: { id }, data: { image: newImage } });
+
+    return module;
+  }
 }

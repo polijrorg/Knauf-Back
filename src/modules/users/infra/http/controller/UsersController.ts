@@ -47,7 +47,7 @@ export default class UserController {
       id,
     });
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 
   public async getById(req: Request, res: Response): Promise<Response> {
@@ -57,7 +57,7 @@ export default class UserController {
 
     const user = await users.execute({ id });
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 
   public async updatePassword(req: Request, res: Response): Promise<Response> {
@@ -68,7 +68,7 @@ export default class UserController {
 
     const user = await users.execute({ id, newPassword });
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 
   public async updateLanguage(req: Request, res: Response): Promise<Response> {
@@ -78,7 +78,7 @@ export default class UserController {
 
     const user = await users.execute({ id, newLanguage });
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 
   public async getAllUsers(req: Request, res: Response): Promise<Response> {
@@ -86,7 +86,7 @@ export default class UserController {
 
     const user = await users.execute();
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 
   public async rankUsers(req: Request, res: Response): Promise<Response> {
@@ -94,6 +94,6 @@ export default class UserController {
 
     const user = await users.execute();
 
-    return res.status(201).json(user);
+    return res.status(200).json(user);
   }
 }
