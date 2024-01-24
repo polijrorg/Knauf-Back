@@ -8,23 +8,19 @@ import IUsersRepository from '../repositories/IUsersRepository';
 
 interface IRequest {
   id: string;
+  newLanguage: string;
 }
 
 @injectable()
-export default class DeleteUserService {
+export default class UpdatePasswordService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
   ) { }
 
-  public async execute({
-    id,
-  }: IRequest): Promise<Users> {
-    const userExists = await this.usersRepository.findById(id);
-
-    if (!userExists) throw new AppError('User does not exist');
-
-    const user = await this.usersRepository.delete(id);
+  public async execute({ id, newLanguage }: IRequest): Promise<Users> {
+    const user = await this.usersRepository.updateLanguage(id, newLanguage);
+    if (!user) throw new AppError('User not found');
 
     return user;
   }

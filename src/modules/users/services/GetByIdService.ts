@@ -11,20 +11,18 @@ interface IRequest {
 }
 
 @injectable()
-export default class DeleteUserService {
+export default class GetByIdService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
+
   ) { }
 
   public async execute({
     id,
   }: IRequest): Promise<Users> {
-    const userExists = await this.usersRepository.findById(id);
-
-    if (!userExists) throw new AppError('User does not exist');
-
-    const user = await this.usersRepository.delete(id);
+    const user = await this.usersRepository.findById(id);
+    if (!user) throw new AppError('User not found');
 
     return user;
   }
