@@ -4,10 +4,14 @@ import StatmentController from '../controller/StatmentController';
 
 const statmentRoutes = Router();
 
-const statmentController = new UsersController();
+const statmentController = new StatmentController();
 
-statmentRoutes.post('/register', statmentController.create);
+statmentRoutes.post('/create', statmentController.create);
 
-statmentRoutes.delete('/delete', statmentController.delete);
+statmentRoutes.delete('/delete/:id', statmentController.delete);
+
+statmentRoutes.get('/getAll', statmentController.getAllStatment);
+
+statmentRoutes.patch('/updateImage/:id', statmentController.updateImage);
 
 export default statmentRoutes;
