@@ -8,16 +8,29 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Users {
+model Answers {
   id         String   @id @default(uuid())
-  email      String
-  password   String
-  language   String
-  name       String
-  image      String
-  active     Boolean
-  score      Int
+  answer     String
   created_at DateTime @default(now())
+}
+
+model Campaigns {
+  id         String   @id @default(uuid())
+  image      String
+  title      String
+  subtitle   String
+  text       String
+  created_at DateTime @default(now())
+}
+
+model Content {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  linkVideo   String?
+  linkAudio   String?
+  image       String?
+  created_at  DateTime @default(now())
 }
 
 model Module {
@@ -33,13 +46,21 @@ model Questions {
   created_at DateTime @default(now())
 }
 
-model Answers {
+model Statment {
   id         String   @id @default(uuid())
-  answer     String
+  image      String
+  text       String
   created_at DateTime @default(now())
 }
 
-model Seen {
-  id   String  @id @default(uuid())
-  seen Boolean
+model Users {
+  id         String   @id @default(uuid())
+  email      String
+  password   String
+  language   String
+  name       String
+  image      String
+  active     Boolean
+  score      Int
+  created_at DateTime @default(now())
 }

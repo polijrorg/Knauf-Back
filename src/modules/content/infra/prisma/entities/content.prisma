@@ -1,0 +1,9 @@
+model Content {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  linkVideo   String?
+  linkAudio   String?
+  image       String?
+  created_at  DateTime @default(now())
+}
