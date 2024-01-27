@@ -12,6 +12,8 @@ import AppError from '@shared/errors/AppError';
 
 import routes from './routes';
 
+import path from 'path';
+
 const app = express();
 
 app.use(cors());
@@ -23,6 +25,8 @@ app.use(routes);
 app.get('/teste', (req: Request, res: Response) => {
   res.json({ message: 'Hello World' });
 });
+
+app.use('/docs', express.static(path.join(__dirname, '..', '..', '..', '..', 'docs')));
 
 app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
   if (err instanceof AppError) {
