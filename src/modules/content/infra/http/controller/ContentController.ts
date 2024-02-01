@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateContentService from '@modules/content/services/CreateContentService';
 import DeleteContentService from '@modules/content/services/DeleteContentService';
+import GetAllContentService from '@modules/content/services/GetAllContentService';
 
 export default class ContentController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -28,9 +29,7 @@ export default class ContentController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const {
-      id,
-    } = req.body;
+    const { id } = req.params;
 
     const deleteContent = container.resolve(DeleteContentService);
 
@@ -38,6 +37,14 @@ export default class ContentController {
       id,
     });
 
-    return res.status(201).json(content);
+    return res.status(200).json(content);
+  }
+
+  public async findAll(req: Request, res: Response): Promise<Response> {
+    const findContent = container.resolve(GetAllContentService);
+
+    const content = await findContent.execute();
+
+    return res.status(200).json(content);
   }
 }

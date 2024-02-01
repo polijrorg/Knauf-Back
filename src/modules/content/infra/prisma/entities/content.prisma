@@ -6,4 +6,20 @@ model Content {
   linkAudio   String?
   image       String?
   created_at  DateTime @default(now())
+  seen        Seen?
+}
+
+model Seen {
+  id          String   @id @default(uuid())
+  seen2       Boolean  @default(false)
+  content     Content  @relation(fields: [contentId], references: [id])
+  contentId   String   @unique
+  user        Users    @relation(fields: [userId], references: [id])
+  userId      String   @unique
+}
+
+model Users {
+  id          String   @id @default(uuid())
+  seen        Seen[]
+  created_at  DateTime @default(now())
 }

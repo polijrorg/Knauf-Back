@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 
 import CreateCampaignsService from '@modules/campaigns/services/CreateCampaignsService';
 import DeleteCampaignsService from '@modules/campaigns/services/DeleteCampaignsService';
+import GetAllCampaignsService from '@modules/campaigns/services/GetAllCampaignsService';
 
 export default class CampaignsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -26,16 +27,20 @@ export default class CampaignsController {
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
-    const {
-      id,
-    } = req.body;
+    const { id } = req.params;
 
     const DeleteCampaigns = container.resolve(DeleteCampaignsService);
 
-    const campaign = await DeleteCampaigns.execute({
-      id,
-    });
+    const campaign = await DeleteCampaigns.execute({ id });
 
-    return res.status(201).json(campaign);
+    return res.status(200).json(campaign);
+  }
+
+  public async getAll(req: Request, res: Response): Promise<Response> {
+    const getCampaigns = container.resolve(GetAllCampaignsService);
+
+    const campaign = await getCampaigns.execute();
+
+    return res.status(200).json(campaign);
   }
 }
