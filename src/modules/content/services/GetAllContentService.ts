@@ -2,25 +2,18 @@ import { inject, injectable } from 'tsyringe';
 
 import { Content } from '@prisma/client';
 
-// import AppError from '@shared/errors/AppError';
-
 import IContentRepository from '../repositories/IContentRepository';
 
-interface IRequest {
-  id: string;
-}
-
 @injectable()
-export default class DeleteContentService {
+export default class GetAllContentService {
   constructor(
     @inject('ContentRepository')
     private contentRepository: IContentRepository,
+
   ) { }
 
-  public async execute({
-    id,
-  }: IRequest): Promise<Content> {
-    const content = await this.contentRepository.delete(id);
+  public async execute(): Promise<Content[] | null> {
+    const content = await this.contentRepository.findAll();
 
     return content;
   }

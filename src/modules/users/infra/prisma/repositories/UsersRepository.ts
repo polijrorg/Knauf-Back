@@ -60,7 +60,11 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async findAllUsers(): Promise<Users[] | null> {
-    const user = await this.ormRepository.findMany();
+    const user = await this.ormRepository.findMany({
+      orderBy: {
+        name: 'asc',
+      },
+    });
 
     return user;
   }

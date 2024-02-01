@@ -30,4 +30,10 @@ export default class ContentRepository implements IContentRepository {
 
     return content;
   }
+
+  public async findAll(): Promise<Content[] | null> {
+    const content = await this.ormRepository.findMany();
+
+    return content;
+  }
 }

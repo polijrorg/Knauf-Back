@@ -30,4 +30,10 @@ export default class CampaignsRepository implements ICampaignsRepository {
 
     return campaign;
   }
+
+  public async getAll(): Promise<Campaigns[] | null> {
+    const campaign = await this.ormRepository.findMany();
+
+    return campaign;
+  }
 }
