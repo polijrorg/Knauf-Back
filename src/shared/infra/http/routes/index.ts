@@ -12,7 +12,6 @@ const routes = Router();
 
 // Users
 routes.use('/users', usersRoutes);
-routes.use('/sessions', sessionsRoutes);
 
 // Module
 routes.use('/module', moduleRoutes);
