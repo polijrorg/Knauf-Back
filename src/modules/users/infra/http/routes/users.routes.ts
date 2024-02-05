@@ -8,6 +8,8 @@ const usersController = new UsersController();
 
 usersRoutes.post('/create', usersController.create);
 
+usersRoutes.post('/login', usersController.login);
+
 usersRoutes.delete('/delete/:id', usersController.delete);
 
 usersRoutes.get('/find/:id', usersController.getById);

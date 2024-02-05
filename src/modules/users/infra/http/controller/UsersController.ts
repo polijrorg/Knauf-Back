@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import GetByIdService from '@modules/users/services/GetByIdService';
@@ -10,6 +11,19 @@ import GetAllUsersService from '@modules/users/services/GetAllUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
 
 export default class UserController {
+  public async login(req: Request, res: Response): Promise<Response> {
+    const {
+      email,
+      password,
+    } = req.body;
+
+    const authenticateUser = container.resolve(AuthenticateUserService);
+
+    const { user, token } = await authenticateUser.execute({ email, password });
+
+    return res.json({ user, token });
+  }
+
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       email,

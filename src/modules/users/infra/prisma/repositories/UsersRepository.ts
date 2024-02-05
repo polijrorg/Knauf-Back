@@ -11,14 +11,6 @@ export default class UsersRepository implements IUsersRepository {
     this.ormRepository = prisma.users;
   }
 
-  public async findByEmailWithRelations(email: string): Promise<Users | null> {
-    const user = await this.ormRepository.findFirst({
-      where: { email },
-    });
-
-    return user;
-  }
-
   public async findByEmail(email: string): Promise<Users | null> {
     const user = await this.ormRepository.findFirst({
       where: { OR: [{ email }] },
@@ -47,8 +39,8 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async updatePassword(id: string, newPassword: string): Promise<Users> {
-    const user = await this.ormRepository.update({ where: { id }, data: { password: newPassword } });
+  public async updatePassword(id: string, hashedPassword: string): Promise<Users> {
+    const user = await this.ormRepository.update({ where: { id }, data: { password: hashedPassword } });
 
     return user;
   }
