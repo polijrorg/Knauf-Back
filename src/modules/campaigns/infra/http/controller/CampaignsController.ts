@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 import CreateCampaignsService from '@modules/campaigns/services/CreateCampaignsService';
 import DeleteCampaignsService from '@modules/campaigns/services/DeleteCampaignsService';
 import GetAllCampaignsService from '@modules/campaigns/services/GetAllCampaignsService';
+import UpdateCampaignsService from '@modules/campaigns/services/UpdateCampaignsService';
 
 export default class CampaignsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -42,5 +43,20 @@ export default class CampaignsController {
     const campaign = await getCampaigns.execute();
 
     return res.status(200).json(campaign);
+  }
+
+  public async update(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const {
+      image, title, subtitle, text,
+    } = req.body;
+
+    const updateCampaigns = container.resolve(UpdateCampaignsService);
+
+    const campaign = await updateCampaigns.execute(id, {
+      image, title, subtitle, text,
+    });
+
+    return res.status(201).json(campaign);
   }
 }

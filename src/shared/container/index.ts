@@ -18,6 +18,8 @@ import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepo
 import QuestionsRepository from '@modules/questions/infra/prisma/repositories/QuestionsRepository';
 import IStatmentRepository from '@modules/statment/repositories/IStatmentRepository';
 import StatmentRepository from '@modules/statment/infra/prisma/repositories/StatmentRepository';
+import ISeenRepository from '@modules/content/repositories/ISeenRepository';
+import SeenRepository from '@modules/content/infra/prisma/repositories/SeenRepository';
 
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
 container.registerSingleton<IModuleRepository>('ModuleRepository', ModuleRepository);
@@ -26,3 +28,4 @@ container.registerSingleton<ICampaignsRepository>('CampaignsRepository', Campaig
 container.registerSingleton<IContentRepository>('ContentRepository', ContentRepository);
 container.registerSingleton<IQuestionsRepository>('QuestionsRepository', QuestionsRepository);
 container.registerSingleton<IStatmentRepository>('StatmentRepository', StatmentRepository);
+container.registerSingleton<ISeenRepository>('SeenRepository', SeenRepository);
