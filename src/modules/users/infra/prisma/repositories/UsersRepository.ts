@@ -61,7 +61,7 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async rankUsers(): Promise<{ name: string; score: number }[] | null> {
+  public async rankUsers(): Promise<Users[] | null> {
     const usersNames = await this.ormRepository.findMany({
       select: {
         name: true,
