@@ -3,6 +3,7 @@ import { Prisma, Content } from '@prisma/client';
 
 import IContentRepository from '@modules/content/repositories/IContentRepository';
 import ICreateContentDTO from '@modules/content/dtos/ICreateContentDTO';
+import IUpdateContentDTO from '@modules/content/dtos/IUpdateContentDTO';
 
 export default class ContentRepository implements IContentRepository {
   private ormRepository: Prisma.ContentDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -33,6 +34,12 @@ export default class ContentRepository implements IContentRepository {
 
   public async findAll(): Promise<Content[] | null> {
     const content = await this.ormRepository.findMany();
+
+    return content;
+  }
+
+  public async update(id:string, data: IUpdateContentDTO): Promise<Content> {
+    const content = await this.ormRepository.update({ where: { id }, data });
 
     return content;
   }

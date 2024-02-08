@@ -12,4 +12,6 @@ campaignsRoutes.delete('/delete/:id', campaignsController.delete);
 
 campaignsRoutes.get('/getAll', campaignsController.getAll);
 
+campaignsRoutes.patch('/update/:id', campaignsController.update);
+
 export default campaignsRoutes;

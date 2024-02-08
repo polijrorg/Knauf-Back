@@ -25,22 +25,35 @@ model Campaigns {
 
 model Content {
   id          String   @id @default(uuid())
+  seen        Seen?
   title       String
   description String
   linkVideo   String?
   linkAudio   String?
   image       String?
   created_at  DateTime @default(now())
-  seen        Seen?
 }
 
 model Seen {
   id        String  @id @default(uuid())
   user      Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String
+  userId    String  @unique
   seen      Boolean @default(false)
   content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contentId String  @unique
+}
+
+model Users {
+  id         String   @id @default(uuid())
+  email      String
+  password   String
+  language   String
+  name       String
+  image      String
+  active     Boolean
+  score      Int
+  created_at DateTime @default(now())
+  seen       Seen[]
 }
 
 model Module {
@@ -61,17 +74,4 @@ model Statment {
   image      String
   text       String
   created_at DateTime @default(now())
-}
-
-model Users {
-  id         String   @id @default(uuid())
-  email      String
-  password   String
-  language   String
-  name       String
-  image      String
-  active     Boolean
-  score      Int
-  created_at DateTime @default(now())
-  seen       Seen[]
 }

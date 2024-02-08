@@ -12,4 +12,6 @@ contentRoutes.delete('/delete/:id', contentController.delete);
 
 contentRoutes.get('/find', contentController.findAll);
 
+contentRoutes.patch('/update/:id', contentController.update);
+
 export default contentRoutes;

@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-// import path from 'path';
 
 import { Content } from '@prisma/client';
 
