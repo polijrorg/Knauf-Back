@@ -3,6 +3,7 @@ interface ICreateCampaignsDTO {
   title: string;
   subtitle: string;
   text: string;
+  moduleId: string;
 }
 
 export default ICreateCampaignsDTO;

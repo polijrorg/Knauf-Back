@@ -14,6 +14,7 @@ export default class ContentController {
       linkVideo,
       linkAudio,
       image,
+      moduleId,
     } = req.body;
 
     const createContent = container.resolve(CreateContentService);
@@ -24,6 +25,7 @@ export default class ContentController {
       linkVideo,
       linkAudio,
       image,
+      moduleId,
     });
 
     return res.status(201).json(content);

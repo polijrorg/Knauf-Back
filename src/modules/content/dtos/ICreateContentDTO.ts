@@ -4,6 +4,7 @@ interface ICreateContentDTO {
   linkVideo: string;
   linkAudio: string;
   image: string;
+  moduleId: string;
 }
 
 export default ICreateContentDTO;

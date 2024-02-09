@@ -4,13 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import { Campaigns } from '@prisma/client';
 
 import ICampaignsRepository from '../repositories/ICampaignsRepository';
-
-interface IRequest {
-  image: string;
-  title: string;
-  subtitle: string;
-  text: string;
-}
+import ICreateCampaignsDTO from '../dtos/ICreateCampaignsDTO';
 
 @injectable()
 export default class CreateCampaignsService {
@@ -19,15 +13,8 @@ export default class CreateCampaignsService {
     private CampaignsRepository: ICampaignsRepository,
   ) { }
 
-  public async execute({
-    image, title, subtitle, text,
-  }: IRequest): Promise<Campaigns> {
-    const campaign = await this.CampaignsRepository.create({
-      image,
-      title,
-      subtitle,
-      text,
-    });
+  public async execute(data: ICreateCampaignsDTO): Promise<Campaigns> {
+    const campaign = await this.CampaignsRepository.create(data);
 
     return campaign;
   }

@@ -3,4 +3,25 @@ model Module {
   name       String
   image      String
   created_at DateTime @default(now())
+  content    Content[]
+  campaigns  Campaigns[]
+  questions  Questions[]
+}
+
+model Content {
+  id         String   @id @default(uuid())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
+}
+
+model Campaigns {
+  id         String   @id @default(uuid())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
+}
+
+model Questions {
+  id         String   @id @default(uuid())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
 }

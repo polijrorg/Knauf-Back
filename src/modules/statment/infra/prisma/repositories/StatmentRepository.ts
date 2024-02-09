@@ -43,4 +43,10 @@ export default class StatmentRepository implements IStatmentRepository {
 
     return statment;
   }
+
+  public async deleteAll(): Promise<Statment[] | null> {
+    const statment = await this.ormRepository.deleteMany();
+
+    return statment;
+  }
 }
