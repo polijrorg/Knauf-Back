@@ -2,5 +2,6 @@ model Statment {
   id          String   @id @default(uuid())
   image       String
   text        String
+  title       String
   created_at  DateTime @default(now())
 }

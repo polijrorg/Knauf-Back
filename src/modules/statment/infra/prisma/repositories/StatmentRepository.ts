@@ -3,6 +3,7 @@ import { Prisma, Statment } from '@prisma/client';
 
 import IStatmentRepository from '@modules/statment/repositories/IStatmentRepository';
 import ICreateStatmentDTO from '@modules/statment/dtos/ICreateStatmentDTO';
+import IUpdateStatmentDTO from '@modules/statment/dtos/IUpdateStatmentDTO';
 
 export default class StatmentRepository implements IStatmentRepository {
   private ormRepository: Prisma.StatmentDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -37,8 +38,8 @@ export default class StatmentRepository implements IStatmentRepository {
     return statment;
   }
 
-  public async updateImage(id: string, newImage: string): Promise<Statment> {
-    const statment = await this.ormRepository.update({ where: { id }, data: { image: newImage } });
+  public async update(id: string, data: IUpdateStatmentDTO): Promise<Statment> {
+    const statment = await this.ormRepository.update({ where: { id }, data });
 
     return statment;
   }
