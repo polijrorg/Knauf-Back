@@ -5,4 +5,11 @@ model Campaigns {
   subtitle  String
   text      String
   created_at DateTime @default(now())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
+}
+
+model Module {
+  id         String   @id @default(uuid())
+  campaigns  Campaigns[]
 }

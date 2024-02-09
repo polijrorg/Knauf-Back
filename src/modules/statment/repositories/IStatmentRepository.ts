@@ -9,6 +9,7 @@ interface IStatmentRepository {
   delete(id: string): Promise<Statment>;
   findAllStatment(): Promise<Statment[] | null>;
   update(id: string, data: IUpdateStatmentDTO): Promise<Statment>;
+  deleteAll(): Promise<Statment[] | null>;
 }
 
 export default IStatmentRepository;

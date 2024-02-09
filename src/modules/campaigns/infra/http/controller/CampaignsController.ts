@@ -13,6 +13,7 @@ export default class CampaignsController {
       title,
       subtitle,
       text,
+      moduleId,
     } = req.body;
 
     const createCampaigns = container.resolve(CreateCampaignsService);
@@ -22,6 +23,7 @@ export default class CampaignsController {
       title,
       subtitle,
       text,
+      moduleId,
     });
 
     return res.status(201).json(campaign);
@@ -57,6 +59,6 @@ export default class CampaignsController {
       image, title, subtitle, text,
     });
 
-    return res.status(201).json(campaign);
+    return res.status(200).json(campaign);
   }
 }
