@@ -6,7 +6,7 @@ model Content {
   linkAudio   String?
   image       String?
   created_at  DateTime @default(now())
-  seen        Seen?
+  seen        Seen[]
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
 }
