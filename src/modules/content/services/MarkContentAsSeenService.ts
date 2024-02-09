@@ -11,8 +11,8 @@ export default class MarkContentAsSeenService {
     private seenRepository: ISeenRepository,
   ) { }
 
-  public async execute(contentId: string): Promise<Seen> {
-    const content = await this.seenRepository.markAsSeenByContentId(contentId);
+  public async execute(userId: string, contentId: string): Promise<Seen> {
+    const content = await this.seenRepository.markAsSeen(userId, contentId);
 
     return content;
   }

@@ -28,10 +28,10 @@ export default class ContentController {
   }
 
   public async markContentAsSeen(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
+    const { userId, contentId } = req.params;
     const markContentAsSeen = container.resolve(MarkContentAsSeenService);
 
-    const seen = await markContentAsSeen.execute(id);
+    const seen = await markContentAsSeen.execute(userId, contentId);
 
     return res.status(200).json(seen);
   }
