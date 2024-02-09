@@ -73,5 +73,6 @@ model Statment {
   id         String   @id @default(uuid())
   image      String
   text       String
+  title      String   @default("Statment title")
   created_at DateTime @default(now())
 }
