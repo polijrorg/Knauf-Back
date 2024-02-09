@@ -16,6 +16,8 @@ model Answers {
 
 model Campaigns {
   id         String   @id @default(uuid())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
   image      String
   title      String
   subtitle   String
@@ -23,8 +25,20 @@ model Campaigns {
   created_at DateTime @default(now())
 }
 
+model Module {
+  id         String      @id @default(uuid())
+  questions  Questions[]
+  name       String
+  image      String
+  created_at DateTime    @default(now())
+  content    Content[]
+  campaigns  Campaigns[]
+}
+
 model Content {
   id          String   @id @default(uuid())
+  module      Module   @relation(fields: [moduleId], references: [id])
+  moduleId    String
   seen        Seen?
   title       String
   description String
@@ -56,23 +70,18 @@ model Users {
   seen       Seen[]
 }
 
-model Module {
-  id         String   @id @default(uuid())
-  name       String
-  image      String
-  created_at DateTime @default(now())
-}
-
 model Questions {
   id         String   @id @default(uuid())
   question   String
   created_at DateTime @default(now())
+  module     Module   @relation(fields: [moduleId], references: [id])
+  moduleId   String
 }
 
 model Statment {
   id         String   @id @default(uuid())
   image      String
   text       String
-  title      String   @default("Statment title")
+  title      String   
   created_at DateTime @default(now())
 }
