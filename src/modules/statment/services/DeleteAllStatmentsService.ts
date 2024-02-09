@@ -11,7 +11,7 @@ export default class DeleteAllStatmentsService {
     private statmentRepository: IStatmentRepository,
   ) { }
 
-  public async execute(): Promise<Statment> {
+  public async execute(): Promise<Statment[] | null> {
     const statment = await this.statmentRepository.deleteAll();
 
     return statment;
