@@ -9,7 +9,7 @@ model Seen {
 
 model Content {
   id          String   @id @default(uuid())
-  seen        Seen?
+  seen        Seen[]
 }
 
 model Users {

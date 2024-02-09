@@ -7,7 +7,7 @@ interface IStatmentRepository {
   findByID(id: string): Promise<Statment | null>;
   create(data: ICreateStatmentDTO): Promise<Statment>;
   delete(id: string): Promise<Statment>;
-  findAllStatment(): Promise<Statment[] | null>;
+  getAll(): Promise<Statment[] | null>;
   update(id: string, data: IUpdateStatmentDTO): Promise<Statment>;
   deleteAll(): Promise<Statment[] | null>;
 }

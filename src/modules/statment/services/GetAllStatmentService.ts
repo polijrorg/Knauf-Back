@@ -13,7 +13,7 @@ export default class GetAllStatmentService {
   ) { }
 
   public async execute(): Promise<Statment[] | null> {
-    const statment = await this.statmentRepository.findAllStatment();
+    const statment = await this.statmentRepository.getAll();
 
     return statment;
   }

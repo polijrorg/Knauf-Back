@@ -32,7 +32,7 @@ export default class StatmentRepository implements IStatmentRepository {
     return statment;
   }
 
-  public async findAllStatment(): Promise<Statment[] | null> {
+  public async getAll(): Promise<Statment[] | null> {
     const statment = await this.ormRepository.findMany();
 
     return statment;
