@@ -10,8 +10,8 @@ statmentRoutes.post('/create', statmentController.create);
 
 statmentRoutes.delete('/delete/:id', statmentController.delete);
 
-statmentRoutes.get('/getAll', statmentController.getAllStatment);
+statmentRoutes.get('/getAll', statmentController.getAll);
 
-statmentRoutes.patch('/updateImage/:id', statmentController.updateImage);
+statmentRoutes.patch('/update/:id', statmentController.update);
 
 export default statmentRoutes;

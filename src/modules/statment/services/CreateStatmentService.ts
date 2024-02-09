@@ -4,11 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import { Statment } from '@prisma/client';
 
 import IStatmentRepository from '../repositories/IStatmentRepository';
-
-interface IRequest {
-  image: string;
-  text: string;
-}
+import ICreateStatmentDTO from '../dtos/ICreateStatmentDTO';
 
 @injectable()
 export default class CreateStatmentService {
@@ -17,8 +13,8 @@ export default class CreateStatmentService {
     private statmentRepository: IStatmentRepository,
   ) { }
 
-  public async execute({ image, text }: IRequest): Promise<Statment> {
-    const statments = await this.statmentRepository.create({ image, text });
+  public async execute(data: ICreateStatmentDTO): Promise<Statment> {
+    const statments = await this.statmentRepository.create(data);
 
     return statments;
   }
