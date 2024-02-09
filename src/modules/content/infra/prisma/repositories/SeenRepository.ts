@@ -31,8 +31,8 @@ export default class SeenRepository implements ISeenRepository {
     return content;
   }
 
-  public async markAsSeenByContentId(contentId: string): Promise<Seen> {
-    const content = await this.ormRepository.update({ where: { contentId }, data: { seen: true } });
+  public async markAsSeen(contentId: string, userId: string): Promise<Seen> {
+    const content = await this.ormRepository.update({ where: { contentId, userId }, data: { seen: true } });
 
     return content;
   }
