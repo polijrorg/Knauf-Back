@@ -9,9 +9,39 @@ generator client {
 }
 
 model Answers {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     String
+  question   Questions @relation(fields: [questionId], references: [id])
+  questionId String
   answer     String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+}
+
+model Users {
+  id         String      @id @default(uuid())
+  email      String
+  password   String
+  language   String
+  name       String
+  image      String
+  active     Boolean
+  score      Int
+  created_at DateTime    @default(now())
+  seen       Seen[]
+  questions  Questions[]
+  answers    Answers[]
+}
+
+model Questions {
+  id         String    @id @default(uuid())
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     String
+  question   String
+  created_at DateTime  @default(now())
+  module     Module    @relation(fields: [moduleId], references: [id])
+  moduleId   String
+  answers    Answers[]
 }
 
 model Campaigns {
@@ -27,6 +57,7 @@ model Campaigns {
 
 model Module {
   id         String      @id @default(uuid())
+  quizzes    Quizz[]
   questions  Questions[]
   name       String
   image      String
@@ -39,7 +70,7 @@ model Content {
   id          String   @id @default(uuid())
   module      Module   @relation(fields: [moduleId], references: [id])
   moduleId    String
-  seen        Seen?
+  seen        Seen[]
   title       String
   description String
   linkVideo   String?
@@ -57,31 +88,32 @@ model Seen {
   contentId String  @unique
 }
 
-model Users {
-  id         String   @id @default(uuid())
-  email      String
-  password   String
-  language   String
-  name       String
-  image      String
-  active     Boolean
-  score      Int
-  created_at DateTime @default(now())
-  seen       Seen[]
+model Quizz {
+  id                String           @id @default(uuid())
+  quizzQuestions    quizzQuestions[]
+  image             String
+  text              String
+  questions         String
+  amountOfQuestions Int
+  timeSpent         Float
+  made              Boolean
+  module            Module           @relation(fields: [moduleId], references: [id])
+  moduleId          String
 }
 
-model Questions {
-  id         String   @id @default(uuid())
-  question   String
-  created_at DateTime @default(now())
-  module     Module   @relation(fields: [moduleId], references: [id])
-  moduleId   String
+model quizzQuestions {
+  id          String @id @default(uuid())
+  question    String
+  answers     Json
+  rightAnswer String
+  quizz       Quizz  @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId     String
 }
 
 model Statment {
   id         String   @id @default(uuid())
   image      String
   text       String
-  title      String   
+  title      String   @default("Statment title")
   created_at DateTime @default(now())
 }

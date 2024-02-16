@@ -6,6 +6,7 @@ model Module {
   content    Content[]
   campaigns  Campaigns[]
   questions  Questions[]
+  quizzes    Quizz[]
 }
 
 model Content {
@@ -24,4 +25,10 @@ model Questions {
   id         String   @id @default(uuid())
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
+}
+
+model Quizz {
+  id         String   @id @default(uuid())
+  module            Module    @relation(fields: [moduleId], references: [id])
+  moduleId          String
 }

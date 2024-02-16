@@ -8,10 +8,8 @@ import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import IModuleRepository from '@modules/module/repositories/IModuleRepository';
 import IQuestionsRepository from '../repositories/IQuestionsRepository';
 
-import ICreateQuestionsDTO from '../dtos/ICreateQuestionsDTO';
-
 @injectable()
-export default class CreateQuestionsService {
+export default class GetAllQuestionsFromAUserService {
   constructor(
     @inject('QuestionsRepository')
     private questionsRepository: IQuestionsRepository,
@@ -21,17 +19,17 @@ export default class CreateQuestionsService {
     private usersRepository: IUsersRepository,
   ) { }
 
-  public async execute(data: ICreateQuestionsDTO): Promise<Questions> {
-    const userExists = await this.usersRepository.findById(data.userId);
+  public async execute(userId: string, moduleId: string): Promise<Questions[] | null> {
+    const userExists = await this.usersRepository.findById(userId);
 
     if (!userExists) throw new AppError('A user with this Id does not exist');
 
-    const moduleExists = await this.moduleRepository.findByID(data.moduleId);
+    const moduleExists = await this.moduleRepository.findByID(moduleId);
 
     if (!moduleExists) throw new AppError('A module with this Id does not exist');
 
-    const questions = await this.questionsRepository.create(data);
+    const question = await this.questionsRepository.getAllFromAUser(userId, moduleId);
 
-    return questions;
+    return question;
   }
 }
