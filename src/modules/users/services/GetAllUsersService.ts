@@ -12,7 +12,7 @@ export default class GetAllUsersService {
 
   ) { }
 
-  public async execute(): Promise<Users> {
+  public async execute(): Promise<Users[] | null> {
     const user = await this.usersRepository.findAllUsers();
 
     return user;

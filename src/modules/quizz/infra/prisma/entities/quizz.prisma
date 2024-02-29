@@ -1,23 +1,27 @@
 model Quizz {
-  id                String    @id @default(uuid())
+  id                String     @id @default(uuid())
   image             String
   text              String
-  questions         String
   amountOfQuestions Int
-  timeSpent         Float?
-  made              Boolean   @default(false)
-  module            Module    @relation(fields: [moduleId], references: [id])
+  module            Module     @relation(fields: [moduleId], references: [id])
   moduleId          String
-  quizzQuestions    quizzQuestions[]
+  quizzQuestions    QuizzQuestions[]
+  quizzGrades       QuizzGrades[]
 }
 
-model quizzQuestions {
-  id                String    @id @default(uuid())
-  quizz             Quizz     @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+model QuizzQuestions {
+  id                String     @id @default(uuid())
+  quizz             Quizz      @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   quizzId           String
 }
 
 model Module {
-  id                String    @id @default(uuid())
+  id                String     @id @default(uuid())
   quizzes           Quizz[]
+}
+
+model QuizzGrades {
+  id                String     @id @default(uuid())
+  quizz             Quizz      @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId           String
 }

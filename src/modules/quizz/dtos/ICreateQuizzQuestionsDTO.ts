@@ -1,6 +1,6 @@
 interface ICreateQuizzQuestionsDTO {
-  questiob: string;
-  answer: string[];
+  question: string;
+  answers: string[];
   rightAnswer: string;
   quizzId: string;
 }

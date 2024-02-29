@@ -8,6 +8,15 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Admin {
+  id         String   @id @default(uuid())
+  email      String
+  password   String
+  name       String
+  image      String
+  created_at DateTime @default(now())
+}
+
 model Answers {
   id         String    @id @default(uuid())
   user       Users     @relation(fields: [userId], references: [id])
@@ -19,18 +28,19 @@ model Answers {
 }
 
 model Users {
-  id         String      @id @default(uuid())
-  email      String
-  password   String
-  language   String
-  name       String
-  image      String
-  active     Boolean
-  score      Int
-  created_at DateTime    @default(now())
-  seen       Seen[]
-  questions  Questions[]
-  answers    Answers[]
+  id          String        @id @default(uuid())
+  email       String
+  password    String
+  language    String
+  name        String
+  image       String
+  active      Boolean
+  score       Int
+  created_at  DateTime      @default(now())
+  seen        Seen[]
+  questions   Questions[]
+  answers     Answers[]
+  quizzGrades QuizzGrades[]
 }
 
 model Questions {
@@ -90,24 +100,33 @@ model Seen {
 
 model Quizz {
   id                String           @id @default(uuid())
-  quizzQuestions    quizzQuestions[]
+  quizzQuestions    QuizzQuestions[]
+  quizzGrades       QuizzGrades[]
   image             String
   text              String
-  questions         String
   amountOfQuestions Int
-  timeSpent         Float
-  made              Boolean
   module            Module           @relation(fields: [moduleId], references: [id])
   moduleId          String
 }
 
-model quizzQuestions {
+model QuizzQuestions {
   id          String @id @default(uuid())
   question    String
   answers     Json
   rightAnswer String
   quizz       Quizz  @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   quizzId     String
+}
+
+model QuizzGrades {
+  id        String  @id @default(uuid())
+  user      Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  timeSpent Int?
+  record    Int?
+  seen      Boolean @default(false)
+  quizz     Quizz   @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId   String
 }
 
 model Statment {

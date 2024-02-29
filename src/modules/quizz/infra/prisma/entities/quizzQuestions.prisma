@@ -1,4 +1,4 @@
-model quizzQuestions {
+model QuizzQuestions {
   id                String    @id @default(uuid())
   question          String
   answers           Json
@@ -9,5 +9,5 @@ model quizzQuestions {
 
 model Quizz {
   id                String    @id @default(uuid())
-  quizzQuestions    quizzQuestions[]
+  quizzQuestions    QuizzQuestions[]
 }
