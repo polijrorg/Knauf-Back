@@ -1,6 +1,7 @@
 import { Users } from '@prisma/client';
 
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
+import IUpdateUserDTO from '../dtos/IUpdateUserDTO';
 
 interface IUsersRepository {
   findByEmail(email: string): Promise<Users | null>;
@@ -9,8 +10,7 @@ interface IUsersRepository {
   rankUsers(): Promise<Users[] | null>;
   create(data: ICreateUserDTO): Promise<Users>;
   delete(id: string): Promise<Users>;
-  updatePassword(id: string, hashedPassword: string): Promise<Users>;
-  updateLanguage(id: string, newLanguage: string): Promise<Users>;
+  update(id: string, data: IUpdateUserDTO): Promise<Users>;
 }
 
 export default IUsersRepository;

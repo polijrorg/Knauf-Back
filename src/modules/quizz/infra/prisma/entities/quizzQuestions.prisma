@@ -1,0 +1,13 @@
+model QuizzQuestions {
+  id                String    @id @default(uuid())
+  question          String
+  answers           Json
+  rightAnswer       String
+  quizz             Quizz     @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId           String
+}
+
+model Quizz {
+  id                String    @id @default(uuid())
+  quizzQuestions    QuizzQuestions[]
+}

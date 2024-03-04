@@ -3,6 +3,7 @@ import { Prisma, Answers } from '@prisma/client';
 
 import IAnswersRepository from '@modules/answers/repositories/IAnswersRepository';
 import ICreateAnswersDTO from '@modules/answers/dtos/ICreateAnswersDTO';
+import IUpdateAnswersDTO from '@modules/answers/dtos/IUpdateAnswersDTO';
 
 export default class AnswersRepository implements IAnswersRepository {
   private ormRepository: Prisma.AnswersDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -12,22 +13,40 @@ export default class AnswersRepository implements IAnswersRepository {
   }
 
   public async findByID(id: string): Promise<Answers | null> {
-    const user = await this.ormRepository.findUnique({
+    const answer = await this.ormRepository.findUnique({
       where: { id },
     });
 
-    return user;
+    return answer;
   }
 
   public async create(data: ICreateAnswersDTO): Promise<Answers> {
-    const module = await this.ormRepository.create({ data });
+    const answer = await this.ormRepository.create({ data });
 
-    return module;
+    return answer;
   }
 
   public async delete(id: string): Promise<Answers> {
-    const user = await this.ormRepository.delete({ where: { id } });
+    const answer = await this.ormRepository.delete({ where: { id } });
 
-    return user;
+    return answer;
+  }
+
+  public async getAllFromAUser(userId: string): Promise<Answers[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { userId }, orderBy: { created_at: 'desc' } });
+
+    return answer;
+  }
+
+  public async getAllFromAQuestion(questionId: string): Promise<Answers[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { questionId }, orderBy: { created_at: 'desc' } });
+
+    return answer;
+  }
+
+  public async update(id: string, data: IUpdateAnswersDTO): Promise<Answers> {
+    const answer = await this.ormRepository.update({ where: { id }, data });
+
+    return answer;
   }
 }

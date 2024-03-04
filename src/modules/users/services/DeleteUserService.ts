@@ -6,10 +6,6 @@ import AppError from '@shared/errors/AppError';
 
 import IUsersRepository from '../repositories/IUsersRepository';
 
-interface IRequest {
-  id: string;
-}
-
 @injectable()
 export default class DeleteUserService {
   constructor(
@@ -17,9 +13,7 @@ export default class DeleteUserService {
     private usersRepository: IUsersRepository,
   ) { }
 
-  public async execute({
-    id,
-  }: IRequest): Promise<Users> {
+  public async execute(id: string): Promise<Users> {
     const userExists = await this.usersRepository.findById(id);
 
     if (!userExists) throw new AppError('User does not exist');

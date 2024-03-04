@@ -19,9 +19,40 @@ model Administrator {
 }
 
 model Answers {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     String
+  question   Questions @relation(fields: [questionId], references: [id])
+  questionId String
   answer     String
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+}
+
+model Users {
+  id          String        @id @default(uuid())
+  email       String
+  password    String
+  language    String
+  name        String
+  image       String
+  active      Boolean
+  score       Int
+  created_at  DateTime      @default(now())
+  seen        Seen[]
+  questions   Questions[]
+  answers     Answers[]
+  quizzGrades QuizzGrades[]
+}
+
+model Questions {
+  id         String    @id @default(uuid())
+  user       Users     @relation(fields: [userId], references: [id])
+  userId     String
+  question   String
+  created_at DateTime  @default(now())
+  module     Module    @relation(fields: [moduleId], references: [id])
+  moduleId   String
+  answers    Answers[]
 }
 
 model Campaigns {
@@ -37,6 +68,7 @@ model Campaigns {
 
 model Module {
   id         String      @id @default(uuid())
+  quizzes    Quizz[]
   questions  Questions[]
   name       String
   image      String
@@ -67,25 +99,35 @@ model Seen {
   contentId String  @unique
 }
 
-model Users {
-  id         String   @id @default(uuid())
-  email      String
-  password   String
-  language   String
-  name       String
-  image      String
-  active     Boolean
-  score      Int
-  created_at DateTime @default(now())
-  seen       Seen[]
+model Quizz {
+  id                String           @id @default(uuid())
+  quizzQuestions    QuizzQuestions[]
+  quizzGrades       QuizzGrades[]
+  image             String
+  text              String
+  amountOfQuestions Int
+  module            Module           @relation(fields: [moduleId], references: [id])
+  moduleId          String
 }
 
-model Questions {
-  id         String   @id @default(uuid())
-  question   String
-  created_at DateTime @default(now())
-  module     Module   @relation(fields: [moduleId], references: [id])
-  moduleId   String
+model QuizzQuestions {
+  id          String @id @default(uuid())
+  question    String
+  answers     Json
+  rightAnswer String
+  quizz       Quizz  @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId     String
+}
+
+model QuizzGrades {
+  id        String  @id @default(uuid())
+  user      Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    String
+  timeSpent Int?
+  record    Int?
+  seen      Boolean @default(false)
+  quizz     Quizz   @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId   String
 }
 
 model Statment {

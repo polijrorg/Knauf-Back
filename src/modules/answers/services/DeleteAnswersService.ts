@@ -2,13 +2,9 @@ import { inject, injectable } from 'tsyringe';
 
 import { Answers } from '@prisma/client';
 
-// import AppError from '@shared/errors/AppError';
+import AppError from '@shared/errors/AppError';
 
 import IAnswersRepository from '../repositories/IAnswersRepository';
-
-interface IRequest {
-  id: string;
-}
 
 @injectable()
 export default class DeleteAnswersService {
@@ -17,9 +13,11 @@ export default class DeleteAnswersService {
     private answersRepository: IAnswersRepository,
   ) { }
 
-  public async execute({
-    id,
-  }: IRequest): Promise<Answers> {
+  public async execute(id: string): Promise<Answers> {
+    const answerExists = await this.answersRepository.findByID(id);
+
+    if (!answerExists) throw new AppError('An answer with this Id does not exist');
+
     const answer = await this.answersRepository.delete(id);
 
     return answer;

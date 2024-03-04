@@ -5,10 +5,9 @@ import AuthenticateUserService from '@modules/users/services/AuthenticateUserSer
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import GetByIdService from '@modules/users/services/GetByIdService';
-import UpdatePasswordService from '@modules/users/services/UpdatePasswordService';
-import UpdateLanguageService from '@modules/users/services/UpdateLanguageService';
 import GetAllUsersService from '@modules/users/services/GetAllUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
+import UpdateUserService from '@modules/users/services/UpdateUserService';
 
 export default class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -57,9 +56,7 @@ export default class UserController {
 
     const deleteUser = container.resolve(DeleteUserService);
 
-    const user = await deleteUser.execute({
-      id,
-    });
+    const user = await deleteUser.execute(id);
 
     return res.status(200).json(user);
   }
@@ -74,23 +71,17 @@ export default class UserController {
     return res.status(200).json(user);
   }
 
-  public async updatePassword(req: Request, res: Response): Promise<Response> {
+  public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { newPassword } = req.body;
+    const {
+      password, language, name, image, active, score,
+    } = req.body;
 
-    const users = container.resolve(UpdatePasswordService);
+    const users = container.resolve(UpdateUserService);
 
-    const user = await users.execute({ id, newPassword });
-
-    return res.status(200).json(user);
-  }
-
-  public async updateLanguage(req: Request, res: Response): Promise<Response> {
-    const { id, newLanguage } = req.params;
-
-    const users = container.resolve(UpdateLanguageService);
-
-    const user = await users.execute({ id, newLanguage });
+    const user = await users.execute(id, {
+      password, language, name, image, active, score,
+    });
 
     return res.status(200).json(user);
   }
