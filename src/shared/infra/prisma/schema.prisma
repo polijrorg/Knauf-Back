@@ -8,6 +8,16 @@ generator client {
   provider = "prisma-client-js"
 }
 
+model Administrator {
+  id         String   @id @default(uuid())
+  email      String
+  name       String
+  password   String
+  image      String
+  language   String
+  created_at DateTime @default(now())
+}
+
 model Answers {
   id         String   @id @default(uuid())
   answer     String
@@ -39,7 +49,7 @@ model Content {
   id          String   @id @default(uuid())
   module      Module   @relation(fields: [moduleId], references: [id])
   moduleId    String
-  seen        Seen?
+  seen        Seen[]
   title       String
   description String
   linkVideo   String?
@@ -82,6 +92,6 @@ model Statment {
   id         String   @id @default(uuid())
   image      String
   text       String
-  title      String   
+  title      String   @default("Statment title")
   created_at DateTime @default(now())
 }

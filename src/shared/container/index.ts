@@ -20,6 +20,8 @@ import IStatmentRepository from '@modules/statment/repositories/IStatmentReposit
 import StatmentRepository from '@modules/statment/infra/prisma/repositories/StatmentRepository';
 import ISeenRepository from '@modules/content/repositories/ISeenRepository';
 import SeenRepository from '@modules/content/infra/prisma/repositories/SeenRepository';
+import IAdministratorRepository from '@modules/administrator/repositories/IAdministratorRepository';
+import AdministratorRepository from '@modules/administrator/infra/prisma/repositories/AdministratorRepository';
 
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
 container.registerSingleton<IModuleRepository>('ModuleRepository', ModuleRepository);
@@ -29,3 +31,4 @@ container.registerSingleton<IContentRepository>('ContentRepository', ContentRepo
 container.registerSingleton<IQuestionsRepository>('QuestionsRepository', QuestionsRepository);
 container.registerSingleton<IStatmentRepository>('StatmentRepository', StatmentRepository);
 container.registerSingleton<ISeenRepository>('SeenRepository', SeenRepository);
+container.registerSingleton<IAdministratorRepository>('AdministratorRepository', AdministratorRepository);
