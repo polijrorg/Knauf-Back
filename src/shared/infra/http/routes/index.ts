@@ -2,7 +2,6 @@ import { Router } from 'express';
 
 // Imports
 
-import adminRoutes from '@modules/admin/infra/http/routes/admin.routes';
 import usersRoutes from '@modules/users/infra/http/routes/users.routes';
 import moduleRoutes from '@modules/module/infra/http/routes/module.routes';
 import statmentRoutes from '@modules/statment/infra/http/routes/statment.routes';
@@ -17,9 +16,6 @@ import quizzGradesRoutes from '@modules/quizz/infra/http/routes/quizzGrades.rout
 import quizzQuestionsRoutes from '@modules/quizz/infra/http/routes/quizzQuestions.routes';
 
 const routes = Router();
-
-// Admin
-routes.use('/admin', adminRoutes);
 
 // Users
 routes.use('/users', usersRoutes);
