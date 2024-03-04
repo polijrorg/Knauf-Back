@@ -1,0 +1,70 @@
+import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+
+import AuthenticateAdministratorService from '@modules/administrator/services/AuthenticateAdministratorService';
+import CreateAdministratorService from '@modules/administrator/services/CreateAdministratorService';
+import GetAdministratorService from '@modules/administrator/services/GetAdministratorService';
+import UpdateLanguageService from '@modules/administrator/services/UpdateLanguageService';
+import UpdatePasswordService from '@modules/administrator/services/UpdatePasswordService';
+
+class AdministratorController {
+  public async login(req: Request, res: Response): Promise<Response> {
+    const {
+      email,
+      password,
+    } = req.body;
+
+    const authenticateAdministrator = container.resolve(AuthenticateAdministratorService);
+
+    const { administrator, token } = await authenticateAdministrator.execute({ email, password });
+
+    return res.json({ administrator, token });
+  }
+
+  public async create(req: Request, res: Response): Promise<Response> {
+    const {
+      email,
+      password,
+      language,
+      name,
+      image,
+    } = req.body;
+
+    const createAdministrator = container.resolve(CreateAdministratorService);
+
+    const administrator = await createAdministrator.execute({
+      name,
+      email,
+      password,
+      language,
+      image,
+    });
+
+    administrator.password = '###';
+
+    return res.status(201).json(administrator);
+  }
+
+  public async getAdministrator(req: Request, res: Response): Promise<Response> {
+    const administratorS = container.resolve(GetAdministratorService);
+    const administrator = await administratorS.execute();
+    return res.status(200).json(administrator);
+  }
+
+  public async updateLanguage(req: Request, res: Response): Promise<Response> {
+    const { id, newLanguage } = req.params;
+    const administrators = container.resolve(UpdateLanguageService);
+    const administrator = await administrators.execute({ id, newLanguage });
+    return res.status(200).json(administrator);
+  }
+
+  public async updatePassword(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { newPassword } = req.body;
+    const administratorS = container.resolve(UpdatePasswordService);
+    const administrator = await administratorS.execute({ id, newPassword });
+    return res.status(200).json(administrator);
+  }
+}
+
+export default AdministratorController;

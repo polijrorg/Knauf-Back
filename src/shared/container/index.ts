@@ -31,6 +31,9 @@ import StatmentRepository from '@modules/statment/infra/prisma/repositories/Stat
 import ISeenRepository from '@modules/content/repositories/ISeenRepository';
 import SeenRepository from '@modules/content/infra/prisma/repositories/SeenRepository';
 
+import IAdministratorRepository from '@modules/administrator/repositories/IAdministratorRepository';
+import AdministratorRepository from '@modules/administrator/infra/prisma/repositories/AdministratorRepository';
+
 import IQuizzRepository from '@modules/quizz/repositories/IQuizzRepository';
 import QuizzRepository from '@modules/quizz/infra/prisma/repositories/QuizzRepository';
 
@@ -49,6 +52,7 @@ container.registerSingleton<IContentRepository>('ContentRepository', ContentRepo
 container.registerSingleton<IQuestionsRepository>('QuestionsRepository', QuestionsRepository);
 container.registerSingleton<IStatmentRepository>('StatmentRepository', StatmentRepository);
 container.registerSingleton<ISeenRepository>('SeenRepository', SeenRepository);
+container.registerSingleton<IAdministratorRepository>('AdministratorRepository', AdministratorRepository);
 container.registerSingleton<IQuizzRepository>('QuizzRepository', QuizzRepository);
 container.registerSingleton<IQuizzGradesRepository>('QuizzGradesRepository', QuizzGradesRepository);
 container.registerSingleton<IQuizzQuestionsRepository>('QuizzQuestionsRepository', QuizzQuestionsRepository);
