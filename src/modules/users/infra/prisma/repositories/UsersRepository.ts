@@ -3,6 +3,7 @@ import { Prisma, Users } from '@prisma/client';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import IUpdateUserDTO from '@modules/users/dtos/IUpdateUserDTO';
 
 export default class UsersRepository implements IUsersRepository {
   private ormRepository: Prisma.UsersDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -39,14 +40,8 @@ export default class UsersRepository implements IUsersRepository {
     return user;
   }
 
-  public async updatePassword(id: string, hashedPassword: string): Promise<Users> {
-    const user = await this.ormRepository.update({ where: { id }, data: { password: hashedPassword } });
-
-    return user;
-  }
-
-  public async updateLanguage(id: string, newLanguage: string): Promise<Users> {
-    const user = await this.ormRepository.update({ where: { id }, data: { language: newLanguage } });
+  public async update(id: string, data: IUpdateUserDTO): Promise<Users> {
+    const user = await this.ormRepository.update({ where: { id }, data });
 
     return user;
   }

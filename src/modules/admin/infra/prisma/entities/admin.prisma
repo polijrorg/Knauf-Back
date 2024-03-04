@@ -1,8 +1,0 @@
-model Admin {
-  id         String   @id @default(uuid())
-  email      String
-  password   String
-  name       String
-  image      String
-  created_at DateTime @default(now())
-}

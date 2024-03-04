@@ -18,8 +18,6 @@ usersRoutes.get('/getUsers', usersController.getAllUsers);
 
 usersRoutes.get('/rankUsers', usersController.rankUsers);
 
-usersRoutes.patch('/updatePassword/:id', usersController.updatePassword);
-
-usersRoutes.patch('/updateLanguage/:id/:newLanguage', usersController.updateLanguage);
+usersRoutes.patch('/update/:id', usersController.update);
 
 export default usersRoutes;
