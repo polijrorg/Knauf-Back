@@ -1,0 +1,21 @@
+model QuizzGrades {
+  id                String     @id @default(uuid())
+  timeSpent         Int?
+  record            Int?
+  seen              Boolean    @default(false)
+  user              Users      @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId            String
+  quizz             Quizz      @relation(fields: [quizzId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  quizzId           String
+}
+
+model Users {
+  id                String     @id @default(uuid())
+  quizzGrades       QuizzGrades[]
+}
+
+model Quizz {
+  id                String     @id @default(uuid())
+  quizzGrades       QuizzGrades[]
+}
+
