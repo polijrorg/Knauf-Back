@@ -1,19 +1,20 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
 import AnswersController from '../controller/AnswersController';
 
 const answersRoutes = Router();
 
 const answersController = new AnswersController();
 
-answersRoutes.post('/create', answersController.create);
+answersRoutes.post('/create', ensureAuthenticated, answersController.create);
 
-answersRoutes.delete('/delete', answersController.delete);
+answersRoutes.delete('/delete', ensureAuthenticated, answersController.delete);
 
-answersRoutes.get('/getAllFromAUser/:questionId', answersController.getAllFromAQuestion);
+answersRoutes.get('/getAllFromAUser/:questionId', ensureAuthenticated, answersController.getAllFromAQuestion);
 
-answersRoutes.get('/getAllFromAUser/:userId', answersController.getAllFromAUser);
+answersRoutes.get('/getAllFromAUser/:userId', ensureAuthenticated, answersController.getAllFromAUser);
 
-answersRoutes.patch('/update/:id', answersController.update);
+answersRoutes.patch('/update/:id', ensureAuthenticated, answersController.update);
 
 export default answersRoutes;
