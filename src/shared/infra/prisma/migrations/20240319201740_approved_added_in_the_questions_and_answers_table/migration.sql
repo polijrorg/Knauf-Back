@@ -9,6 +9,3 @@ ALTER TABLE "Answers" ADD COLUMN     "approved" BOOLEAN NOT NULL DEFAULT false;
 
 -- AlterTable
 ALTER TABLE "Questions" ADD COLUMN     "approved" BOOLEAN NOT NULL DEFAULT false;
-
--- DropTable
-DROP TABLE "Admin";
