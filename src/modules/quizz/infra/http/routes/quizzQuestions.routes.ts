@@ -8,9 +8,9 @@ const quizzQuestionsController = new QuizzQuestionsController();
 
 quizzQuestionsRoutes.post('/create', quizzQuestionsController.create);
 
-quizzQuestionsRoutes.delete('/delete', quizzQuestionsController.delete);
+quizzQuestionsRoutes.delete('/delete/:id', quizzQuestionsController.delete);
 
-quizzQuestionsRoutes.get('/getAllFromAModule/:quizzId', quizzQuestionsController.getAll);
+quizzQuestionsRoutes.get('/getAllFromAQuizz/:quizzId', quizzQuestionsController.getAll);
 
 quizzQuestionsRoutes.patch('/update/:id', quizzQuestionsController.update);
 

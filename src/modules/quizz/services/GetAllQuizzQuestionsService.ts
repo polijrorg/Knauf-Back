@@ -12,7 +12,7 @@ export default class GetAllQuizzQuestionsService {
   constructor(
     @inject('QuizzRepository')
     private quizzRepository: IQuizzRepository,
-    @inject('QuizzGradesRepository')
+    @inject('QuizzQuestionsRepository')
     private quizzQuestionsRepository: IQuizzQuestionsRepository,
   ) { }
 
@@ -21,7 +21,7 @@ export default class GetAllQuizzQuestionsService {
 
     if (!questionExists) throw new AppError('A quizz with this Id does not exist');
 
-    const answers = await this.quizzQuestionsRepository.get(quizzId);
+    const answers = await this.quizzQuestionsRepository.getAll(quizzId);
 
     return answers;
   }

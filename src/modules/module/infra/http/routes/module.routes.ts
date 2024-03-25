@@ -10,8 +10,8 @@ moduleRoutes.post('/create', moduleController.create);
 
 moduleRoutes.delete('/delete/:id', moduleController.delete);
 
-moduleRoutes.get('/getModules', moduleController.getAllModules);
+moduleRoutes.get('/getAll', moduleController.getAllModules);
 
-moduleRoutes.patch('/updateImage/:id', moduleController.updateImage);
+moduleRoutes.patch('/update/:id', moduleController.update);
 
 export default moduleRoutes;

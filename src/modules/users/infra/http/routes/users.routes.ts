@@ -12,8 +12,6 @@ usersRoutes.post('/login', usersController.login);
 
 usersRoutes.delete('/delete/:id', usersController.delete);
 
-usersRoutes.get('/find/:id', usersController.getById);
-
 usersRoutes.get('/getUsers', usersController.getAllUsers);
 
 usersRoutes.get('/rankUsers', usersController.rankUsers);

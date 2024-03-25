@@ -5,30 +5,23 @@ import { QuizzGrades } from '@prisma/client';
 import AppError from '@shared/errors/AppError';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
-import IQuizzRepository from '../repositories/IQuizzRepository';
 import IQuizzGradesRepository from '../repositories/IQuizzGradesRepository';
 
 @injectable()
-export default class GetAQuizzGradesService {
+export default class GetAllQuizzGradesFromAUSerService {
   constructor(
     @inject('UsersRepository')
     private usersRepository: IUsersRepository,
-    @inject('QuizzRepository')
-    private quizzRepository: IQuizzRepository,
     @inject('QuizzGradesRepository')
     private quizzGradesRepository: IQuizzGradesRepository,
   ) { }
 
-  public async execute(quizzId: string, userId: string): Promise<QuizzGrades | null> {
-    const questionExists = await this.quizzRepository.findByID(quizzId);
-
-    if (!questionExists) throw new AppError('A quizz with this Id does not exist');
-
+  public async execute(userId: string): Promise<QuizzGrades[] | null> {
     const userExists = await this.usersRepository.findById(userId);
 
     if (!userExists) throw new AppError('A user with this Id does not exist');
 
-    const answers = await this.quizzGradesRepository.getSpecific(quizzId, userId);
+    const answers = await this.quizzGradesRepository.getAllFromAUser(userId);
 
     return answers;
   }

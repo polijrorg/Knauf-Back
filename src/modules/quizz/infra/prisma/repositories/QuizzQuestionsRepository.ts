@@ -32,7 +32,7 @@ export default class QuizzQuestionsRepository implements IQuizzQuestionsReposito
     return answer;
   }
 
-  public async get(quizzId: string): Promise<QuizzQuestions[] | null> {
+  public async getAll(quizzId: string): Promise<QuizzQuestions[] | null> {
     const answer = await this.ormRepository.findMany({ where: { quizzId } });
 
     return answer;

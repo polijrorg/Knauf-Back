@@ -6,6 +6,8 @@ import DeleteQuestionsService from '@modules/questions/services/DeleteQuestionsS
 import GetAllQuestionsService from '@modules/questions/services/GetAllQuestionsService';
 import GetAllQuestionsFromAUserService from '@modules/questions/services/GetAllQuestionsFromAUserService';
 import UpdateQuestionsService from '@modules/questions/services/UpdateQuestionsService';
+import GetAllToApproveByModuleService from '@modules/questions/services/GetAllToApproveByModuleService';
+import GetAllToApproveService from '@modules/questions/services/GetAllToApproveService';
 
 export default class QuestionsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -42,6 +44,24 @@ export default class QuestionsController {
     return res.status(200).json(question);
   }
 
+  public async getAllToApproveByModule(req: Request, res: Response): Promise<Response> {
+    const { moduleId } = req.params;
+
+    const getAllModuleQuestions = container.resolve(GetAllToApproveByModuleService);
+
+    const question = await getAllModuleQuestions.execute(moduleId);
+
+    return res.status(200).json(question);
+  }
+
+  public async getAllToApprove(req: Request, res: Response): Promise<Response> {
+    const getAllModuleQuestions = container.resolve(GetAllToApproveService);
+
+    const question = await getAllModuleQuestions.execute();
+
+    return res.status(200).json(question);
+  }
+
   public async getAllFromAUser(req: Request, res: Response): Promise<Response> {
     const { userId, moduleId } = req.params;
 
@@ -54,11 +74,11 @@ export default class QuestionsController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { question } = req.body;
+    const { question, approved } = req.body;
 
     const updateQuestions = container.resolve(UpdateQuestionsService);
 
-    const questions = await updateQuestions.execute(id, question);
+    const questions = await updateQuestions.execute(id, { question, approved });
 
     return res.status(200).json(questions);
   }

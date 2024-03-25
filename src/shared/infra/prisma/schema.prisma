@@ -8,15 +8,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Admin {
-  id         String   @id @default(uuid())
-  email      String
-  password   String
-  name       String
-  image      String
-  created_at DateTime @default(now())
-}
-
 model Answers {
   id         String    @id @default(uuid())
   user       Users     @relation(fields: [userId], references: [id])
@@ -25,6 +16,7 @@ model Answers {
   questionId String
   answer     String
   created_at DateTime  @default(now())
+  approved   Boolean   @default(false)
 }
 
 model Users {
@@ -51,6 +43,7 @@ model Questions {
   created_at DateTime  @default(now())
   module     Module    @relation(fields: [moduleId], references: [id])
   moduleId   String
+  approved   Boolean   @default(false)
   answers    Answers[]
 }
 

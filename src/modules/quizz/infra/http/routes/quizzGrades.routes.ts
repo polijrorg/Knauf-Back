@@ -8,9 +8,13 @@ const quizzGradesController = new QuizzGradesController();
 
 quizzGradesRoutes.post('/create', quizzGradesController.create);
 
-quizzGradesRoutes.delete('/delete', quizzGradesController.delete);
+quizzGradesRoutes.delete('/delete/:id', quizzGradesController.delete);
 
-quizzGradesRoutes.get('/getAllFromAModule/:quizzId/:userId', quizzGradesController.get);
+quizzGradesRoutes.get('/getSpecific/:quizzId/:userId', quizzGradesController.getSpecific);
+
+quizzGradesRoutes.get('/getAllFromAQuizz/:quizzId', quizzGradesController.getAllFromAQuizz);
+
+quizzGradesRoutes.get('/getAllFromAUser/:userId', quizzGradesController.getAllFromAUser);
 
 quizzGradesRoutes.patch('/update/:id', quizzGradesController.update);
 

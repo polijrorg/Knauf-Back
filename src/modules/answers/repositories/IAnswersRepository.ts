@@ -9,6 +9,7 @@ interface IAnswersRepository {
   delete(id: string): Promise<Answers>;
   getAllFromAUser(userId: string): Promise<Answers[] | null>;
   getAllFromAQuestion(questionId: string): Promise<Answers[] | null>;
+  getAllToApprove(): Promise<Answers[] | null>;
   update(id: string, data: IUpdateAnswersDTO): Promise<Answers>;
 }
 

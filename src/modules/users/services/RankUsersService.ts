@@ -12,7 +12,7 @@ export default class RankUsersService {
 
   ) { }
 
-  public async execute(): Promise<Users> {
+  public async execute(): Promise<Users[] | null> {
     const user = await this.usersRepository.rankUsers();
 
     return user;

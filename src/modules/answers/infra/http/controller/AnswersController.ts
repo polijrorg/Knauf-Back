@@ -6,6 +6,7 @@ import DeleteAnswersService from '@modules/answers/services/DeleteAnswersService
 import GetAllAnswersFromAQuestionService from '@modules/answers/services/GetAllAnswersFromAQuestionService';
 import GetAllAnswersFromAUserService from '@modules/answers/services/GetAllAnswersFromAUserService';
 import UpdateAnswersService from '@modules/answers/services/UpdateAnswerService';
+import GetAllToApproveService from '@modules/answers/services/GetAllToApproveService';
 
 export default class AnswersController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -42,6 +43,14 @@ export default class AnswersController {
     return res.status(200).json(answers);
   }
 
+  public async getAllToApprove(req: Request, res: Response): Promise<Response> {
+    const getAnswers = container.resolve(GetAllToApproveService);
+
+    const answers = await getAnswers.execute();
+
+    return res.status(200).json(answers);
+  }
+
   public async getAllFromAUser(req: Request, res: Response): Promise<Response> {
     const { userId } = req.params;
 
@@ -54,11 +63,11 @@ export default class AnswersController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { answer } = req.body;
+    const { answer, approved } = req.body;
 
     const updateAnswers = container.resolve(UpdateAnswersService);
 
-    const answers = await updateAnswers.execute(id, answer);
+    const answers = await updateAnswers.execute(id, { answer, approved });
 
     return res.status(200).json(answers);
   }
