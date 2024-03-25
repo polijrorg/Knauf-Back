@@ -10,7 +10,7 @@ contentRoutes.post('/create', contentController.create);
 
 contentRoutes.delete('/delete/:id', contentController.delete);
 
-contentRoutes.get('/getAll', contentController.findAll);
+contentRoutes.get('/find', contentController.findAll);
 
 contentRoutes.patch('/update/:id', contentController.update);
 
