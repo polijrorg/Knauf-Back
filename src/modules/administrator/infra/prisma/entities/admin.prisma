@@ -1,0 +1,9 @@
+model Administrator {
+    id          String      @id @default(uuid())
+    email       String
+    name        String
+    password    String
+    image       String
+    language    String
+    created_at  DateTime     @default(now())
+}
