@@ -4,7 +4,6 @@ import { container } from 'tsyringe';
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
-import GetByIdService from '@modules/users/services/GetByIdService';
 import GetAllUsersService from '@modules/users/services/GetAllUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
@@ -57,16 +56,6 @@ export default class UserController {
     const deleteUser = container.resolve(DeleteUserService);
 
     const user = await deleteUser.execute(id);
-
-    return res.status(200).json(user);
-  }
-
-  public async getById(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params;
-
-    const users = container.resolve(GetByIdService);
-
-    const user = await users.execute({ id });
 
     return res.status(200).json(user);
   }

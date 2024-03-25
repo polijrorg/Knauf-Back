@@ -10,6 +10,8 @@ seenRoutes.post('/create', seenController.create);
 
 seenRoutes.get('/getAll/:id', seenController.getAll);
 
-seenRoutes.patch('/markAsSeen/:userId/:contentId', seenController.markContentAsSeen);
+seenRoutes.get('/getAllFromContent/:id', seenController.getAllFromContent);
+
+seenRoutes.patch('/markAsSeen/:id', seenController.markContentAsSeen);
 
 export default seenRoutes;

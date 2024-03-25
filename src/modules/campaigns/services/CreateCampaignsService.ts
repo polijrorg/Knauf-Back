@@ -1,5 +1,4 @@
 import { inject, injectable } from 'tsyringe';
-// import path from 'path';
 
 import { Campaigns } from '@prisma/client';
 

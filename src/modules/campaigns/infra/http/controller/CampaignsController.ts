@@ -34,7 +34,7 @@ export default class CampaignsController {
 
     const DeleteCampaigns = container.resolve(DeleteCampaignsService);
 
-    const campaign = await DeleteCampaigns.execute({ id });
+    const campaign = await DeleteCampaigns.execute(id);
 
     return res.status(200).json(campaign);
   }

@@ -3,6 +3,7 @@ import { Prisma, Module } from '@prisma/client';
 
 import IModuleRepository from '@modules/module/repositories/IModuleRepository';
 import ICreateModuleDTO from '@modules/module/dtos/ICreateModuleDTO';
+import IUpdateModuleDTO from '@modules/module/dtos/IUpdateModuleDTO';
 
 export default class ModuleRepository implements IModuleRepository {
   private ormRepository: Prisma.ModuleDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -37,8 +38,8 @@ export default class ModuleRepository implements IModuleRepository {
     return module;
   }
 
-  public async updateImage(id: string, newImage: string): Promise<Module> {
-    const module = await this.ormRepository.update({ where: { id }, data: { image: newImage } });
+  public async update(id: string, data: IUpdateModuleDTO): Promise<Module> {
+    const module = await this.ormRepository.update({ where: { id }, data });
 
     return module;
   }

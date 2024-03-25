@@ -32,8 +32,20 @@ export default class QuizzGradesRepository implements IQuizzGradesRepository {
     return answer;
   }
 
-  public async get(quizzId: string, userId: string): Promise<QuizzGrades | null> {
+  public async getSpecific(quizzId: string, userId: string): Promise<QuizzGrades | null> {
     const answer = await this.ormRepository.findFirst({ where: { quizzId, userId } });
+
+    return answer;
+  }
+
+  public async getAllFromAQuizz(quizzId: string): Promise<QuizzGrades[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { quizzId } });
+
+    return answer;
+  }
+
+  public async getAllFromAUser(userId: string): Promise<QuizzGrades[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { userId } });
 
     return answer;
   }

@@ -8,7 +8,7 @@ const quizzController = new QuizzController();
 
 quizzRoutes.post('/create', quizzController.create);
 
-quizzRoutes.delete('/delete', quizzController.delete);
+quizzRoutes.delete('/delete/:id', quizzController.delete);
 
 quizzRoutes.get('/getAllFromAModule/:moduleId', quizzController.getAll);
 

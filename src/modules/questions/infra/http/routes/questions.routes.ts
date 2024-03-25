@@ -12,6 +12,10 @@ questionsRoutes.delete('/delete/:id', questionsController.delete);
 
 questionsRoutes.get('/getAll/:moduleId', questionsController.getAllFromAModule);
 
+questionsRoutes.get('/getAllToApproveByModule/:moduleId', questionsController.getAllToApproveByModule);
+
+questionsRoutes.get('/getAllToApprove', questionsController.getAllToApprove);
+
 questionsRoutes.get('/getAllFromAUser/:userId/:moduleId', questionsController.getAllFromAUser);
 
 questionsRoutes.patch('/update/:id', questionsController.update);

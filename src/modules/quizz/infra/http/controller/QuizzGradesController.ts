@@ -5,6 +5,8 @@ import CreateQuizzGradesService from '@modules/quizz/services/CreateQuizzGradesS
 import DeleteQuizzGradesService from '@modules/quizz/services/DeleteQuizzGradesService';
 import GetAQuizzGradesService from '@modules/quizz/services/GetAQuizzGradesService';
 import UpdateQuizzGradesService from '@modules/quizz/services/UpdateQuizzGradesService';
+import GetAllQuizzGradesFromAQuizzService from '@modules/quizz/services/GetAllQuizzGradesFromAQuizzService';
+import GetAllQuizzGradesFromAUSerService from '@modules/quizz/services/GetAllQuizzGradesFromAUserService';
 
 export default class QuizzGradesController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -31,12 +33,32 @@ export default class QuizzGradesController {
     return res.status(200).json(answers);
   }
 
-  public async get(req: Request, res: Response): Promise<Response> {
+  public async getSpecific(req: Request, res: Response): Promise<Response> {
     const { quizzId, userId } = req.params;
 
     const getAnswers = container.resolve(GetAQuizzGradesService);
 
     const answers = await getAnswers.execute(quizzId, userId);
+
+    return res.status(200).json(answers);
+  }
+
+  public async getAllFromAQuizz(req: Request, res: Response): Promise<Response> {
+    const { quizzId } = req.params;
+
+    const getAnswers = container.resolve(GetAllQuizzGradesFromAQuizzService);
+
+    const answers = await getAnswers.execute(quizzId);
+
+    return res.status(200).json(answers);
+  }
+
+  public async getAllFromAUser(req: Request, res: Response): Promise<Response> {
+    const { userId } = req.params;
+
+    const getAnswers = container.resolve(GetAllQuizzGradesFromAUSerService);
+
+    const answers = await getAnswers.execute(userId);
 
     return res.status(200).json(answers);
   }

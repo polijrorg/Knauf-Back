@@ -39,7 +39,19 @@ export default class QuestionsRepository implements IQuestionsRepository {
   }
 
   public async getAll(moduleId: string): Promise<Questions[] | null> {
-    const question = await this.ormRepository.findMany({ where: { moduleId }, orderBy: { created_at: 'desc' } });
+    const question = await this.ormRepository.findMany({ where: { moduleId, approved: true }, orderBy: { created_at: 'desc' } });
+
+    return question;
+  }
+
+  public async getAllToApproveByModule(moduleId: string): Promise<Questions[] | null> {
+    const question = await this.ormRepository.findMany({ where: { moduleId, approved: false }, orderBy: { created_at: 'desc' } });
+
+    return question;
+  }
+
+  public async getAllToApprove(): Promise<Questions[] | null> {
+    const question = await this.ormRepository.findMany({ where: { approved: false }, orderBy: { created_at: 'desc' } });
 
     return question;
   }
