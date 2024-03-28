@@ -19,5 +19,4 @@ answersRoutes.patch('/update/:id', ensureAuthenticated, answersController.update
 
 answersRoutes.get('/getAllToApprove', ensureAuthenticated, answersController.getAllToApprove);
 
-
 export default answersRoutes;
