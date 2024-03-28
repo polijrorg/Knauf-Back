@@ -1,23 +1,24 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
 import QuestionsController from '../controller/QuestionsController';
 
 const questionsRoutes = Router();
 
 const questionsController = new QuestionsController();
 
-questionsRoutes.post('/create', questionsController.create);
+questionsRoutes.post('/create', ensureAuthenticated, questionsController.create);
 
-questionsRoutes.delete('/delete/:id', questionsController.delete);
+questionsRoutes.delete('/delete/:id', ensureAuthenticated, questionsController.delete);
 
-questionsRoutes.get('/getAll/:moduleId', questionsController.getAllFromAModule);
+questionsRoutes.get('/getAll/:moduleId', ensureAuthenticated, questionsController.getAllFromAModule);
 
-questionsRoutes.get('/getAllToApproveByModule/:moduleId', questionsController.getAllToApproveByModule);
+questionsRoutes.get('/getAllFromAUser/:userId/:moduleId', ensureAuthenticated, questionsController.getAllFromAUser);
 
-questionsRoutes.get('/getAllToApprove', questionsController.getAllToApprove);
+questionsRoutes.get('/getAllToApproveByModule/:moduleId', ensureAuthenticated, questionsController.getAllToApproveByModule);
 
-questionsRoutes.get('/getAllFromAUser/:userId/:moduleId', questionsController.getAllFromAUser);
+questionsRoutes.get('/getAllToApprove', ensureAuthenticated, questionsController.getAllToApprove);
 
-questionsRoutes.patch('/update/:id', questionsController.update);
+questionsRoutes.patch('/update/:id', ensureAuthenticated, questionsController.update);
 
 export default questionsRoutes;

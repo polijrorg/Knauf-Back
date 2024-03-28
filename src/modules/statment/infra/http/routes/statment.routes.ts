@@ -1,19 +1,20 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
 import StatmentController from '../controller/StatmentController';
 
 const statmentRoutes = Router();
 
 const statmentController = new StatmentController();
 
-statmentRoutes.post('/create', statmentController.create);
+statmentRoutes.post('/create', ensureAuthenticated, statmentController.create);
 
-statmentRoutes.delete('/delete/:id', statmentController.delete);
+statmentRoutes.delete('/delete/:id', ensureAuthenticated, statmentController.delete);
 
-statmentRoutes.delete('/deleteAll', statmentController.deleteAll);
+statmentRoutes.delete('/deleteAll', ensureAuthenticated, statmentController.deleteAll);
 
-statmentRoutes.get('/getAll', statmentController.getAll);
+statmentRoutes.get('/getAll', ensureAuthenticated, statmentController.getAll);
 
-statmentRoutes.patch('/update/:id', statmentController.update);
+statmentRoutes.patch('/update/:id', ensureAuthenticated, statmentController.update);
 
 export default statmentRoutes;
