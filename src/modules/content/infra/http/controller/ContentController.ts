@@ -36,9 +36,7 @@ export default class ContentController {
 
     const deleteContent = container.resolve(DeleteContentService);
 
-    const content = await deleteContent.execute({
-      id,
-    });
+    const content = await deleteContent.execute(id);
 
     return res.status(200).json(content);
   }

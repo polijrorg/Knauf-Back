@@ -18,9 +18,9 @@ export default class CreateQuizzQuestionsService {
   ) { }
 
   public async execute(data: ICreateQuizzQuestionsDTO): Promise<QuizzQuestions> {
-    const userExists = await this.quizzRepository.findByID(data.quizzId);
+    const quizzExists = await this.quizzRepository.findByID(data.quizzId);
 
-    if (!userExists) throw new AppError('A quizz with this Id does not exist');
+    if (!quizzExists) throw new AppError('A quizz with this Id does not exist');
 
     const answers = await this.quizzQuestionsRepository.create(data);
 

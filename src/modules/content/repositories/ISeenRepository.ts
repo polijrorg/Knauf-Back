@@ -5,7 +5,8 @@ interface ISeenRepository {
   findByID(id: string): Promise<Seen | null>;
   create(data: ICreateSeenDTO): Promise<Seen>;
   getAllByUserId(userId: string): Promise<Seen[] | null>;
-  markAsSeen(contentId: string, userId: string): Promise<Seen>;
+  getAllByContentId(moduleId: string): Promise<Seen[] | null>;
+  markAsSeen(id: string): Promise<Seen>;
 }
 
 export default ISeenRepository;

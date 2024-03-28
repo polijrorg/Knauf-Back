@@ -44,6 +44,12 @@ export default class AnswersRepository implements IAnswersRepository {
     return answer;
   }
 
+  public async getAllToApprove(): Promise<Answers[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { approved: false }, orderBy: { created_at: 'desc' } });
+
+    return answer;
+  }
+
   public async update(id: string, data: IUpdateAnswersDTO): Promise<Answers> {
     const answer = await this.ormRepository.update({ where: { id }, data });
 

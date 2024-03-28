@@ -4,6 +4,7 @@ import { container } from 'tsyringe';
 
 import CreateSeenService from '@modules/content/services/CreateSeenService';
 import MarkContentAsSeenService from '@modules/content/services/MarkContentAsSeenService';
+import GetAllSeenFromAContentService from '@modules/content/services/GetAllSeenFromAContentService';
 
 export default class ContentController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -27,11 +28,21 @@ export default class ContentController {
     return res.status(200).json(seen);
   }
 
+  public async getAllFromContent(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const getAllSeen = container.resolve(GetAllSeenFromAContentService);
+
+    const seen = await getAllSeen.execute(id);
+
+    return res.status(200).json(seen);
+  }
+
   public async markContentAsSeen(req: Request, res: Response): Promise<Response> {
-    const { userId, contentId } = req.params;
+    const { id } = req.params;
+
     const markContentAsSeen = container.resolve(MarkContentAsSeenService);
 
-    const seen = await markContentAsSeen.execute(userId, contentId);
+    const seen = await markContentAsSeen.execute(id);
 
     return res.status(200).json(seen);
   }

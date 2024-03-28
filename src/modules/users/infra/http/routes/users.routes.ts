@@ -13,9 +13,11 @@ usersRoutes.post('/login', usersController.login);
 
 usersRoutes.delete('/delete/:id', ensureAuthenticated, usersController.delete);
 
+
 usersRoutes.get('/find/:id', ensureAuthenticated, usersController.getById);
 
 usersRoutes.get('/getUsers', ensureAuthenticated, usersController.getAllUsers);
+
 
 usersRoutes.get('/rankUsers', ensureAuthenticated, usersController.rankUsers);
 

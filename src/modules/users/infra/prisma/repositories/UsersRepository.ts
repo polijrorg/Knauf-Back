@@ -21,9 +21,7 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async findById(id: string): Promise<Users | null> {
-    const user = await this.ormRepository.findUnique({
-      where: { id },
-    });
+    const user = await this.ormRepository.findUnique({ where: { id } });
 
     return user;
   }
@@ -48,21 +46,41 @@ export default class UsersRepository implements IUsersRepository {
 
   public async findAllUsers(): Promise<Users[] | null> {
     const user = await this.ormRepository.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        language: true,
+        image: true,
+        active: true,
+        score: true,
+        created_at: true,
+      },
       orderBy: {
         name: 'asc',
       },
     });
 
-    return user;
+    return user as Users[];
   }
 
   public async rankUsers(): Promise<Users[] | null> {
     const usersNames = await this.ormRepository.findMany({
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        language: true,
+        image: true,
+        active: true,
+        score: true,
+        created_at: true,
+      },
       orderBy: {
         score: 'desc',
       },
     });
 
-    return usersNames;
+    return usersNames as Users[];
   }
 }

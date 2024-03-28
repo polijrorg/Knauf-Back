@@ -26,6 +26,7 @@ model Answers {
   questionId String
   answer     String
   created_at DateTime  @default(now())
+  approved   Boolean   @default(false)
 }
 
 model Users {
@@ -52,6 +53,7 @@ model Questions {
   created_at DateTime  @default(now())
   module     Module    @relation(fields: [moduleId], references: [id])
   moduleId   String
+  approved   Boolean   @default(false)
   answers    Answers[]
 }
 

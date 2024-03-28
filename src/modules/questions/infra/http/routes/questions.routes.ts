@@ -15,6 +15,10 @@ questionsRoutes.get('/getAll/:moduleId', ensureAuthenticated, questionsControlle
 
 questionsRoutes.get('/getAllFromAUser/:userId/:moduleId', ensureAuthenticated, questionsController.getAllFromAUser);
 
+questionsRoutes.get('/getAllToApproveByModule/:moduleId', ensureAuthenticated, questionsController.getAllToApproveByModule);
+
+questionsRoutes.get('/getAllToApprove', ensureAuthenticated, questionsController.getAllToApprove);
+
 questionsRoutes.patch('/update/:id', ensureAuthenticated, questionsController.update);
 
 export default questionsRoutes;
