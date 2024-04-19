@@ -13,6 +13,6 @@ moduleRoutes.delete('/delete/:id', ensureAuthenticated, moduleController.delete)
 
 moduleRoutes.get('/getModules', ensureAuthenticated, moduleController.getAllModules);
 
-moduleRoutes.patch('/updateImage/:id', ensureAuthenticated, moduleController.updateImage);
+moduleRoutes.patch('/updateImage/:id', ensureAuthenticated, moduleController.update);
 
 export default moduleRoutes;
