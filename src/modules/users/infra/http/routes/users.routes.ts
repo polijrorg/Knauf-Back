@@ -1,5 +1,6 @@
 import { Router } from 'express';
 
+import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
 import UsersController from '../controller/UsersController';
 
 const usersRoutes = Router();
@@ -10,12 +11,16 @@ usersRoutes.post('/create', usersController.create);
 
 usersRoutes.post('/login', usersController.login);
 
-usersRoutes.delete('/delete/:id', usersController.delete);
+usersRoutes.delete('/delete/:id', ensureAuthenticated, usersController.delete);
 
-usersRoutes.get('/getUsers', usersController.getAllUsers);
 
-usersRoutes.get('/rankUsers', usersController.rankUsers);
+usersRoutes.get('/find/:id', ensureAuthenticated, usersController.getById);
 
-usersRoutes.patch('/update/:id', usersController.update);
+usersRoutes.get('/getUsers', ensureAuthenticated, usersController.getAllUsers);
+
+
+usersRoutes.get('/rankUsers', ensureAuthenticated, usersController.rankUsers);
+
+usersRoutes.patch('/update/:id', ensureAuthenticated, usersController.update);
 
 export default usersRoutes;
