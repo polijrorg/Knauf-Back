@@ -10,9 +10,8 @@ import '@shared/container';
 
 import AppError from '@shared/errors/AppError';
 
-import routes from './routes';
-
 import path from 'path';
+import routes from './routes';
 
 const app = express();
 
