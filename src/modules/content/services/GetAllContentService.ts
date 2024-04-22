@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { Content } from '@prisma/client';
+import { Content, Language } from '@prisma/client';
 
 import IContentRepository from '../repositories/IContentRepository';
 
@@ -12,8 +12,8 @@ export default class GetAllContentService {
 
   ) { }
 
-  public async execute(): Promise<Content[] | null> {
-    const content = await this.contentRepository.findAll();
+  public async execute(language: Language): Promise<Content[] | null> {
+    const content = await this.contentRepository.findAll(language);
 
     return content;
   }

@@ -2,6 +2,13 @@ model Statment {
   id          String   @id @default(uuid())
   image       String
   text        String
+  language    Language @default(portuguese)
   title       String   @default("Statment title")
   created_at  DateTime @default(now())
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }

@@ -2,7 +2,7 @@ model Users {
   id         String   @id @default(uuid())
   email      String
   password   String
-  language   String
+  language   Language @default(portuguese)
   name       String
   image      String
   active     Boolean
@@ -12,6 +12,12 @@ model Users {
   questions  Questions[]
   answers    Answers[]
   quizzGrades QuizzGrades[]
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }
 
 model Seen {

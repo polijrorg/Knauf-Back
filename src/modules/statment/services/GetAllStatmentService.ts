@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { Statment } from '@prisma/client';
+import { Language, Statment } from '@prisma/client';
 
 import IStatmentRepository from '../repositories/IStatmentRepository';
 
@@ -12,8 +12,8 @@ export default class GetAllStatmentService {
 
   ) { }
 
-  public async execute(): Promise<Statment[] | null> {
-    const statment = await this.statmentRepository.getAll();
+  public async execute(language: Language): Promise<Statment[] | null> {
+    const statment = await this.statmentRepository.getAll(language);
 
     return statment;
   }

@@ -11,8 +11,6 @@ statmentRoutes.post('/create', ensureAuthenticated, statmentController.create);
 
 statmentRoutes.delete('/delete/:id', ensureAuthenticated, statmentController.delete);
 
-statmentRoutes.delete('/deleteAll', ensureAuthenticated, statmentController.deleteAll);
-
 statmentRoutes.get('/getAll', ensureAuthenticated, statmentController.getAll);
 
 statmentRoutes.patch('/update/:id', ensureAuthenticated, statmentController.update);

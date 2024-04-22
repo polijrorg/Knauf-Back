@@ -4,9 +4,16 @@ model Campaigns {
   title     String
   subtitle  String
   text      String
+  language  Language  @default(portuguese)
   created_at DateTime @default(now())
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }
 
 model Module {

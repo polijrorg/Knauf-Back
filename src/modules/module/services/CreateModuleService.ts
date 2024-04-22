@@ -4,11 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import { Module } from '@prisma/client';
 
 import IModuleRepository from '../repositories/IModuleRepository';
-
-interface IRequest {
-  name: string;
-  image: string;
-}
+import ICreateModuleDTO from '../dtos/ICreateModuleDTO';
 
 @injectable()
 export default class CreateModuleService {
@@ -17,13 +13,8 @@ export default class CreateModuleService {
     private moduleRepository: IModuleRepository,
   ) { }
 
-  public async execute({
-    name, image,
-  }: IRequest): Promise<Module> {
-    const module = await this.moduleRepository.create({
-      name,
-      image,
-    });
+  public async execute(data: ICreateModuleDTO): Promise<Module> {
+    const module = await this.moduleRepository.create(data);
 
     return module;
   }

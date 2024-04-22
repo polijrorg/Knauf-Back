@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Campaigns } from '@prisma/client';
+import { Prisma, Language, Campaigns } from '@prisma/client';
 
 import ICampaignsRepository from '@modules/campaigns/repositories/ICampaignsRepository';
 import ICreateCampaignsDTO from '@modules/campaigns/dtos/ICreateCampaignsDTO';
@@ -32,8 +32,8 @@ export default class CampaignsRepository implements ICampaignsRepository {
     return campaign;
   }
 
-  public async getAll(): Promise<Campaigns[] | null> {
-    const campaign = await this.ormRepository.findMany();
+  public async getAll(language: Language): Promise<Campaigns[] | null> {
+    const campaign = await this.ormRepository.findMany({ where: { language } });
 
     return campaign;
   }

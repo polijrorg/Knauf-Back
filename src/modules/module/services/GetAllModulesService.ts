@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { Module } from '@prisma/client';
+import { Language, Module } from '@prisma/client';
 
 import IModuleRepository from '../repositories/IModuleRepository';
 
@@ -12,8 +12,8 @@ export default class GetAllModulesService {
 
   ) { }
 
-  public async execute(): Promise<Module[] | null> {
-    const module = await this.moduleRepository.findAllModules();
+  public async execute(language: Language): Promise<Module[] | null> {
+    const module = await this.moduleRepository.findAllModules(language);
 
     return module;
   }

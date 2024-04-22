@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Statment } from '@prisma/client';
+import { Prisma, Language, Statment } from '@prisma/client';
 
 import IStatmentRepository from '@modules/statment/repositories/IStatmentRepository';
 import ICreateStatmentDTO from '@modules/statment/dtos/ICreateStatmentDTO';
@@ -32,20 +32,14 @@ export default class StatmentRepository implements IStatmentRepository {
     return statment;
   }
 
-  public async getAll(): Promise<Statment[] | null> {
-    const statment = await this.ormRepository.findMany();
+  public async getAll(language: Language): Promise<Statment[] | null> {
+    const statment = await this.ormRepository.findMany({ where: { language } });
 
     return statment;
   }
 
   public async update(id: string, data: IUpdateStatmentDTO): Promise<Statment> {
     const statment = await this.ormRepository.update({ where: { id }, data });
-
-    return statment;
-  }
-
-  public async deleteAll(): Promise<Statment[] | null> {
-    const statment = await this.ormRepository.deleteMany();
 
     return statment;
   }

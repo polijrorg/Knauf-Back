@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Quizz } from '@prisma/client';
+import { Language, Prisma, Quizz } from '@prisma/client';
 
 import IQuizzRepository from '@modules/quizz/repositories/IQuizzRepository';
 import ICreateQuizzDTO from '@modules/quizz/dtos/ICreateQuizzDTO';
@@ -32,8 +32,8 @@ export default class QuizzRepository implements IQuizzRepository {
     return answer;
   }
 
-  public async getAll(moduleId: string): Promise<Quizz[] | null> {
-    const answer = await this.ormRepository.findMany({ where: { moduleId } });
+  public async getAll(moduleId: string, language: Language): Promise<Quizz[] | null> {
+    const answer = await this.ormRepository.findMany({ where: { moduleId, language } });
 
     return answer;
   }

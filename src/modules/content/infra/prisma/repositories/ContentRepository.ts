@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Content } from '@prisma/client';
+import { Prisma, Language, Content } from '@prisma/client';
 
 import IContentRepository from '@modules/content/repositories/IContentRepository';
 import ICreateContentDTO from '@modules/content/dtos/ICreateContentDTO';
@@ -32,8 +32,8 @@ export default class ContentRepository implements IContentRepository {
     return content;
   }
 
-  public async findAll(): Promise<Content[] | null> {
-    const content = await this.ormRepository.findMany();
+  public async findAll(language: Language): Promise<Content[] | null> {
+    const content = await this.ormRepository.findMany({ where: { language } });
 
     return content;
   }
