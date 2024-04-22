@@ -5,10 +5,17 @@ model Content {
   linkVideo   String?
   linkAudio   String?
   image       String?
+  language    Language @default(portuguese)
   created_at  DateTime @default(now())
   seen        Seen[]
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }
 
 model Seen {

@@ -5,15 +5,18 @@ import CreateStatmentService from '@modules/statment/services/CreateStatmentServ
 import DeleteStatmentService from '@modules/statment/services/DeleteStatmentService';
 import GetAllStatmentService from '@modules/statment/services/GetAllStatmentService';
 import UpdateStatmentService from '@modules/statment/services/UpdateStatmentService';
-import DeleteAllStatmentsService from '@modules/statment/services/DeleteAllStatmentsService';
 
 export default class StatmentController {
   public async create(req: Request, res: Response): Promise<Response> {
-    const { image, text, title } = req.body;
+    const {
+      image, text, title, language,
+    } = req.body;
 
     const createStatment = container.resolve(CreateStatmentService);
 
-    const statment = await createStatment.execute({ image, text, title });
+    const statment = await createStatment.execute({
+      image, text, title, language,
+    });
 
     return res.status(201).json(statment);
   }
@@ -29,9 +32,10 @@ export default class StatmentController {
   }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
+    const { language } = req.body;
     const statments = container.resolve(GetAllStatmentService);
 
-    const statment = await statments.execute();
+    const statment = await statments.execute(language);
 
     return res.status(200).json(statment);
   }
@@ -42,14 +46,6 @@ export default class StatmentController {
     const statments = container.resolve(UpdateStatmentService);
 
     const statment = await statments.execute(id, { text, title, image });
-
-    return res.status(200).json(statment);
-  }
-
-  public async deleteAll(req: Request, res: Response): Promise<Response> {
-    const deleteStatment = container.resolve(DeleteAllStatmentsService);
-
-    const statment = await deleteStatment.execute();
 
     return res.status(200).json(statment);
   }

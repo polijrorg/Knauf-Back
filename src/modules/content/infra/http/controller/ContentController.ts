@@ -15,6 +15,7 @@ export default class ContentController {
       linkAudio,
       image,
       moduleId,
+      language,
     } = req.body;
 
     const createContent = container.resolve(CreateContentService);
@@ -26,6 +27,7 @@ export default class ContentController {
       linkAudio,
       image,
       moduleId,
+      language,
     });
 
     return res.status(201).json(content);
@@ -42,9 +44,10 @@ export default class ContentController {
   }
 
   public async findAll(req: Request, res: Response): Promise<Response> {
+    const { language } = req.body;
     const findContent = container.resolve(GetAllContentService);
 
-    const content = await findContent.execute();
+    const content = await findContent.execute(language);
 
     return res.status(200).json(content);
   }

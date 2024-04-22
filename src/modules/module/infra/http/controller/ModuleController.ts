@@ -11,6 +11,7 @@ export default class moduleController {
     const {
       name,
       image,
+      language,
     } = req.body;
 
     const createModule = container.resolve(CreateModuleService);
@@ -18,6 +19,7 @@ export default class moduleController {
     const module = await createModule.execute({
       name,
       image,
+      language,
     });
 
     return res.status(201).json(module);
@@ -34,9 +36,10 @@ export default class moduleController {
   }
 
   public async getAllModules(req: Request, res: Response): Promise<Response> {
+    const { language } = req.body;
     const modules = container.resolve(GetAllModulesService);
 
-    const module = await modules.execute();
+    const module = await modules.execute(language);
 
     return res.status(200).json(module);
   }

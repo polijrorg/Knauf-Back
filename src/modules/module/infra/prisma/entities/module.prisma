@@ -2,11 +2,18 @@ model Module {
   id         String   @id @default(uuid())
   name       String
   image      String
+  language   Language @default(portuguese)
   created_at DateTime @default(now())
   content    Content[]
   campaigns  Campaigns[]
   questions  Questions[]
   quizzes    Quizz[]
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }
 
 model Content {

@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Module } from '@prisma/client';
+import { Prisma, Module, Language } from '@prisma/client';
 
 import IModuleRepository from '@modules/module/repositories/IModuleRepository';
 import ICreateModuleDTO from '@modules/module/dtos/ICreateModuleDTO';
@@ -32,8 +32,8 @@ export default class ModuleRepository implements IModuleRepository {
     return module;
   }
 
-  public async findAllModules(): Promise<Module[] | null> {
-    const module = await this.ormRepository.findMany();
+  public async findAllModules(language: Language): Promise<Module[] | null> {
+    const module = await this.ormRepository.findMany({ where: { language } });
 
     return module;
   }

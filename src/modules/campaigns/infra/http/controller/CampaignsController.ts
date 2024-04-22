@@ -14,6 +14,7 @@ export default class CampaignsController {
       subtitle,
       text,
       moduleId,
+      language,
     } = req.body;
 
     const createCampaigns = container.resolve(CreateCampaignsService);
@@ -24,6 +25,7 @@ export default class CampaignsController {
       subtitle,
       text,
       moduleId,
+      language,
     });
 
     return res.status(201).json(campaign);
@@ -40,9 +42,10 @@ export default class CampaignsController {
   }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
+    const { language } = req.body;
     const getCampaigns = container.resolve(GetAllCampaignsService);
 
-    const campaign = await getCampaigns.execute();
+    const campaign = await getCampaigns.execute(language);
 
     return res.status(200).json(campaign);
   }

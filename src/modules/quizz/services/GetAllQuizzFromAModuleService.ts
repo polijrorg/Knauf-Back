@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 
-import { Quizz } from '@prisma/client';
+import { Language, Quizz } from '@prisma/client';
 
 import AppError from '@shared/errors/AppError';
 
@@ -16,12 +16,12 @@ export default class GetAllQuizzFromAModuleService {
     private moduleRepository: IModuleRepository,
   ) { }
 
-  public async execute(moduleId: string): Promise<Quizz[] | null> {
+  public async execute(moduleId: string, language: Language): Promise<Quizz[] | null> {
     const questionExists = await this.moduleRepository.findByID(moduleId);
 
     if (!questionExists) throw new AppError('A module with this Id does not exist');
 
-    const answers = await this.quizzRepository.getAll(moduleId);
+    const answers = await this.quizzRepository.getAll(moduleId, language);
 
     return answers;
   }

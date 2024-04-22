@@ -3,10 +3,17 @@ model Quizz {
   image             String
   text              String
   amountOfQuestions Int
+  language          Language   @default(portuguese)
   module            Module     @relation(fields: [moduleId], references: [id])
   moduleId          String
   quizzQuestions    QuizzQuestions[]
   quizzGrades       QuizzGrades[]
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
 }
 
 model QuizzQuestions {
