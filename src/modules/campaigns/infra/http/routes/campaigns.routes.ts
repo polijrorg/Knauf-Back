@@ -11,7 +11,7 @@ campaignsRoutes.post('/create', ensureAuthenticated, campaignsController.create)
 
 campaignsRoutes.delete('/delete/:id', ensureAuthenticated, campaignsController.delete);
 
-campaignsRoutes.get('/getAll', ensureAuthenticated, campaignsController.getAll);
+campaignsRoutes.get('/getAll/:language', ensureAuthenticated, campaignsController.getAll);
 
 campaignsRoutes.patch('/update/:id', ensureAuthenticated, campaignsController.update);
 

@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+import { Language } from '@prisma/client';
 import { container } from 'tsyringe';
 
 import CreateCampaignsService from '@modules/campaigns/services/CreateCampaignsService';
@@ -42,10 +43,15 @@ export default class CampaignsController {
   }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
-    const { language } = req.body;
+    const { language } = req.params;
+    const validLanguages = Object.values(Language).map((l) => l.toLowerCase()) as Language[];
+
+    if (!validLanguages.includes(language.toLowerCase() as Language)) {
+      return res.status(400).json({ error: 'Invalid language provided' });
+    }
     const getCampaigns = container.resolve(GetAllCampaignsService);
 
-    const campaign = await getCampaigns.execute(language);
+    const campaign = await getCampaigns.execute(language.toLowerCase() as Language);
 
     return res.status(200).json(campaign);
   }

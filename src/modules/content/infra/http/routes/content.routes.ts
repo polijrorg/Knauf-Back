@@ -11,7 +11,7 @@ contentRoutes.post('/create', ensureAuthenticated, contentController.create);
 
 contentRoutes.delete('/delete/:id', ensureAuthenticated, contentController.delete);
 
-contentRoutes.get('/find', ensureAuthenticated, contentController.findAll);
+contentRoutes.get('/find/:language', ensureAuthenticated, contentController.findAll);
 
 contentRoutes.patch('/update/:id', ensureAuthenticated, contentController.update);
 

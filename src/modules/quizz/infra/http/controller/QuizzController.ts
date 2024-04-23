@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Language } from '@prisma/client';
 
 import CreateQuizzService from '@modules/quizz/services/CreateQuizzService';
 import DeleteQuizzService from '@modules/quizz/services/DeleteQuizzService';
@@ -32,12 +33,16 @@ export default class QuizzController {
   }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
-    const { moduleId } = req.params;
-    const { language } = req.body;
+    const { moduleId, language } = req.params;
+    const validLanguages = Object.values(Language).map((l) => l.toLowerCase()) as Language[];
+
+    if (!validLanguages.includes(language.toLowerCase() as Language)) {
+      return res.status(400).json({ error: 'Invalid language provided' });
+    }
 
     const getAnswers = container.resolve(GetAllQuizzFromAModuleService);
 
-    const answers = await getAnswers.execute(moduleId, language);
+    const answers = await getAnswers.execute(moduleId, language.toLowerCase() as Language);
 
     return res.status(200).json(answers);
   }
