@@ -11,7 +11,7 @@ moduleRoutes.post('/create', ensureAuthenticated, moduleController.create);
 
 moduleRoutes.delete('/delete/:id', ensureAuthenticated, moduleController.delete);
 
-moduleRoutes.get('/getModules', ensureAuthenticated, moduleController.getAllModules);
+moduleRoutes.get('/getModules/:language', ensureAuthenticated, moduleController.getAllModules);
 
 moduleRoutes.patch('/updateImage/:id', ensureAuthenticated, moduleController.update);
 

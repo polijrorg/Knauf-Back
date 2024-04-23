@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Language } from '@prisma/client';
 
 import CreateContentService from '@modules/content/services/CreateContentService';
 import DeleteContentService from '@modules/content/services/DeleteContentService';
@@ -44,10 +45,15 @@ export default class ContentController {
   }
 
   public async findAll(req: Request, res: Response): Promise<Response> {
-    const { language } = req.body;
+    const { language } = req.params;
+    const validLanguages = Object.values(Language).map((l) => l.toLowerCase()) as Language[];
+
+    if (!validLanguages.includes(language.toLowerCase() as Language)) {
+      return res.status(400).json({ error: 'Invalid language provided' });
+    }
     const findContent = container.resolve(GetAllContentService);
 
-    const content = await findContent.execute(language);
+    const content = await findContent.execute(language.toLowerCase() as Language);
 
     return res.status(200).json(content);
   }

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
+import { Language } from '@prisma/client';
 
 import CreateStatmentService from '@modules/statment/services/CreateStatmentService';
 import DeleteStatmentService from '@modules/statment/services/DeleteStatmentService';
@@ -32,10 +33,15 @@ export default class StatmentController {
   }
 
   public async getAll(req: Request, res: Response): Promise<Response> {
-    const { language } = req.body;
+    const { language } = req.params;
+    const validLanguages = Object.values(Language).map((l) => l.toLowerCase()) as Language[];
+
+    if (!validLanguages.includes(language.toLowerCase() as Language)) {
+      return res.status(400).json({ error: 'Invalid language provided' });
+    }
     const statments = container.resolve(GetAllStatmentService);
 
-    const statment = await statments.execute(language);
+    const statment = await statments.execute(language as Language);
 
     return res.status(200).json(statment);
   }

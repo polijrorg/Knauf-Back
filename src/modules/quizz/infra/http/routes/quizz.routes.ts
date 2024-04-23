@@ -11,7 +11,7 @@ quizzRoutes.post('/create', ensureAuthenticated, quizzController.create);
 
 quizzRoutes.delete('/delete/:id', ensureAuthenticated, quizzController.delete);
 
-quizzRoutes.get('/getAllFromAModule/:moduleId', ensureAuthenticated, quizzController.getAll);
+quizzRoutes.get('/getAllFromAModule/:moduleId/:language', ensureAuthenticated, quizzController.getAll);
 
 quizzRoutes.patch('/update/:id', ensureAuthenticated, quizzController.update);
 
