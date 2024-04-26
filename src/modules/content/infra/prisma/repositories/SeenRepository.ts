@@ -37,9 +37,29 @@ export default class SeenRepository implements ISeenRepository {
     return content;
   }
 
-  public async markAsSeen(id: string): Promise<Seen> {
-    const content = await this.ormRepository.update({ where: { id }, data: { seen: true } });
+  public async getByUserAndContent(userId: string, contentId: string): Promise<Seen | null> {
+    const content = await this.ormRepository.findFirst({ where: { contentId, userId } });
 
     return content;
+  }
+
+  public async markAsSeen(userId: string, contentId: string): Promise<Seen> {
+    const seen = await this.ormRepository.update({ where: { userId, contentId }, data: { seen: true } });
+
+    const content = await prisma.content.findUnique({ where: { id: contentId } });
+
+    const user = await prisma.users.findUnique({ where: { id: userId } });
+
+    if (user && content) {
+      const newScore = user.score + content.score;
+
+      await prisma.users.update({
+        where: { id: userId },
+        data: { score: newScore },
+      });
+      return seen;
+    }
+
+    return seen;
   }
 }
