@@ -1,5 +1,4 @@
 interface IUpdateUserDTO {
-  password?: string;
   language?: string;
   name?: string;
   image?: string;
