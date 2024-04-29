@@ -64,13 +64,13 @@ export default class UserController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const {
-      password, language, name, image, active, score,
+      language, name, image, active, score,
     } = req.body;
 
     const users = container.resolve(UpdateUserService);
 
     const user = await users.execute(id, {
-      password, language, name, image, active, score,
+      language, name, image, active, score,
     });
 
     return res.status(200).json(user);
