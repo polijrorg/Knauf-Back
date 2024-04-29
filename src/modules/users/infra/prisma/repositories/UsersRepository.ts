@@ -4,6 +4,8 @@ import { Prisma, Users } from '@prisma/client';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import IUpdateUserDTO from '@modules/users/dtos/IUpdateUserDTO';
+import AppError from '@shared/errors/AppError';
+import { String } from 'aws-sdk/clients/batch';
 
 export default class UsersRepository implements IUsersRepository {
   private ormRepository: Prisma.UsersDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -82,5 +84,15 @@ export default class UsersRepository implements IUsersRepository {
     });
 
     return usersNames as Users[];
+  }
+
+  public async changePassword(id: string, newPassword: string): Promise<Users> {
+    const user = await this.ormRepository.update({
+      where:
+       { id },
+      data: { password: newPassword },
+    });
+
+    return user;
   }
 }

@@ -7,6 +7,7 @@ import DeleteUserService from '@modules/users/services/DeleteUserService';
 import GetAllUsersService from '@modules/users/services/GetAllUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
+import ChangePasswordUserService from '@modules/users/services/ChangePasswordUserService';
 
 export default class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -87,6 +88,17 @@ export default class UserController {
     const users = container.resolve(RankUsersService);
 
     const user = await users.execute();
+
+    return res.status(200).json(user);
+  }
+
+  public async changePassword(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const { oldPassword, newPassword } = req.body;
+
+    const users = container.resolve(ChangePasswordUserService);
+
+    const user = await users.execute(id, oldPassword, newPassword);
 
     return res.status(200).json(user);
   }

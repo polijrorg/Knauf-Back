@@ -11,6 +11,7 @@ interface IUsersRepository {
   create(data: ICreateUserDTO): Promise<Users>;
   delete(id: string): Promise<Users>;
   update(id: string, data: IUpdateUserDTO): Promise<Users>;
+  changePassword(id: string, newPassword: string): Promise<Users>
 }
 
 export default IUsersRepository;
