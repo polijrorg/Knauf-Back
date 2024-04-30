@@ -14,4 +14,6 @@ quizzQuestionsRoutes.get('/getAllFromAQuizz/:quizzId', quizzQuestionsController.
 
 quizzQuestionsRoutes.patch('/update/:id', quizzQuestionsController.update);
 
+quizzQuestionsRoutes.get('/search', quizzQuestionsController.getSearch);
+
 export default quizzQuestionsRoutes;
