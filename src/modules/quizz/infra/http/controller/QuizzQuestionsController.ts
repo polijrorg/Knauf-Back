@@ -5,6 +5,7 @@ import CreateQuizzQuestionsService from '@modules/quizz/services/CreateQuizzQues
 import DeleteQuizzQuestionsService from '@modules/quizz/services/DeleteQuizzQuestionsService';
 import GetAllQuizzQuestionsService from '@modules/quizz/services/GetAllQuizzQuestionsService';
 import UpdateQuizzQuestionsService from '@modules/quizz/services/UpdateQuizzQuestionsService';
+import SearchQuizzQuestionsService from '@modules/quizz/services/SearchQuizzQuestionsService';
 
 export default class QuizzQuestionsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -50,5 +51,13 @@ export default class QuizzQuestionsController {
     const blabla = await updateAnswers.execute(id, { question, answers, rightAnswer });
 
     return res.status(200).json(blabla);
+  }
+
+  public async getSearch(req: Request, res: Response): Promise<Response> {
+    const text = req.query.q;
+
+    const query = container.resolve(SearchQuizzQuestionsService);
+    const quizzQuestions = await query.execute(text);
+    return res.status(200).json(quizzQuestions);
   }
 }
