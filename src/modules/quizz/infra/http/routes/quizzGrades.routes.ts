@@ -16,6 +16,4 @@ quizzGradesRoutes.get('/getAllFromAQuizz/:quizzId', quizzGradesController.getAll
 
 quizzGradesRoutes.get('/getAllFromAUser/:userId', quizzGradesController.getAllFromAUser);
 
-quizzGradesRoutes.patch('/update/:id', quizzGradesController.update);
-
 export default quizzGradesRoutes;

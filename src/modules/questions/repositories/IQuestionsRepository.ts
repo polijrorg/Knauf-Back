@@ -1,7 +1,6 @@
 import { Questions } from '@prisma/client';
 
 import ICreateQuestionsDTO from '../dtos/ICreateQuestionsDTO';
-import IUpdateQuestionsDTO from '../dtos/IUpdateQuestionDTO';
 
 interface IQuestionsRepository {
   findByID(id: string): Promise<Questions | null>;
@@ -11,7 +10,7 @@ interface IQuestionsRepository {
   getAll(moduleId: string): Promise <Questions[] | null>;
   getAllToApprove(): Promise <Questions[] | null>;
   getAllToApproveByModule(moduleId: string): Promise <Questions[] | null>;
-  update(id: string, data: IUpdateQuestionsDTO): Promise <Questions>;
+  update(id: string, score: number): Promise <Questions>;
 }
 
 export default IQuestionsRepository;

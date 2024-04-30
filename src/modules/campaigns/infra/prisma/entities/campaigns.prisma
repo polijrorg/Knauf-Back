@@ -4,10 +4,26 @@ model Campaigns {
   title     String
   subtitle  String
   text      String
+  score     Float     @default(0)
   language  Language  @default(portuguese)
   created_at DateTime @default(now())
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
+  seenCampaigns SeenCampaigns[]
+}
+
+model SeenCampaigns {
+  id          String @id @default(uuid())
+  seen        Boolean @default(false)
+  campaignsId String
+  campaigns   Campaigns @relation(fields: [campaignsId], references: [id])
+  userId      String
+  user        Users @relation(fields: [userId], references: [id])
+}
+
+model Users {
+  id          String @id @default(uuid())
+  seenCampaigns SeenCampaigns[]
 }
 
 enum Language {

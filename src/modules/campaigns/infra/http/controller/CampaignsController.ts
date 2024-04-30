@@ -6,6 +6,8 @@ import CreateCampaignsService from '@modules/campaigns/services/CreateCampaignsS
 import DeleteCampaignsService from '@modules/campaigns/services/DeleteCampaignsService';
 import GetAllCampaignsService from '@modules/campaigns/services/GetAllCampaignsService';
 import UpdateCampaignsService from '@modules/campaigns/services/UpdateCampaignsService';
+import GetAllSeenCampaignsService from '@modules/campaigns/services/GetAllSeenCampaignsService';
+import CreateSeenCampaignsService from '@modules/campaigns/services/CreateSeenCampaignsService';
 
 export default class CampaignsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -16,6 +18,7 @@ export default class CampaignsController {
       text,
       moduleId,
       language,
+      score,
     } = req.body;
 
     const createCampaigns = container.resolve(CreateCampaignsService);
@@ -27,7 +30,18 @@ export default class CampaignsController {
       text,
       moduleId,
       language,
+      score,
     });
+
+    return res.status(201).json(campaign);
+  }
+
+  public async createSeenCampaings(req: Request, res: Response): Promise<Response> {
+    const { campaignsId, userId } = req.body;
+
+    const createCampaigns = container.resolve(CreateSeenCampaignsService);
+
+    const campaign = await createCampaigns.execute(campaignsId, userId);
 
     return res.status(201).json(campaign);
   }
@@ -52,6 +66,15 @@ export default class CampaignsController {
     const getCampaigns = container.resolve(GetAllCampaignsService);
 
     const campaign = await getCampaigns.execute(language.toLowerCase() as Language);
+
+    return res.status(200).json(campaign);
+  }
+
+  public async getAllSeenCampaigns(req: Request, res: Response): Promise<Response> {
+    const { campaignsId } = req.params;
+    const getCampaigns = container.resolve(GetAllSeenCampaignsService);
+
+    const campaign = await getCampaigns.execute(campaignsId);
 
     return res.status(200).json(campaign);
   }

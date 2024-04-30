@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Questions" ADD COLUMN     "score" DOUBLE PRECISION NOT NULL DEFAULT 0;

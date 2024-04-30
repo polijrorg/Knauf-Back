@@ -3,7 +3,6 @@ import { Prisma, QuizzGrades } from '@prisma/client';
 
 import IQuizzGradesRepository from '@modules/quizz/repositories/IQuizzGradesRepository';
 import ICreateQuizzGradesDTO from '@modules/quizz/dtos/ICreateQuizzGradesDTO';
-import IUpdateQuizzGradesDTO from '@modules/quizz/dtos/IUpdateQuizzGradesDTO';
 
 export default class QuizzGradesRepository implements IQuizzGradesRepository {
   private ormRepository: Prisma.QuizzGradesDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -21,6 +20,22 @@ export default class QuizzGradesRepository implements IQuizzGradesRepository {
   }
 
   public async create(data: ICreateQuizzGradesDTO): Promise<QuizzGrades> {
+    const user = await prisma.users.findUnique({ where: { id: data.userId } });
+
+    if (!user) {
+      throw new Error('User not found');
+    }
+
+    const quizz = await prisma.quizz.findUnique({ where: { id: data.quizzId } });
+
+    if (!quizz) {
+      throw new Error('Quizz not found');
+    }
+
+    const newScore = Math.floor(user.score + ((data.record / quizz.amountOfQuestions) * quizz.grade));
+
+    await prisma.users.update({ where: { id: data.userId }, data: { score: newScore } });
+
     const answer = await this.ormRepository.create({ data });
 
     return answer;
@@ -46,12 +61,6 @@ export default class QuizzGradesRepository implements IQuizzGradesRepository {
 
   public async getAllFromAUser(userId: string): Promise<QuizzGrades[] | null> {
     const answer = await this.ormRepository.findMany({ where: { userId } });
-
-    return answer;
-  }
-
-  public async update(id: string, data: IUpdateQuizzGradesDTO): Promise<QuizzGrades> {
-    const answer = await this.ormRepository.update({ where: { id }, data });
 
     return answer;
   }

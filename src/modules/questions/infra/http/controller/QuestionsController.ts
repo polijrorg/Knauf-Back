@@ -74,11 +74,11 @@ export default class QuestionsController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { question, approved } = req.body;
+    const { score } = req.body;
 
     const updateQuestions = container.resolve(UpdateQuestionsService);
 
-    const questions = await updateQuestions.execute(id, { question, approved });
+    const questions = await updateQuestions.execute(id, score);
 
     return res.status(200).json(questions);
   }

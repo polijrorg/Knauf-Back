@@ -63,11 +63,11 @@ export default class AnswersController {
 
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
-    const { answer, approved } = req.body;
+    const { score } = req.body;
 
     const updateAnswers = container.resolve(UpdateAnswersService);
 
-    const answers = await updateAnswers.execute(id, { answer, approved });
+    const answers = await updateAnswers.execute(id, score);
 
     return res.status(200).json(answers);
   }
