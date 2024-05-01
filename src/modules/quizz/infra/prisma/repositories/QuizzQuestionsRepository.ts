@@ -47,8 +47,15 @@ export default class QuizzQuestionsRepository implements IQuizzQuestionsReposito
     const quizzQuestions = await this.ormRepository.findMany({
       where: {
         question: {
-          contains: keywords,
+          search: keywords,
           mode: 'insensitive',
+        },
+      },
+      orderBy: {
+        _relevance: {
+          fields: ['question'],
+          search: keywords,
+          sort: 'desc',
         },
       },
     });

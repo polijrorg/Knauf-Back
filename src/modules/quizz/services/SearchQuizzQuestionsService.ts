@@ -13,7 +13,8 @@ export default class SearchQuizzQuestionsService {
   ) { }
 
   public async execute(keywords: string): Promise<QuizzQuestions[] | null> {
-    const quizzQuestion = await this.quizzQuestionsRepository.search(keywords);
+    const treated_keyword = `${keywords.replace(/ +/gm, ' ').replace(/ $|^ /gm, '').replace(/ /gm, ':* | ')}:*`;
+    const quizzQuestion = await this.quizzQuestionsRepository.search(treated_keyword);
 
     return quizzQuestion;
   }
