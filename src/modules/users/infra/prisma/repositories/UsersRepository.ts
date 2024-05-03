@@ -31,14 +31,10 @@ export default class UsersRepository implements IUsersRepository {
 
     const allModules = await prisma.module.findMany();
 
-    const moduleGradesData: Prisma.ModuleGradesCreateManyInput[] = [];
-
-    allModules.forEach((modules) => {
-      moduleGradesData.push({
-        userId: user.id,
-        moduleId: modules.id,
-      });
-    });
+    const moduleGradesData: Prisma.ModuleGradesCreateManyInput[] = allModules.map((module) => ({
+      userId: user.id,
+      moduleId: module.id,
+    }));
 
     await prisma.moduleGrades.createMany({
       data: moduleGradesData,
