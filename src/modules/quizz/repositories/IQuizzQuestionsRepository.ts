@@ -9,6 +9,7 @@ interface IQuizzQuestionsRepository {
   delete(id: string): Promise<QuizzQuestions>;
   getAll(quizzId: string): Promise<QuizzQuestions[] | null>;
   update(id: string, data: IUpdateQuizzQuestionsDTO): Promise<QuizzQuestions>;
+  search(quizzQuestionId: string): Promise<QuizzQuestions[] | null>
 }
 
 export default IQuizzQuestionsRepository;

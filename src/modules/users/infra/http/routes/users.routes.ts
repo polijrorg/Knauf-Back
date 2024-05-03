@@ -19,4 +19,6 @@ usersRoutes.get('/rankUsers', ensureAuthenticated, usersController.rankUsers);
 
 usersRoutes.patch('/update/:id', ensureAuthenticated, usersController.update);
 
+usersRoutes.patch('/changePassword/:id', ensureAuthenticated, usersController.changePassword);
+
 export default usersRoutes;

@@ -1,6 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
 import { Prisma, QuizzQuestions } from '@prisma/client';
-
 import IQuizzQuestionsRepository from '@modules/quizz/repositories/IQuizzQuestionsRepository';
 import ICreateQuizzQuestionsDTO from '@modules/quizz/dtos/ICreateQuizzQuestionsDTO';
 import IUpdateQuizzQuestionsDTO from '@modules/quizz/dtos/IUpdateQuizzQuestionsDTO';
@@ -42,5 +41,18 @@ export default class QuizzQuestionsRepository implements IQuizzQuestionsReposito
     const answer = await this.ormRepository.update({ where: { id }, data });
 
     return answer;
+  }
+
+  public async search(keywords: string): Promise<QuizzQuestions[] | null> {
+    const quizzQuestions = await this.ormRepository.findMany({
+      where: {
+        question: {
+          contains: keywords,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return quizzQuestions;
   }
 }

@@ -94,4 +94,14 @@ export default class UsersRepository implements IUsersRepository {
 
     return usersNames as Users[];
   }
+
+  public async changePassword(id: string, newPassword: string): Promise<Users> {
+    const user = await this.ormRepository.update({
+      where:
+       { id },
+      data: { password: newPassword },
+    });
+
+    return user;
+  }
 }
