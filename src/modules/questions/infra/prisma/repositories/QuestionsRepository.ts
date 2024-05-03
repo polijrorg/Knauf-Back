@@ -3,7 +3,6 @@ import { Prisma, Questions } from '@prisma/client';
 
 import IQuestionsRepository from '@modules/questions/repositories/IQuestionsRepository';
 import ICreateQuestionsDTO from '@modules/questions/dtos/ICreateQuestionsDTO';
-import IUpdateQuestionsDTO from '@modules/questions/dtos/IUpdateQuestionDTO';
 
 export default class QuestionsRepository implements IQuestionsRepository {
   private ormRepository: Prisma.QuestionsDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -56,8 +55,25 @@ export default class QuestionsRepository implements IQuestionsRepository {
     return question;
   }
 
-  public async update(id: string, data: IUpdateQuestionsDTO): Promise<Questions> {
-    const question = await this.ormRepository.update({ where: { id }, data });
+  public async update(id: string, score: number): Promise<Questions> {
+    const question = await this.ormRepository.update({ where: { id }, data: { score, approved: true } });
+    const usersId = question.userId;
+
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId: usersId, moduleId: question.moduleId } });
+
+    const user = await prisma.users.findUnique({ where: { id: usersId } });
+
+    const exists = await this.ormRepository.findMany({ where: { userId: usersId, moduleId: question.moduleId } });
+
+    if (user && exists.length === 1) {
+      const newScore = Math.floor(user.score + score);
+      await prisma.users.update({ where: { id: usersId }, data: { score: newScore } });
+
+      if (moduleGrade) {
+        const newGrade = Math.floor(moduleGrade.grade + score);
+        await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+      }
+    }
 
     return question;
   }

@@ -1,5 +1,7 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Module, Language } from '@prisma/client';
+import {
+  Prisma, Module, Language, Users,
+} from '@prisma/client';
 
 import IModuleRepository from '@modules/module/repositories/IModuleRepository';
 import ICreateModuleDTO from '@modules/module/dtos/ICreateModuleDTO';
@@ -23,6 +25,18 @@ export default class ModuleRepository implements IModuleRepository {
   public async create(data: ICreateModuleDTO): Promise<Module> {
     const module = await this.ormRepository.create({ data });
 
+    const allUsers = await prisma.users.findMany();
+
+    const allModules = await prisma.module.findMany();
+
+    const moduleGradesData: Prisma.ModuleGradesCreateManyInput[] = [];
+
+    allUsers.forEach((user) => { allModules.forEach((modules) => { moduleGradesData.push({ userId: user.id, moduleId: modules.id }); }); });
+
+    await prisma.moduleGrades.createMany({
+      data: moduleGradesData,
+    });
+
     return module;
   }
 
@@ -30,6 +44,19 @@ export default class ModuleRepository implements IModuleRepository {
     const module = await this.ormRepository.delete({ where: { id } });
 
     return module;
+  }
+
+  public async rankUsersByModule(moduleId: string): Promise<Users[] | null> {
+    const moduleGrades = await prisma.moduleGrades.findMany({
+      where: { moduleId },
+      include: { user: true },
+    });
+
+    moduleGrades.sort((a, b) => b.grade - a.grade);
+
+    const rankedUsers = moduleGrades.map((moduleGrade) => moduleGrade.user);
+
+    return rankedUsers;
   }
 
   public async findAllModules(language: Language): Promise<Module[] | null> {

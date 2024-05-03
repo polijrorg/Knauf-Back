@@ -10,13 +10,13 @@ import GetAllQuizzFromAModuleService from '@modules/quizz/services/GetAllQuizzFr
 export default class QuizzController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      image, text, amountOfQuestions, moduleId, language,
+      image, text, amountOfQuestions, moduleId, language, grade,
     } = req.body;
 
     const createAnswers = container.resolve(CreateQuizzService);
 
     const answers = await createAnswers.execute({
-      image, text, amountOfQuestions, moduleId, language,
+      image, text, amountOfQuestions, moduleId, language, grade,
     });
 
     return res.status(201).json(answers);

@@ -1,7 +1,6 @@
 import { Answers } from '@prisma/client';
 
 import ICreateAnswersDTO from '../dtos/ICreateAnswersDTO';
-import IUpdateAnswersDTO from '../dtos/IUpdateAnswersDTO';
 
 interface IAnswersRepository {
   findByID(id: string): Promise<Answers | null>;
@@ -10,7 +9,7 @@ interface IAnswersRepository {
   getAllFromAUser(userId: string): Promise<Answers[] | null>;
   getAllFromAQuestion(questionId: string): Promise<Answers[] | null>;
   getAllToApprove(): Promise<Answers[] | null>;
-  update(id: string, data: IUpdateAnswersDTO): Promise<Answers>;
+  update(id: string, score: number): Promise<Answers>;
 }
 
 export default IAnswersRepository;

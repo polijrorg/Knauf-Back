@@ -3,6 +3,7 @@ model Quizz {
   image             String
   text              String
   amountOfQuestions Int
+  grade             Float      @default(0)
   language          Language   @default(portuguese)
   module            Module     @relation(fields: [moduleId], references: [id])
   moduleId          String

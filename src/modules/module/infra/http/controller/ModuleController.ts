@@ -6,6 +6,7 @@ import CreateModuleService from '@modules/module/services/CreateModuleService';
 import DeleteModuleService from '@modules/module/services/DeleteModuleService';
 import GetAllModulesService from '@modules/module/services/GetAllModulesService';
 import UpdateModuleService from '@modules/module/services/UpdateModuleService';
+import RankUsersByModuleService from '@modules/module/services/RankUsersByModuleService';
 
 export default class moduleController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -46,6 +47,16 @@ export default class moduleController {
     const modules = container.resolve(GetAllModulesService);
 
     const module = await modules.execute(language.toLowerCase() as Language);
+
+    return res.status(200).json(module);
+  }
+
+  public async rankUsers(req: Request, res: Response): Promise<Response> {
+    const { moduleId } = req.params;
+
+    const modules = container.resolve(RankUsersByModuleService);
+
+    const module = await modules.execute(moduleId);
 
     return res.status(200).json(module);
   }

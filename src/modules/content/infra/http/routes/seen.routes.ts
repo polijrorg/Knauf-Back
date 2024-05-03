@@ -12,6 +12,8 @@ seenRoutes.get('/getAll/:id', seenController.getAll);
 
 seenRoutes.get('/getAllFromContent/:id', seenController.getAllFromContent);
 
-seenRoutes.patch('/markAsSeen/:id', seenController.markContentAsSeen);
+seenRoutes.get('/getByUserAndContent/:contentId/:userId', seenController.getByUserAndContent);
+
+seenRoutes.patch('/markAsSeen/:contentId/:userId', seenController.markContentAsSeen);
 
 export default seenRoutes;

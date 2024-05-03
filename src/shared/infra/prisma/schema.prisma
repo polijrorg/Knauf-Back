@@ -27,22 +27,25 @@ model Answers {
   answer     String
   created_at DateTime  @default(now())
   approved   Boolean   @default(false)
+  score      Float     @default(0)
 }
 
 model Users {
-  id          String        @id @default(uuid())
-  email       String
-  password    String
-  language    Language      @default(portuguese)
-  name        String
-  image       String
-  active      Boolean
-  score       Int
-  created_at  DateTime      @default(now())
-  seen        Seen[]
-  questions   Questions[]
-  answers     Answers[]
-  quizzGrades QuizzGrades[]
+  id            String          @id @default(uuid())
+  email         String
+  password      String
+  language      Language        @default(portuguese)
+  name          String
+  image         String
+  active        Boolean
+  score         Int
+  created_at    DateTime        @default(now())
+  seen          Seen[]
+  questions     Questions[]
+  answers       Answers[]
+  quizzGrades   QuizzGrades[]
+  moduleGrades  ModuleGrades[]
+  seenCampaigns SeenCampaigns[]
 }
 
 model Questions {
@@ -53,32 +56,45 @@ model Questions {
   created_at DateTime  @default(now())
   module     Module    @relation(fields: [moduleId], references: [id])
   moduleId   String
+  score      Float     @default(0)
   approved   Boolean   @default(false)
   answers    Answers[]
 }
 
 model Campaigns {
-  id         String   @id @default(uuid())
-  module     Module   @relation(fields: [moduleId], references: [id])
-  moduleId   String
-  image      String
-  title      String
-  subtitle   String
-  text       String
-  language   Language @default(portuguese)
-  created_at DateTime @default(now())
+  id            String          @id @default(uuid())
+  module        Module          @relation(fields: [moduleId], references: [id])
+  moduleId      String
+  image         String
+  title         String
+  subtitle      String
+  text          String
+  score         Float           @default(0)
+  language      Language        @default(portuguese)
+  created_at    DateTime        @default(now())
+  seenCampaigns SeenCampaigns[]
+}
+
+model SeenCampaigns {
+  id          String    @id @default(uuid())
+  seen        Boolean   @default(false)
+  campaignsId String
+  campaigns   Campaigns @relation(fields: [campaignsId], references: [id])
+  userId      String
+  user        Users     @relation(fields: [userId], references: [id])
 }
 
 model Module {
-  id         String      @id @default(uuid())
-  quizzes    Quizz[]
-  questions  Questions[]
-  name       String
-  image      String
-  language   Language    @default(portuguese)
-  created_at DateTime    @default(now())
-  content    Content[]
-  campaigns  Campaigns[]
+  id           String         @id @default(uuid())
+  quizzes      Quizz[]
+  questions    Questions[]
+  name         String
+  image        String
+  language     Language       @default(portuguese)
+  created_at   DateTime       @default(now())
+  content      Content[]
+  campaigns    Campaigns[]
+  moduleGrades ModuleGrades[]
 }
 
 model Content {
@@ -91,6 +107,7 @@ model Content {
   linkVideo   String?
   linkAudio   String?
   image       String?
+  score       Int      @default(0)
   language    Language @default(portuguese)
   created_at  DateTime @default(now())
 }
@@ -104,6 +121,15 @@ model Seen {
   contentId String  @unique
 }
 
+model ModuleGrades {
+  id       String @id @default(uuid())
+  user     Users  @relation(fields: [userId], references: [id])
+  module   Module @relation(fields: [moduleId], references: [id])
+  userId   String
+  moduleId String
+  grade    Float  @default(0)
+}
+
 model Quizz {
   id                String           @id @default(uuid())
   quizzQuestions    QuizzQuestions[]
@@ -111,6 +137,7 @@ model Quizz {
   image             String
   text              String
   amountOfQuestions Int
+  grade             Float            @default(0)
   language          Language         @default(portuguese)
   module            Module           @relation(fields: [moduleId], references: [id])
   moduleId          String

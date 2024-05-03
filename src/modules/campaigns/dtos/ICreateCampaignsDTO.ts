@@ -5,6 +5,7 @@ interface ICreateCampaignsDTO {
   title: string;
   subtitle: string;
   text: string;
+  score: number;
   moduleId: string;
   language: Language;
 }

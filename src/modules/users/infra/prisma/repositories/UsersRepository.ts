@@ -29,6 +29,21 @@ export default class UsersRepository implements IUsersRepository {
   public async create(data: ICreateUserDTO): Promise<Users> {
     const user = await this.ormRepository.create({ data });
 
+    const allModules = await prisma.module.findMany();
+
+    const moduleGradesData: Prisma.ModuleGradesCreateManyInput[] = [];
+
+    allModules.forEach((modules) => {
+      moduleGradesData.push({
+        userId: user.id,
+        moduleId: modules.id,
+      });
+    });
+
+    await prisma.moduleGrades.createMany({
+      data: moduleGradesData,
+    });
+
     return user;
   }
 

@@ -8,6 +8,21 @@ model Module {
   campaigns  Campaigns[]
   questions  Questions[]
   quizzes    Quizz[]
+  moduleGrades ModuleGrades[]
+}
+
+model ModuleGrades {
+  id         String   @id @default(uuid())
+  user       Users    @relation(fields: [userId], references: [id])
+  module     Module   @relation(fields: [moduleId], references: [id])
+  userId     String
+  moduleId   String
+  grade      Float    @default(0)
+}
+
+model Users {
+  id         String   @id @default(uuid())
+  moduleGrades ModuleGrades[]
 }
 
 enum Language {

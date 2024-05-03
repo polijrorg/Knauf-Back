@@ -4,6 +4,7 @@ model Questions {
   created_at DateTime     @default(now())
   module     Module       @relation(fields: [moduleId], references: [id])
   moduleId   String
+  score      Float        @default(0)
   approved   Boolean      @default(false)
   user       Users        @relation(fields: [userId], references: [id])
   userId     String

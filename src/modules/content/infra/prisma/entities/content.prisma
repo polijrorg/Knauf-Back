@@ -5,6 +5,7 @@ model Content {
   linkVideo   String?
   linkAudio   String?
   image       String?
+  score       Int      @default(0)
   language    Language @default(portuguese)
   created_at  DateTime @default(now())
   seen        Seen[]
