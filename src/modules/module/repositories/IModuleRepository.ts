@@ -9,7 +9,7 @@ interface IModuleRepository {
   delete(id: string): Promise<Module>;
   findAllModules(language: Language): Promise<Module[] | null>;
   update(id: string, data: IUpdateModuleDTO): Promise<Module>;
-  rankUsersByModule(moduleId: string): Promise<Users[] | null>;
+  rankUsersByModule(moduleId: string): Promise<{ user: Users, grade: number }[] | null>;
 }
 
 export default IModuleRepository;
