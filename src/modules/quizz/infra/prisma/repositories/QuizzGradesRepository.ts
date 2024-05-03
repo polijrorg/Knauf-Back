@@ -32,6 +32,13 @@ export default class QuizzGradesRepository implements IQuizzGradesRepository {
       throw new Error('Quizz not found');
     }
 
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId: user.id, moduleId: quizz.moduleId } });
+
+    if (moduleGrade) {
+      const newGrade = Math.floor(moduleGrade.grade + ((data.record / quizz.amountOfQuestions) * quizz.grade));
+      await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+    }
+
     const newScore = Math.floor(user.score + ((data.record / quizz.amountOfQuestions) * quizz.grade));
 
     await prisma.users.update({ where: { id: data.userId }, data: { score: newScore } });

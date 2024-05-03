@@ -32,12 +32,19 @@ export default class CampaignsRepository implements ICampaignsRepository {
     const content = await prisma.seenCampaigns.create({ data: { campaignsId, userId, seen: true } });
 
     const user = await prisma.users.findUnique({ where: { id: userId } });
+
     const campaign = await prisma.campaigns.findUnique({ where: { id: campaignsId } });
+
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId, moduleId: campaign?.moduleId } });
 
     if (user && campaign) {
       const newScore = Math.floor(user.score + campaign.score);
-
       await prisma.users.update({ where: { id: userId }, data: { score: newScore } });
+
+      if (moduleGrade) {
+        const newGrade = Math.floor(moduleGrade.grade + campaign.score);
+        await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+      }
     }
 
     return content;

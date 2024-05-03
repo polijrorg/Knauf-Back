@@ -48,16 +48,18 @@ export default class SeenRepository implements ISeenRepository {
 
     const content = await prisma.content.findUnique({ where: { id: contentId } });
 
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId, moduleId: content?.moduleId } });
+
     const user = await prisma.users.findUnique({ where: { id: userId } });
 
     if (user && content) {
       const newScore = user.score + content.score;
+      await prisma.users.update({ where: { id: userId }, data: { score: newScore } });
 
-      await prisma.users.update({
-        where: { id: userId },
-        data: { score: newScore },
-      });
-      return seen;
+      if (moduleGrade) {
+        const newGrade = Math.floor(moduleGrade.grade + content.score);
+        await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+      }
     }
 
     return seen;

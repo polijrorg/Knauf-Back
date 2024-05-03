@@ -55,12 +55,20 @@ export default class AnswersRepository implements IAnswersRepository {
 
     const user = await prisma.users.findUnique({ where: { id: usersId } });
 
+    const question = await prisma.questions.findUnique({ where: { id: answer.questionId } });
+
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId: usersId, moduleId: question?.moduleId } });
+
     const exists = await this.ormRepository.findMany({ where: { userId: usersId, questionId: answer.questionId } });
 
     if (user && exists.length === 1) {
       const newScore = Math.floor(user.score + score);
-
       await prisma.users.update({ where: { id: usersId }, data: { score: newScore } });
+
+      if (moduleGrade) {
+        const newGrade = Math.floor(moduleGrade.grade + score);
+        await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+      }
     }
 
     return answer;

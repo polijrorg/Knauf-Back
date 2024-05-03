@@ -44,6 +44,7 @@ model Users {
   questions     Questions[]
   answers       Answers[]
   quizzGrades   QuizzGrades[]
+  moduleGrades  ModuleGrades[]
   seenCampaigns SeenCampaigns[]
 }
 
@@ -84,15 +85,16 @@ model SeenCampaigns {
 }
 
 model Module {
-  id         String      @id @default(uuid())
-  quizzes    Quizz[]
-  questions  Questions[]
-  name       String
-  image      String
-  language   Language    @default(portuguese)
-  created_at DateTime    @default(now())
-  content    Content[]
-  campaigns  Campaigns[]
+  id           String         @id @default(uuid())
+  quizzes      Quizz[]
+  questions    Questions[]
+  name         String
+  image        String
+  language     Language       @default(portuguese)
+  created_at   DateTime       @default(now())
+  content      Content[]
+  campaigns    Campaigns[]
+  moduleGrades ModuleGrades[]
 }
 
 model Content {
@@ -117,6 +119,15 @@ model Seen {
   seen      Boolean @default(false)
   content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contentId String  @unique
+}
+
+model ModuleGrades {
+  id       String @id @default(uuid())
+  user     Users  @relation(fields: [userId], references: [id])
+  module   Module @relation(fields: [moduleId], references: [id])
+  userId   String
+  moduleId String
+  grade    Float  @default(0)
 }
 
 model Quizz {

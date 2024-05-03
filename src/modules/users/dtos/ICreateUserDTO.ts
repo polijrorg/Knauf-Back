@@ -1,7 +1,9 @@
+import { Language } from '@prisma/client';
+
 interface ICreateUserDTO {
   email: string;
   password: string;
-  language: string;
+  language: Language;
   name: string;
   image: string;
   active: boolean;
