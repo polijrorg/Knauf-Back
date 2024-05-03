@@ -46,7 +46,7 @@ export default class ModuleRepository implements IModuleRepository {
     return module;
   }
 
-  public async rankUsersByModule(moduleId: string): Promise<Users[] | null> {
+  public async rankUsersByModule(moduleId: string): Promise<{ user: Users, grade: number }[] | null> {
     const moduleGrades = await prisma.moduleGrades.findMany({
       where: { moduleId },
       include: { user: true },
@@ -54,7 +54,10 @@ export default class ModuleRepository implements IModuleRepository {
 
     moduleGrades.sort((a, b) => b.grade - a.grade);
 
-    const rankedUsers = moduleGrades.map((moduleGrade) => moduleGrade.user);
+    const rankedUsers = moduleGrades.map((moduleGrade) => ({
+      user: moduleGrade.user,
+      grade: moduleGrade.grade,
+    }));
 
     return rankedUsers;
   }
