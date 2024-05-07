@@ -1,4 +1,4 @@
-import { Users } from '@prisma/client';
+import { Users, Language } from '@prisma/client';
 
 import ICreateUserDTO from '../dtos/ICreateUserDTO';
 import IUpdateUserDTO from '../dtos/IUpdateUserDTO';
@@ -8,6 +8,7 @@ interface IUsersRepository {
   findById(id: string): Promise<Users | null>;
   findAllUsers(): Promise<Users[] | null>;
   rankUsers(): Promise<Users[] | null>;
+  rankUsersByLanguage(language: Language): Promise<Users[] | null>;
   create(data: ICreateUserDTO): Promise<Users>;
   delete(id: string): Promise<Users>;
   update(id: string, data: IUpdateUserDTO): Promise<Users>;
