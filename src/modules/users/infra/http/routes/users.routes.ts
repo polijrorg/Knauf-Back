@@ -17,6 +17,8 @@ usersRoutes.get('/getUsers', ensureAuthenticated, usersController.getAllUsers);
 
 usersRoutes.get('/rankUsers', ensureAuthenticated, usersController.rankUsers);
 
+usersRoutes.get('/rankUsersByLanguage', ensureAuthenticated, usersController.rankUsersByLanguage);
+
 usersRoutes.patch('/update/:id', ensureAuthenticated, usersController.update);
 
 usersRoutes.patch('/changePassword/:id', ensureAuthenticated, usersController.changePassword);

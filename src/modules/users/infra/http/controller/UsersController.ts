@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
+import { Language } from '@prisma/client';
+
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
@@ -8,6 +10,7 @@ import GetAllUsersService from '@modules/users/services/GetAllUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ChangePasswordUserService from '@modules/users/services/ChangePasswordUserService';
+import RankUsersByLanguageService from '@modules/users/services/RankUsersByLanguageService';
 
 export default class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -88,6 +91,16 @@ export default class UserController {
     const users = container.resolve(RankUsersService);
 
     const user = await users.execute();
+
+    return res.status(200).json(user);
+  }
+
+  public async rankUsersByLanguage(req: Request, res: Response): Promise<Response> {
+    const { language } = req.body;
+
+    const users = container.resolve(RankUsersByLanguageService);
+
+    const user = await users.execute(language as Language);
 
     return res.status(200).json(user);
   }

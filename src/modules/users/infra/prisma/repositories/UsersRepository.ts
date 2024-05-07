@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Users } from '@prisma/client';
+import { Prisma, Users, Language } from '@prisma/client';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
@@ -93,6 +93,12 @@ export default class UsersRepository implements IUsersRepository {
     });
 
     return usersNames as Users[];
+  }
+
+  public async rankUsersByLanguage(language: Language): Promise<Users[] | null> {
+    const usersNames = await this.ormRepository.findMany({ where: { language }, orderBy: { score: 'desc' } });
+
+    return usersNames;
   }
 
   public async changePassword(id: string, newPassword: string): Promise<Users> {
