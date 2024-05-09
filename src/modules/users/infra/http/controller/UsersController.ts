@@ -7,6 +7,7 @@ import AuthenticateUserService from '@modules/users/services/AuthenticateUserSer
 import CreateUserService from '@modules/users/services/CreateUserService';
 import DeleteUserService from '@modules/users/services/DeleteUserService';
 import GetAllUsersService from '@modules/users/services/GetAllUsersService';
+import GetUsersService from '@modules/users/services/GetUsersService';
 import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ChangePasswordUserService from '@modules/users/services/ChangePasswordUserService';
@@ -83,6 +84,15 @@ export default class UserController {
     const users = container.resolve(GetAllUsersService);
 
     const user = await users.execute();
+
+    return res.status(200).json(user);
+  }
+
+  public async getUser(req: Request, res: Response): Promise<Response> {
+    const { id } = req.body;
+    const users = container.resolve(GetUsersService);
+
+    const user = await users.execute(id);
 
     return res.status(200).json(user);
   }
