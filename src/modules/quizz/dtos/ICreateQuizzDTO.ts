@@ -4,6 +4,7 @@ interface ICreateQuizzDTO {
   image: string;
   text: string;
   amountOfQuestions: number;
+  timeLimit: number;
   grade: number;
   moduleId: string;
   language: Language;
