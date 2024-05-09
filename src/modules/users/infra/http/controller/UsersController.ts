@@ -89,7 +89,7 @@ export default class UserController {
   }
 
   public async getUser(req: Request, res: Response): Promise<Response> {
-    const { id } = req.body;
+    const { id } = req.params;
     const users = container.resolve(GetUsersService);
 
     const user = await users.execute(id);
