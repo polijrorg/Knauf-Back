@@ -15,7 +15,7 @@ usersRoutes.delete('/delete/:id', ensureAuthenticated, usersController.delete);
 
 usersRoutes.get('/getUsers', ensureAuthenticated, usersController.getAllUsers);
 
-usersRoutes.get('/findById', ensureAuthenticated, usersController.getUser);
+usersRoutes.get('/findById/:id', ensureAuthenticated, usersController.getUser);
 
 usersRoutes.get('/rankUsers', ensureAuthenticated, usersController.rankUsers);
 
