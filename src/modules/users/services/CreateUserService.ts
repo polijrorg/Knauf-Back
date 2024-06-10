@@ -21,14 +21,10 @@ export default class CreateUserService {
 
   public async execute(data: ICreateUserDTO): Promise<Users> {
     const userAlreadyExists = await this.usersRepository.findByEmail(data.email);
-
     if (userAlreadyExists) throw new AppError('User with same email already exists');
-
     const hashedPassword = await this.hashProvider.generateHash(data.password);
-
     // eslint-disable-next-line no-param-reassign
     data.password = hashedPassword;
-
     const user = await this.usersRepository.create(data);
 
     return user;

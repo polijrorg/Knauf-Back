@@ -1,6 +1,5 @@
 model Quizz {
   id                String     @id @default(uuid())
-  image             String
   text              String
   amountOfQuestions Int
   timeLimit         Int        @default(0)

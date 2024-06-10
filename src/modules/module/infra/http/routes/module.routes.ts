@@ -1,13 +1,16 @@
 import { Router } from 'express';
 
 import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
+
+import multer from 'multer';
+import multerConfig from '@shared/container/providers/AWSProvider/aws_S3/config/multer';
 import ModuleController from '../controller/ModuleController';
 
 const moduleRoutes = Router();
-
+const upload = multer(multerConfig);
 const moduleController = new ModuleController();
 
-moduleRoutes.post('/create', ensureAuthenticated, moduleController.create);
+moduleRoutes.post('/create', upload.single('image'), moduleController.create);
 
 moduleRoutes.delete('/delete/:id', ensureAuthenticated, moduleController.delete);
 

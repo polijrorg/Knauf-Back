@@ -1,6 +1,5 @@
 model Statment {
   id          String   @id @default(uuid())
-  image       String
   text        String
   language    Language @default(portuguese)
   title       String   @default("Statment title")

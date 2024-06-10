@@ -13,7 +13,6 @@ model Administrator {
   email      String
   name       String
   password   String
-  image      String
   language   String
   created_at DateTime @default(now())
 }
@@ -36,7 +35,6 @@ model Users {
   password      String
   language      Language        @default(portuguese)
   name          String
-  image         String
   active        Boolean
   score         Int
   created_at    DateTime        @default(now())
@@ -65,7 +63,6 @@ model Campaigns {
   id            String          @id @default(uuid())
   module        Module          @relation(fields: [moduleId], references: [id])
   moduleId      String
-  image         String
   title         String
   subtitle      String
   text          String
@@ -89,7 +86,6 @@ model Module {
   quizzes      Quizz[]
   questions    Questions[]
   name         String
-  image        String
   language     Language       @default(portuguese)
   created_at   DateTime       @default(now())
   content      Content[]
@@ -134,7 +130,6 @@ model Quizz {
   id                String           @id @default(uuid())
   quizzQuestions    QuizzQuestions[]
   quizzGrades       QuizzGrades[]
-  image             String
   text              String
   amountOfQuestions Int
   timeLimit         Int              @default(0)
@@ -166,7 +161,6 @@ model QuizzGrades {
 
 model Statment {
   id         String   @id @default(uuid())
-  image      String
   text       String
   language   Language @default(portuguese)
   title      String   @default("Statment title")

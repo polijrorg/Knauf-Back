@@ -8,11 +8,11 @@ import GetAllCampaignsService from '@modules/campaigns/services/GetAllCampaignsS
 import UpdateCampaignsService from '@modules/campaigns/services/UpdateCampaignsService';
 import GetAllSeenCampaignsService from '@modules/campaigns/services/GetAllSeenCampaignsService';
 import CreateSeenCampaignsService from '@modules/campaigns/services/CreateSeenCampaignsService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class CampaignsController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      image,
       title,
       subtitle,
       text,
@@ -21,16 +21,27 @@ export default class CampaignsController {
       score,
     } = req.body;
 
+    const { file } = req;
+    let linkImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
+
     const createCampaigns = container.resolve(CreateCampaignsService);
 
     const campaign = await createCampaigns.execute({
-      image,
+      image: linkImage,
       title,
       subtitle,
       text,
       moduleId,
       language,
-      score,
+      score: Number(score),
     });
 
     return res.status(201).json(campaign);

@@ -12,6 +12,7 @@ import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ChangePasswordUserService from '@modules/users/services/ChangePasswordUserService';
 import RankUsersByLanguageService from '@modules/users/services/RankUsersByLanguageService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -33,10 +34,20 @@ export default class UserController {
       password,
       language,
       name,
-      image,
       active,
       score,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createUser = container.resolve(CreateUserService);
 
@@ -45,9 +56,9 @@ export default class UserController {
       password,
       language,
       name,
-      image,
-      active,
-      score,
+      image: linkImage,
+      active: active === 'true', // Converter para Boolean,
+      score: Number(score),
     });
 
     user.password = '###';

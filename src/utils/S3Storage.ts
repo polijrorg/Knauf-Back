@@ -13,7 +13,7 @@ class S3Storage {
       });
     }
 
-    async saveFile(filename: string): Promise<void> {
+    async saveFile(filename: string): Promise<string> {
       const originalPath = path.resolve(multerConfig.directory, filename);
 
       try {
@@ -34,9 +34,12 @@ class S3Storage {
 
         await fs.promises.unlink(originalPath);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error('Error in saveFile:', error);
         throw error;
       }
+
+      return filename;
     }
 }
 
