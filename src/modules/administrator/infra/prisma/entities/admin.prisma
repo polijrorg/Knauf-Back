@@ -3,7 +3,7 @@ model Administrator {
     email       String
     name        String
     password    String
-    image       String
     language    String
     created_at  DateTime     @default(now())
+    image       String?
 }

@@ -6,20 +6,36 @@ import CreateStatmentService from '@modules/statment/services/CreateStatmentServ
 import DeleteStatmentService from '@modules/statment/services/DeleteStatmentService';
 import GetAllStatmentService from '@modules/statment/services/GetAllStatmentService';
 import UpdateStatmentService from '@modules/statment/services/UpdateStatmentService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class StatmentController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      image, text, title, language,
+      text, title, language,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+    let idImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createStatment = container.resolve(CreateStatmentService);
 
     const statment = await createStatment.execute({
-      image, text, title, language,
+      image: linkImage, text, title, language,
     });
 
-    return res.status(201).json(statment);
+    const statmentFinal = { ...statment, ...{ idImage } };
+
+    return res.status(201).json(statmentFinal);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

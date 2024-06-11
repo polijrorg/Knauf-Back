@@ -13,9 +13,9 @@ model Administrator {
   email      String
   name       String
   password   String
-  image      String
   language   String
   created_at DateTime @default(now())
+  image      String?
 }
 
 model Answers {
@@ -36,7 +36,6 @@ model Users {
   password      String
   language      Language        @default(portuguese)
   name          String
-  image         String
   active        Boolean
   score         Int
   created_at    DateTime        @default(now())
@@ -44,6 +43,7 @@ model Users {
   questions     Questions[]
   answers       Answers[]
   quizzGrades   QuizzGrades[]
+  image         String?
   moduleGrades  ModuleGrades[]
   seenCampaigns SeenCampaigns[]
 }
@@ -65,7 +65,6 @@ model Campaigns {
   id            String          @id @default(uuid())
   module        Module          @relation(fields: [moduleId], references: [id])
   moduleId      String
-  image         String
   title         String
   subtitle      String
   text          String
@@ -73,6 +72,7 @@ model Campaigns {
   language      Language        @default(portuguese)
   created_at    DateTime        @default(now())
   seenCampaigns SeenCampaigns[]
+  image         String?
 }
 
 model SeenCampaigns {
@@ -89,12 +89,12 @@ model Module {
   quizzes      Quizz[]
   questions    Questions[]
   name         String
-  image        String
   language     Language       @default(portuguese)
   created_at   DateTime       @default(now())
   content      Content[]
   campaigns    Campaigns[]
   moduleGrades ModuleGrades[]
+  image        String?
 }
 
 model Content {
@@ -134,7 +134,6 @@ model Quizz {
   id                String           @id @default(uuid())
   quizzQuestions    QuizzQuestions[]
   quizzGrades       QuizzGrades[]
-  image             String
   text              String
   amountOfQuestions Int
   timeLimit         Int              @default(0)
@@ -142,6 +141,7 @@ model Quizz {
   language          Language         @default(portuguese)
   module            Module           @relation(fields: [moduleId], references: [id])
   moduleId          String
+  image             String?
 }
 
 model QuizzQuestions {
@@ -166,11 +166,11 @@ model QuizzGrades {
 
 model Statment {
   id         String   @id @default(uuid())
-  image      String
   text       String
   language   Language @default(portuguese)
   title      String   @default("Statment title")
   created_at DateTime @default(now())
+  image      String
 }
 
 enum Language {

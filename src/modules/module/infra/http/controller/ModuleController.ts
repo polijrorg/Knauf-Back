@@ -7,24 +7,39 @@ import DeleteModuleService from '@modules/module/services/DeleteModuleService';
 import GetAllModulesService from '@modules/module/services/GetAllModulesService';
 import UpdateModuleService from '@modules/module/services/UpdateModuleService';
 import RankUsersByModuleService from '@modules/module/services/RankUsersByModuleService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class moduleController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       name,
-      image,
       language,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+    let idImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createModule = container.resolve(CreateModuleService);
 
     const module = await createModule.execute({
       name,
-      image,
+      image: linkImage,
       language,
     });
 
-    return res.status(201).json(module);
+    const moduleFinal = { ...module, ...{ idImage } };
+
+    return res.status(201).json(moduleFinal);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

@@ -4,7 +4,6 @@ model Users {
   password   String
   language   Language @default(portuguese)
   name       String
-  image      String
   active     Boolean
   score      Int
   created_at DateTime @default(now())
@@ -12,6 +11,7 @@ model Users {
   questions  Questions[]
   answers    Answers[]
   quizzGrades QuizzGrades[]
+  image      String?
 }
 
 enum Language {

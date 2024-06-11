@@ -1,13 +1,18 @@
 import { Router } from 'express';
 
 import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
+
+import multer from 'multer';
+import multerConfig from '@shared/container/providers/AWSProvider/aws_S3/config/multer';
+
 import UsersController from '../controller/UsersController';
 
-const usersRoutes = Router();
+const upload = multer(multerConfig);
 
+const usersRoutes = Router();
 const usersController = new UsersController();
 
-usersRoutes.post('/create', usersController.create);
+usersRoutes.post('/create', upload.single('image'), usersController.create);
 
 usersRoutes.post('/login', usersController.login);
 

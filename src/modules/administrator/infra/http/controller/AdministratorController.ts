@@ -6,6 +6,7 @@ import CreateAdministratorService from '@modules/administrator/services/CreateAd
 import GetAdministratorService from '@modules/administrator/services/GetAdministratorService';
 import UpdateLanguageService from '@modules/administrator/services/UpdateLanguageService';
 import UpdatePasswordService from '@modules/administrator/services/UpdatePasswordService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 class AdministratorController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -27,8 +28,20 @@ class AdministratorController {
       password,
       language,
       name,
-      image,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+    let idImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createAdministrator = container.resolve(CreateAdministratorService);
 
@@ -37,12 +50,14 @@ class AdministratorController {
       email,
       password,
       language,
-      image,
+      image: linkImage,
     });
+
+    const administratorFinal = { ...administrator, ...{ idImage } };
 
     administrator.password = '###';
 
-    return res.status(201).json(administrator);
+    return res.status(201).json(administratorFinal);
   }
 
   public async getAdministrator(req: Request, res: Response): Promise<Response> {

@@ -12,6 +12,7 @@ import RankUsersService from '@modules/users/services/RankUsersService';
 import UpdateUserService from '@modules/users/services/UpdateUserService';
 import ChangePasswordUserService from '@modules/users/services/ChangePasswordUserService';
 import RankUsersByLanguageService from '@modules/users/services/RankUsersByLanguageService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class UserController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -33,10 +34,22 @@ export default class UserController {
       password,
       language,
       name,
-      image,
       active,
       score,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+    let idImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createUser = container.resolve(CreateUserService);
 
@@ -45,14 +58,16 @@ export default class UserController {
       password,
       language,
       name,
-      image,
-      active,
-      score,
+      image: linkImage,
+      active: active === 'true', // Converter para Boolean,
+      score: Number(score),
     });
+
+    const userObj = { ...user, ...{ idImage } };
 
     user.password = '###';
 
-    return res.status(201).json(user);
+    return res.status(201).json(userObj);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
@@ -68,13 +83,13 @@ export default class UserController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const {
-      password, name, image, active, score,
+      password, name, active, score, image,
     } = req.body;
 
     const users = container.resolve(UpdateUserService);
 
     const user = await users.execute(id, {
-      password, name, image, active, score,
+      password, name, image, active: active === 'true', score: Number(score),
     });
 
     return res.status(200).json(user);

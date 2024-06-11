@@ -6,20 +6,36 @@ import CreateQuizzService from '@modules/quizz/services/CreateQuizzService';
 import DeleteQuizzService from '@modules/quizz/services/DeleteQuizzService';
 import UpdateQuizzService from '@modules/quizz/services/UpdateQuizzService';
 import GetAllQuizzFromAModuleService from '@modules/quizz/services/GetAllQuizzFromAModuleService';
+import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
 
 export default class QuizzController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
-      image, text, amountOfQuestions, moduleId, language, grade, timeLimit,
+      text, amountOfQuestions, moduleId, language, grade, timeLimit,
     } = req.body;
+
+    const { file } = req;
+    let linkImage = '';
+    let idImage = '';
+
+    if (file) {
+      const uploadImagesService = new UploadImagesService();
+      const imageName = await uploadImagesService.execute(file);
+      linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
+    } else {
+      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+    }
 
     const createAnswers = container.resolve(CreateQuizzService);
 
     const answers = await createAnswers.execute({
-      image, text, amountOfQuestions, moduleId, language, grade, timeLimit,
+      image: linkImage, text, amountOfQuestions: Number(amountOfQuestions), moduleId, language, grade: Number(grade), timeLimit: Number(timeLimit),
     });
 
-    return res.status(201).json(answers);
+    const answersFinal = { ...answers, ...{ idImage } };
+
+    return res.status(201).json(answersFinal);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

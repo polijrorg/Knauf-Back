@@ -1,6 +1,5 @@
 model Quizz {
   id                String     @id @default(uuid())
-  image             String
   text              String
   amountOfQuestions Int
   timeLimit         Int        @default(0)
@@ -10,6 +9,7 @@ model Quizz {
   moduleId          String
   quizzQuestions    QuizzQuestions[]
   quizzGrades       QuizzGrades[]
+  image      String?
 }
 
 enum Language {
