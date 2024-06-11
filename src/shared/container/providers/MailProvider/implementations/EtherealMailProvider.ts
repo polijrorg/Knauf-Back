@@ -49,7 +49,9 @@ export default class EtherealMailProvider implements IMailProvider {
       html,
     });
 
+    // eslint-disable-next-line no-console
     console.log('Message sent: %s', message.messageId);
+    // eslint-disable-next-line no-console
     console.log('Preview URL: %s', nodemailer.getTestMessageUrl(message));
   }
 }

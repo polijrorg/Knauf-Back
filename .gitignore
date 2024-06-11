@@ -14,7 +14,8 @@ dist/
 # orm
 ormconfig.json
 
-#algumas coisinhas
+#algumas coisinhas (p/ testar aqui)
+
 passo_passo.txt
 package-lock.json.backup
 package.json.backup
