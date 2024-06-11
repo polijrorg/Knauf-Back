@@ -41,6 +41,20 @@ class S3Storage {
 
       return filename;
     }
+
+    async deleteFile(filename: string): Promise<void> {
+      await this.client.deleteObject({
+        Bucket: 'appsustentabilidade',
+        Key: filename,
+      }).promise();
+    }
+
+    async getFile(filename: string): Promise<void> {
+      await this.client.getObject({
+        Bucket: 'appsustentabilidade',
+        Key: filename,
+      }).promise();
+    }
 }
 
 export default S3Storage;

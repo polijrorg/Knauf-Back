@@ -9,6 +9,7 @@ model Campaigns {
   module     Module   @relation(fields: [moduleId], references: [id])
   moduleId   String
   seenCampaigns SeenCampaigns[]
+  image      String?
 }
 
 model SeenCampaigns {

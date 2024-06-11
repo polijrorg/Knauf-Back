@@ -15,6 +15,7 @@ model Administrator {
   password   String
   language   String
   created_at DateTime @default(now())
+  image      String?
 }
 
 model Answers {
@@ -42,6 +43,7 @@ model Users {
   questions     Questions[]
   answers       Answers[]
   quizzGrades   QuizzGrades[]
+  image         String?
   moduleGrades  ModuleGrades[]
   seenCampaigns SeenCampaigns[]
 }
@@ -70,6 +72,7 @@ model Campaigns {
   language      Language        @default(portuguese)
   created_at    DateTime        @default(now())
   seenCampaigns SeenCampaigns[]
+  image         String?
 }
 
 model SeenCampaigns {
@@ -91,6 +94,7 @@ model Module {
   content      Content[]
   campaigns    Campaigns[]
   moduleGrades ModuleGrades[]
+  image        String?
 }
 
 model Content {
@@ -137,6 +141,7 @@ model Quizz {
   language          Language         @default(portuguese)
   module            Module           @relation(fields: [moduleId], references: [id])
   moduleId          String
+  image             String?
 }
 
 model QuizzQuestions {
@@ -165,6 +170,7 @@ model Statment {
   language   Language @default(portuguese)
   title      String   @default("Statment title")
   created_at DateTime @default(now())
+  image      String
 }
 
 enum Language {

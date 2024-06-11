@@ -16,11 +16,13 @@ export default class QuizzController {
 
     const { file } = req;
     let linkImage = '';
+    let idImage = '';
 
     if (file) {
       const uploadImagesService = new UploadImagesService();
       const imageName = await uploadImagesService.execute(file);
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
     } else {
       linkImage = 'https://i.imgur.com/4AVhMxk.png';
     }
@@ -31,7 +33,9 @@ export default class QuizzController {
       image: linkImage, text, amountOfQuestions: Number(amountOfQuestions), moduleId, language, grade: Number(grade), timeLimit: Number(timeLimit),
     });
 
-    return res.status(201).json(answers);
+    const answersFinal = { ...answers, ...{ idImage } };
+
+    return res.status(201).json(answersFinal);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

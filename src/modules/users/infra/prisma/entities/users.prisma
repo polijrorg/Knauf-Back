@@ -11,6 +11,7 @@ model Users {
   questions  Questions[]
   answers    Answers[]
   quizzGrades QuizzGrades[]
+  image      String?
 }
 
 enum Language {

@@ -11,6 +11,8 @@ const contentRoutes = Router();
 
 const upload = multer(multerConfig);
 
+contentRoutes.delete('/deleteImageAWS/:filename', contentController.deleteImage);
+
 contentRoutes.post('/uploadImageAWS', upload.single('image'), contentController.updateImage);
 
 contentRoutes.post('/create', upload.single('image'), contentController.create);

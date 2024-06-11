@@ -23,11 +23,13 @@ export default class CampaignsController {
 
     const { file } = req;
     let linkImage = '';
+    let idImage = '';
 
     if (file) {
       const uploadImagesService = new UploadImagesService();
       const imageName = await uploadImagesService.execute(file);
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
     } else {
       linkImage = 'https://i.imgur.com/4AVhMxk.png';
     }
@@ -44,7 +46,9 @@ export default class CampaignsController {
       score: Number(score),
     });
 
-    return res.status(201).json(campaign);
+    const camapaignFinal = { ...campaign, ...{ idImage } };
+
+    return res.status(201).json(camapaignFinal);
   }
 
   public async createSeenCampaings(req: Request, res: Response): Promise<Response> {

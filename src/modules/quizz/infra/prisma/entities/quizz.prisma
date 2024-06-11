@@ -9,6 +9,7 @@ model Quizz {
   moduleId          String
   quizzQuestions    QuizzQuestions[]
   quizzGrades       QuizzGrades[]
+  image      String?
 }
 
 enum Language {

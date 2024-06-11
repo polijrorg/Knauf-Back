@@ -5,4 +5,5 @@ model Administrator {
     password    String
     language    String
     created_at  DateTime     @default(now())
+    image       String?
 }

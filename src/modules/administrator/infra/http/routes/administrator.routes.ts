@@ -17,7 +17,7 @@ administratorRoutes.get('/getAdministrator', administratorController.getAdminist
 
 administratorRoutes.post('/login', administratorController.login);
 
-administratorRoutes.patch('/updatePassword/:id', administratorController.updatePassword);
+administratorRoutes.patch('/updatePassword/:id', upload.single('image'), administratorController.updatePassword);
 
 administratorRoutes.patch('/updateLanguage/:id/:newLanguage', administratorController.updateLanguage);
 

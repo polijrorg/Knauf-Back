@@ -32,11 +32,13 @@ class AdministratorController {
 
     const { file } = req;
     let linkImage = '';
+    let idImage = '';
 
     if (file) {
       const uploadImagesService = new UploadImagesService();
       const imageName = await uploadImagesService.execute(file);
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
     } else {
       linkImage = 'https://i.imgur.com/4AVhMxk.png';
     }
@@ -51,9 +53,11 @@ class AdministratorController {
       image: linkImage,
     });
 
+    const administratorFinal = { ...administrator, ...{ idImage } };
+
     administrator.password = '###';
 
-    return res.status(201).json(administrator);
+    return res.status(201).json(administratorFinal);
   }
 
   public async getAdministrator(req: Request, res: Response): Promise<Response> {

@@ -10,7 +10,7 @@ const moduleRoutes = Router();
 const upload = multer(multerConfig);
 const moduleController = new ModuleController();
 
-moduleRoutes.post('/create', upload.single('image'), moduleController.create);
+moduleRoutes.post('/create', ensureAuthenticated, upload.single('image'), moduleController.create);
 
 moduleRoutes.delete('/delete/:id', ensureAuthenticated, moduleController.delete);
 

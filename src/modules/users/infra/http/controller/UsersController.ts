@@ -40,11 +40,13 @@ export default class UserController {
 
     const { file } = req;
     let linkImage = '';
+    let idImage = '';
 
     if (file) {
       const uploadImagesService = new UploadImagesService();
       const imageName = await uploadImagesService.execute(file);
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
     } else {
       linkImage = 'https://i.imgur.com/4AVhMxk.png';
     }
@@ -61,9 +63,11 @@ export default class UserController {
       score: Number(score),
     });
 
+    const userObj = { ...user, ...{ idImage } };
+
     user.password = '###';
 
-    return res.status(201).json(user);
+    return res.status(201).json(userObj);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
@@ -79,13 +83,13 @@ export default class UserController {
   public async update(req: Request, res: Response): Promise<Response> {
     const { id } = req.params;
     const {
-      password, name, image, active, score,
+      password, name, active, score, image,
     } = req.body;
 
     const users = container.resolve(UpdateUserService);
 
     const user = await users.execute(id, {
-      password, name, image, active, score,
+      password, name, image, active: active === 'true', score: Number(score),
     });
 
     return res.status(200).json(user);

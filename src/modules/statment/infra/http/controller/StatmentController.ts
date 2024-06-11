@@ -16,11 +16,13 @@ export default class StatmentController {
 
     const { file } = req;
     let linkImage = '';
+    let idImage = '';
 
     if (file) {
       const uploadImagesService = new UploadImagesService();
       const imageName = await uploadImagesService.execute(file);
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
+      idImage = imageName;
     } else {
       linkImage = 'https://i.imgur.com/4AVhMxk.png';
     }
@@ -31,7 +33,9 @@ export default class StatmentController {
       image: linkImage, text, title, language,
     });
 
-    return res.status(201).json(statment);
+    const statmentFinal = { ...statment, ...{ idImage } };
+
+    return res.status(201).json(statmentFinal);
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {

@@ -4,6 +4,7 @@ model Statment {
   language    Language @default(portuguese)
   title       String   @default("Statment title")
   created_at  DateTime @default(now())
+  image       String
 }
 
 enum Language {

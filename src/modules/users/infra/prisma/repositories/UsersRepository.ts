@@ -50,6 +50,7 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async update(id: string, data: IUpdateUserDTO): Promise<Users> {
+    console.log('Prisma Update Data:', data); // Adicione este log para depuração
     const user = await this.ormRepository.update({ where: { id }, data });
 
     return user;
