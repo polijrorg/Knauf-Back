@@ -1,4 +1,4 @@
-import S3Storage from 'utils/S3Storage';
+import S3Storage from '../../../../../../utils/S3Storage';
 
 class DeleteImagesService {
   async execute(filename: string): Promise<void> {
