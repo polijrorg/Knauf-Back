@@ -45,7 +45,7 @@ class ForumController {
     try {
       const getAllForumService = container.resolve(GetAllForumService);
       const foruns = await getAllForumService.execute();
-      return res.status(201).json(foruns);
+      return res.status(200).json(foruns);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
