@@ -1,6 +1,6 @@
 import prisma from '@shared/infra/prisma/client';
 import { Prisma, Forum } from '@prisma/client';
-import IForumRepository from '@modules/forum/repositories/ForumRepository';
+import IForumRepository from '@modules/forum/repositories/IForumRepository';
 import ICreateForumDTO from '@modules/forum/dtos/ICreateForumDTO';
 
 class ForumRepository implements IForumRepository {

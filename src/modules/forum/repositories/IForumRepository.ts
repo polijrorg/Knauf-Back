@@ -1,9 +1,9 @@
 import { Forum } from '@prisma/client';
 import ICreateForumDTO from '../dtos/ICreateForumDTO';
 
-interface IAdministratorRepository {
+interface IForumRepository {
     create(data: ICreateForumDTO): Promise<Forum>;
     getAll(): Promise<Forum[] | null>;
 }
 
-export default IAdministratorRepository;
+export default IForumRepository;

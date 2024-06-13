@@ -4,7 +4,7 @@ import './providers';
 
 // Repositorio novo colocar aqui :)
 
-import IForumRepository from '@modules/forum/repositories/ForumRepository';
+import IForumRepository from '@modules/forum/repositories/IForumRepository';
 import ForumRepository from '@modules/forum/infra/prisma/repositories/ForumRepository';
 
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';

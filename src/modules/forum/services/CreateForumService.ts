@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import { Forum } from '@prisma/client';
-import IForumRepository from '../repositories/ForumRepository';
+import IForumRepository from '../repositories/IForumRepository';
 import ICreateForumDTO from '../dtos/ICreateForumDTO';
 
 @injectable()
