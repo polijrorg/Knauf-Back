@@ -29,7 +29,12 @@ class ForumRepository implements IForumRepository {
           module: true,
           user: {
             select: {
-              password: false,
+              id: true,
+              email: true,
+              name: true,
+              active: true,
+              score: true,
+              seen: true,
             },
           },
         },
