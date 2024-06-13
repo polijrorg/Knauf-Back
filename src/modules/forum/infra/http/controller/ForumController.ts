@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
+import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
 import FindByIdModuleService from '@modules/module/services/FindByIdModuleService';
 
@@ -35,6 +36,16 @@ class ForumController {
         text,
       });
       return res.status(201).json(forum);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async getAll(req: Request, res: Response): Promise<Response> {
+    try {
+      const getAllForumService = container.resolve(GetAllForumService);
+      const foruns = await getAllForumService.execute();
+      return res.status(201).json(foruns);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }

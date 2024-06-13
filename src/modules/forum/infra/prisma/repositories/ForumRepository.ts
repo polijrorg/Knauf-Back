@@ -10,6 +10,10 @@ class ForumRepository implements IAForumRepository {
       this.ormRepository = prisma.forum;
     }
 
+    public async getAll(): Promise<Forum[]> {
+      return this.ormRepository.findMany();
+    }
+
     public async create(data: ICreateForumDTO): Promise<Forum> {
       const {
         idModule, idUser, text,
