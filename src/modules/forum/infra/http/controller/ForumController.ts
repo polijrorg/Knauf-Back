@@ -17,24 +17,23 @@ class ForumController {
         throw new AppError('All fields must be filled', 400);
       }
 
-      const createForumService = container.resolve(CreateForumService);
-      const getUsersService = container.resolve(GetUsersService);
       const findByIdModuleService = container.resolve(FindByIdModuleService);
-
       const module = await findByIdModuleService.execute(idModule);
       if (!module) {
         throw new AppError('Module not found', 400);
       }
 
+      const getUsersService = container.resolve(GetUsersService);
       const user = await getUsersService.execute(idUser);
       if (!user) {
         throw new AppError('User not found', 400);
       }
 
+      const createForumService = container.resolve(CreateForumService);
       const forum = await createForumService.execute({ idModule: module.id, idUser: user.id, text });
       return res.status(201).json(forum);
     } catch (error) {
-      throw new AppError(error.message, error.status || 500);
+      throw new AppError(error.message, error.status);
     }
   }
 
