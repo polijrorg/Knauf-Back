@@ -18,7 +18,6 @@ class ForumController {
       }
 
       const findByIdModuleService = container.resolve(FindByIdModuleService);
-      console.log(idModule, idUser, text);
       const module = await findByIdModuleService.execute(idModule);
       if (!module) {
         throw new AppError('Module not found', 400);

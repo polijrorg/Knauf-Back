@@ -11,7 +11,22 @@ class ForumRepository implements IForumRepository {
     }
 
     public async getAll(): Promise<Forum[] | null> {
-      return this.ormRepository.findMany();
+      const foruns = this.ormRepository.findMany({
+        include: {
+          module: true,
+          user: {
+            select: {
+              id: true,
+              email: true,
+              name: true,
+              active: true,
+              score: true,
+              seen: true,
+            },
+          },
+        },
+      });
+      return foruns;
     }
 
     public async create(data: ICreateForumDTO): Promise<Forum> {

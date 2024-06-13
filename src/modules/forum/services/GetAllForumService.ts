@@ -5,8 +5,8 @@ import IForumRepository from '../repositories/IForumRepository';
 @injectable()
 class GetAllForumService {
   constructor(
-        @inject('ForumRepository')
-        private forumRepository: IForumRepository,
+    @inject('ForumRepository')
+    private forumRepository: IForumRepository,
   ) {}
 
   public async execute(): Promise<Forum[] | null> {
