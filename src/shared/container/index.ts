@@ -4,6 +4,9 @@ import './providers';
 
 // Repositorio novo colocar aqui :)
 
+import IForumRepository from '@modules/forum/repositories/ForumRepository';
+import ForumRepository from '@modules/forum/infra/prisma/repositories/ForumRepository';
+
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import UsersRepository from '@modules/users/infra/prisma/repositories/UsersRepository';
 
@@ -40,6 +43,7 @@ import QuizzGradesRepository from '@modules/quizz/infra/prisma/repositories/Quiz
 import IQuizzQuestionsRepository from '@modules/quizz/repositories/IQuizzQuestionsRepository';
 import QuizzQuestionsRepository from '@modules/quizz/infra/prisma/repositories/QuizzQuestionsRepository';
 
+container.registerSingleton<IForumRepository>('ForumRepository', ForumRepository);
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
 container.registerSingleton<IModuleRepository>('ModuleRepository', ModuleRepository);
 container.registerSingleton<IAnswersRepository>('AnswersRepository', AnswersRepository);

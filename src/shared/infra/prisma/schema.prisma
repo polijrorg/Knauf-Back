@@ -45,6 +45,7 @@ model Users {
   quizzGrades   QuizzGrades[]
   image         String?
   moduleGrades  ModuleGrades[]
+  Forum         Forum[]
   seenCampaigns SeenCampaigns[]
 }
 
@@ -95,6 +96,7 @@ model Module {
   campaigns    Campaigns[]
   moduleGrades ModuleGrades[]
   image        String?
+  Forum        Forum[]
 }
 
 model Content {
@@ -119,6 +121,18 @@ model Seen {
   seen      Boolean @default(false)
   content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   contentId String  @unique
+}
+
+model Forum {
+  id       String   @id @default(uuid())
+  user     Users    @relation(fields: [usersId], references: [id])
+  module   Module   @relation(fields: [moduleId], references: [id])
+  text     String
+  coments  String
+  status   Status   @default(pending)
+  usersId  String
+  moduleId String
+  language Language @default(portuguese)
 }
 
 model ModuleGrades {
@@ -177,4 +191,10 @@ enum Language {
   portuguese
   english
   spanish
+}
+
+enum Status {
+  approved
+  notApproved
+  pending
 }

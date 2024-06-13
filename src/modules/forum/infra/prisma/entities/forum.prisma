@@ -1,0 +1,33 @@
+model Forum {
+  id       String   @id @default(uuid())
+  user     Users    @relation(fields: [usersId], references: [id])
+  module   Module   @relation(fields: [moduleId], references: [id])
+  text     String
+  coments  String
+  status   Status   @default(pending)
+  usersId  String
+  moduleId String
+  language Language @default(portuguese)
+}
+
+enum Status {
+  approved
+  notApproved
+  pending
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
+}
+
+model Users {
+  id    String  @id @default(uuid())
+  Forum Forum[]
+}
+
+model Module {
+  id    String  @id @default(uuid())
+  Forum Forum[]
+}
