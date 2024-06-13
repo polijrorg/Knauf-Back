@@ -3,6 +3,7 @@ import { Router } from 'express';
 // Imports
 
 import usersRoutes from '@modules/users/infra/http/routes/users.routes';
+import forumRoutes from '@modules/forum/infra/http/routes/forum.routes';
 import moduleRoutes from '@modules/module/infra/http/routes/module.routes';
 import statmentRoutes from '@modules/statment/infra/http/routes/statment.routes';
 import contentRoutes from '@modules/content/infra/http/routes/content.routes';
@@ -19,6 +20,9 @@ const routes = Router();
 
 // Users
 routes.use('/users', usersRoutes);
+
+// Forum
+routes.use('/forum', forumRoutes);
 
 // Module
 routes.use('/module', moduleRoutes);
