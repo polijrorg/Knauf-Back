@@ -1,16 +1,16 @@
 import prisma from '@shared/infra/prisma/client';
 import { Prisma, Forum } from '@prisma/client';
-import IAForumRepository from '@modules/forum/repositories/ForumRepository';
+import IForumRepository from '@modules/forum/repositories/ForumRepository';
 import ICreateForumDTO from '@modules/forum/dtos/ICreateForumDTO';
 
-class ForumRepository implements IAForumRepository {
+class ForumRepository implements IForumRepository {
     private ormRepository: Prisma.ForumDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
 
     constructor() {
       this.ormRepository = prisma.forum;
     }
 
-    public async getAll(): Promise<Forum[]> {
+    public async getAll(): Promise<Forum[] | null> {
       return this.ormRepository.findMany();
     }
 
