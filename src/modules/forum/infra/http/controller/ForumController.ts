@@ -11,7 +11,7 @@ class ForumController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
       const { idModule, idUser } = req.params;
-      const { text } = req.params;
+      const { text } = req.body;
       // Se não tiver todos
       if (!idModule || !idUser || !text) {
         throw new AppError('All fields must be filled', 400);
