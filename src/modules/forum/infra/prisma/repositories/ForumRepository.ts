@@ -43,7 +43,7 @@ class ForumRepository implements IForumRepository {
       } = data;
       const forum = await this.ormRepository.create({
         data: {
-          coments: '', // Lembra de Alterar aqui
+          comments: { create: [] }, // Quando cria o Forum, cria o comments vazio
           text,
           module: { connect: { id: idModule } },
           user: { connect: { id: idUser } },
