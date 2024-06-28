@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
+import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
 import FindByIdModuleService from '@modules/module/services/FindByIdModuleService';
 
@@ -42,6 +43,17 @@ class ForumController {
       const getAllForumService = container.resolve(GetAllForumService);
       const foruns = await getAllForumService.execute();
       return res.status(200).json(foruns);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum } = req.params;
+      const deleteForumService = container.resolve(DeleteForumService);
+      const forum = await deleteForumService.execute({ idForum });
+      return res.status(200).json(forum);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
