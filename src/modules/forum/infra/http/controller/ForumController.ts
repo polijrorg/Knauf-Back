@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
+import AddCommentsForumService from '@modules/forum/services/AddCommentsForumService';
+import DeleteCommentForumService from '@modules/forum/services/DeleteCommentForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
@@ -11,7 +13,8 @@ import FindByIdModuleService from '@modules/module/services/FindByIdModuleServic
 class ForumController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
-      const { idModule, idUser } = req.params;
+      const { id: idUser } = req.token;
+      const { idModule } = req.params;
       const { text } = req.body;
 
       if (!idModule || !idUser || !text) {
@@ -38,11 +41,44 @@ class ForumController {
     }
   }
 
+  public async deleteComment(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum, idComment } = req.params;
+      const { id: idUser } = req.token;
+
+      const deleteCommentForumService = container.resolve(DeleteCommentForumService);
+      const comments = await deleteCommentForumService.execute({ idForum, idComment, idUser });
+      return res.status(200).json(comments);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
   public async getAll(req: Request, res: Response): Promise<Response> {
     try {
       const getAllForumService = container.resolve(GetAllForumService);
       const foruns = await getAllForumService.execute();
       return res.status(200).json(foruns);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async addCommentsForum(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id: idUser } = req.token;
+      const { idForum } = req.params;
+      const { text } = req.body;
+
+      const getUsersService = container.resolve(GetUsersService);
+      const user = await getUsersService.execute(idUser);
+      if (!user) {
+        throw new AppError('User not found', 400);
+      }
+
+      const addCommentsForumService = container.resolve(AddCommentsForumService);
+      const comments = await addCommentsForumService.execute({ idForum, idUser, text });
+      return res.status(200).json(comments);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }

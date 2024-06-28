@@ -46,6 +46,7 @@ model Users {
   image         String?
   moduleGrades  ModuleGrades[]
   Forum         Forum[]
+  Comments      Comments[]
   seenCampaigns SeenCampaigns[]
 }
 
@@ -124,15 +125,25 @@ model Seen {
 }
 
 model Forum {
-  id       String   @id @default(uuid())
-  user     Users    @relation(fields: [usersId], references: [id])
-  module   Module   @relation(fields: [moduleId], references: [id])
+  id       String     @id @default(uuid())
+  user     Users      @relation(fields: [usersId], references: [id])
+  module   Module     @relation(fields: [moduleId], references: [id])
   text     String
-  coments  String
-  status   Status   @default(pending)
+  comments Comments[]
+  status   Status     @default(pending)
   usersId  String
   moduleId String
-  language Language @default(portuguese)
+  language Language   @default(portuguese)
+}
+
+model Comments {
+  id      String  @id @default(uuid())
+  usersId String?
+  user    Users?  @relation(fields: [usersId], references: [id])
+  text    String
+  Forum   Forum?  @relation(fields: [forumId], references: [id])
+  forumId String?
+  status  Status  @default(pending)
 }
 
 model ModuleGrades {

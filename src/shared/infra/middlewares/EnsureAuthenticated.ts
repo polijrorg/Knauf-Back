@@ -22,8 +22,7 @@ export default function ensureAuthenticated(request: Request, _response: Respons
     const decoded = verify(token, auth.jwt.secret as Secret);
 
     const { sub: msg } = decoded as ITokenPayload;
-    const [id, type] = msg.split(' ');
-    request.token = { id, type };
+    request.token = { id: msg };
 
     return next();
   } catch (error) {
