@@ -10,6 +10,14 @@ class ForumRepository implements IForumRepository {
       this.ormRepository = prisma.forum;
     }
 
+    public async delete(idForum: string): Promise<Forum | null> {
+      const forum = await this.ormRepository.findUnique({ where: { id: idForum } });
+      await this.ormRepository.delete({
+        where: { id: forum?.id },
+      });
+      return forum;
+    }
+
     public async getAll(): Promise<Forum[] | null> {
       const foruns = this.ormRepository.findMany({
         include: {
