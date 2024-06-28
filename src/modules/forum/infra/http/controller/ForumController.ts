@@ -4,6 +4,7 @@ import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
 import AddCommentsForumService from '@modules/forum/services/AddCommentsForumService';
+import DeleteCommentForumService from '@modules/forum/services/DeleteCommentForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
@@ -35,6 +36,19 @@ class ForumController {
       const createForumService = container.resolve(CreateForumService);
       const forum = await createForumService.execute({ idModule: module.id, idUser: user.id, text });
       return res.status(201).json(forum);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async deleteComment(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum, idComment } = req.params;
+      const { id: idUser } = req.token;
+
+      const deleteCommentForumService = container.resolve(DeleteCommentForumService);
+      const comments = await deleteCommentForumService.execute({ idForum, idComment, idUser });
+      return res.status(200).json(comments);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }

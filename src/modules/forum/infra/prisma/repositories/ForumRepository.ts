@@ -10,6 +10,26 @@ class ForumRepository implements IForumRepository {
     this.ormRepository = prisma.forum;
   }
 
+  public async deleteComment(idComment: string, idForum: string, idUser: string): Promise<Comments> {
+    const comment = await prisma.comments.findFirst({
+      where: {
+        id: idComment,
+        forumId: idForum,
+        usersId: idUser,
+      },
+    });
+
+    if (!comment) {
+      throw new Error('Comentário não encontrado ou não pertence ao fórum especificado.');
+    }
+
+    const deletedComment = await prisma.comments.delete({
+      where: { id: idComment },
+    });
+
+    return deletedComment;
+  }
+
   public async addCommentForum(idForum: string, comment: { text: string, usersId: string }): Promise<Comments> {
     const createdComment = await prisma.comments.create({
       data: {
