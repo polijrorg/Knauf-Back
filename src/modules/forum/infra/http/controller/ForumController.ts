@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
+import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
 import FindByIdModuleService from '@modules/module/services/FindByIdModuleService';
@@ -46,6 +47,17 @@ class ForumController {
       const getAllForumService = container.resolve(GetAllForumService);
       const foruns = await getAllForumService.execute();
       return res.status(200).json(foruns);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async delete(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum } = req.params;
+      const deleteForumService = container.resolve(DeleteForumService);
+      await deleteForumService.execute({ idForum });
+      return res.status(204);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
