@@ -12,7 +12,8 @@ import FindByIdModuleService from '@modules/module/services/FindByIdModuleServic
 class ForumController {
   public async create(req: Request, res: Response): Promise<Response> {
     try {
-      const { idModule, idUser } = req.params;
+      const { id: idUser } = req.token;
+      const { idModule } = req.params;
       const { text } = req.body;
 
       if (!idModule || !idUser || !text) {
@@ -51,7 +52,8 @@ class ForumController {
 
   public async addCommentsForum(req: Request, res: Response): Promise<Response> {
     try {
-      const { idForum, idUser } = req.params;
+      const { id: idUser } = req.token;
+      const { idForum } = req.params;
       const { text } = req.body;
 
       const getUsersService = container.resolve(GetUsersService);

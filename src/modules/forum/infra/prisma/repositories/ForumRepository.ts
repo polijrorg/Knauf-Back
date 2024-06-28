@@ -34,6 +34,7 @@ class ForumRepository implements IForumRepository {
     const foruns = this.ormRepository.findMany({
       include: {
         module: true,
+        comments: true,
         user: {
           select: {
             id: true,
