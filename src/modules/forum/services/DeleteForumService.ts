@@ -1,3 +1,4 @@
+import { Forum } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 import IForumRepository from '../repositories/ForumRepository';
 
@@ -12,8 +13,9 @@ class DeleteForumService {
         private forumRepository: IForumRepository,
   ) {}
 
-  public async execute({ idForum }: IRequest): Promise<void> {
-    await this.forumRepository.delete(idForum);
+  public async execute({ idForum }: IRequest): Promise<Forum | null> {
+    const forum = await this.forumRepository.delete(idForum);
+    return forum;
   }
 }
 
