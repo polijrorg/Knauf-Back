@@ -3,6 +3,7 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
+import AddCommentsForumService from '@modules/forum/services/AddCommentsForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
@@ -43,6 +44,25 @@ class ForumController {
       const getAllForumService = container.resolve(GetAllForumService);
       const foruns = await getAllForumService.execute();
       return res.status(200).json(foruns);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async addCommentsForum(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum, idUser } = req.params;
+      const { text } = req.body;
+
+      const getUsersService = container.resolve(GetUsersService);
+      const user = await getUsersService.execute(idUser);
+      if (!user) {
+        throw new AppError('User not found', 400);
+      }
+
+      const addCommentsForumService = container.resolve(AddCommentsForumService);
+      const comments = await addCommentsForumService.execute({ idForum, idUser, text });
+      return res.status(200).json(comments);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }

@@ -9,5 +9,6 @@ const forumController = new ForumController();
 forumRoutes.post('/create/:idUser/:idModule', forumController.create);
 forumRoutes.get('/getAll', forumController.getAll);
 forumRoutes.delete('/delete/:idForum', forumController.delete);
+forumRoutes.post('/:idUser/:idForum', forumController.addCommentsForum);
 
 export default forumRoutes;
