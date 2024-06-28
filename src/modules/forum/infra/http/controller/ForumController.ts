@@ -56,8 +56,8 @@ class ForumController {
     try {
       const { idForum } = req.params;
       const deleteForumService = container.resolve(DeleteForumService);
-      await deleteForumService.execute({ idForum });
-      return res.status(204);
+      const forum = await deleteForumService.execute({ idForum });
+      return res.status(200).json(forum);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
