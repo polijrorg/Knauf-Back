@@ -9,6 +9,7 @@ import GetAllForumService from '@modules/forum/services/GetAllForumService';
 import DeleteForumService from '@modules/forum/services/DeleteForumService';
 import GetUsersService from '@modules/users/services/GetUsersService';
 import FindByIdModuleService from '@modules/module/services/FindByIdModuleService';
+import SearchForumService from '@modules/forum/services/SearchForumService';
 
 class ForumController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -93,6 +94,14 @@ class ForumController {
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
+  }
+
+  public async getSearch(req: Request, res: Response): Promise<Response> {
+    const text = req.query.q;
+
+    const query = container.resolve(SearchForumService);
+    const quizzQuestions = await query.execute(text);
+    return res.status(200).json(quizzQuestions);
   }
 }
 

@@ -1,2 +1,0 @@
--- AlterTable
-ALTER TABLE "Answers" ADD COLUMN     "score" DOUBLE PRECISION NOT NULL DEFAULT 0;

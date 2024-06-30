@@ -97,6 +97,19 @@ class ForumRepository implements IForumRepository {
     });
     return forum;
   }
+
+  public async search(keywords: string): Promise<Forum[] | null> {
+    const forum_search = await this.ormRepository.findMany({
+      where: {
+        text: {
+          contains: keywords,
+          mode: 'insensitive',
+        },
+      },
+    });
+
+    return forum_search;
+  }
 }
 
 export default ForumRepository;
