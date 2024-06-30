@@ -124,13 +124,23 @@ CREATE TABLE "Seen" (
 CREATE TABLE "Forum" (
     "id" TEXT NOT NULL,
     "text" TEXT NOT NULL,
-    "coments" TEXT NOT NULL,
     "status" "Status" NOT NULL DEFAULT E'pending',
     "usersId" TEXT NOT NULL,
     "moduleId" TEXT NOT NULL,
     "language" "Language" NOT NULL DEFAULT E'portuguese',
 
     CONSTRAINT "Forum_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Comments" (
+    "id" TEXT NOT NULL,
+    "usersId" TEXT,
+    "text" TEXT NOT NULL,
+    "forumId" TEXT,
+    "status" "Status" NOT NULL DEFAULT E'pending',
+
+    CONSTRAINT "Comments_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -233,6 +243,12 @@ ALTER TABLE "Forum" ADD CONSTRAINT "Forum_usersId_fkey" FOREIGN KEY ("usersId") 
 
 -- AddForeignKey
 ALTER TABLE "Forum" ADD CONSTRAINT "Forum_moduleId_fkey" FOREIGN KEY ("moduleId") REFERENCES "Module"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_usersId_fkey" FOREIGN KEY ("usersId") REFERENCES "Users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Comments" ADD CONSTRAINT "Comments_forumId_fkey" FOREIGN KEY ("forumId") REFERENCES "Forum"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "ModuleGrades" ADD CONSTRAINT "ModuleGrades_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
