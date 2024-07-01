@@ -1,9 +1,9 @@
 import { inject, injectable } from 'tsyringe';
-import { Comments } from '@prisma/client';
+import { Comments, Status } from '@prisma/client';
 import IForumRepository from '../repositories/IForumRepository';
 
 interface IRequest {
-  newStatus: string;
+  newStatus: Status;
   idComments: string;
 }
 
