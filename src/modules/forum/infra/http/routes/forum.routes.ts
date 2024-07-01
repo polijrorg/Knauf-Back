@@ -13,7 +13,7 @@ forumRoutes.delete('/delete/:idForum', ensureAuthenticated, forumController.dele
 forumRoutes.post('/:idForum', ensureAuthenticated, forumController.addCommentsForum);
 forumRoutes.delete('/:idForum/:idComment', ensureAuthenticated, forumController.deleteComment);
 forumRoutes.post('/comment/updateStatus/:idComment', ensureAuthenticated, forumController.updateStatusComments);
-forumRoutes.delete('/forum/updateStatus/:idForum', ensureAuthenticated, forumController.updateStatusForum);
+forumRoutes.post('/forum/updateStatus/:idForum', ensureAuthenticated, forumController.updateStatusForum);
 forumRoutes.get('/search', forumController.getSearch);
 
 export default forumRoutes;
