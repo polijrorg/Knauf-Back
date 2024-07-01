@@ -56,6 +56,17 @@ class ForumRepository implements IForumRepository {
         forumId: idForum,
         status: 'pending',
       },
+      include: {
+        user: {
+          select: {
+            id: true,
+            email: true,
+            name: true,
+            image: true,
+            seen: true,
+          },
+        },
+      },
     });
     return createdComment;
   }
