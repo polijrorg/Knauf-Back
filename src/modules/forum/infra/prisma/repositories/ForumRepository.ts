@@ -1,5 +1,7 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Forum, Comments } from '@prisma/client';
+import {
+  Prisma, Forum, Comments, Status,
+} from '@prisma/client';
 import IForumRepository from '@modules/forum/repositories/IForumRepository';
 import ICreateForumDTO from '@modules/forum/dtos/ICreateForumDTO';
 
@@ -8,6 +10,22 @@ class ForumRepository implements IForumRepository {
 
   constructor() {
     this.ormRepository = prisma.forum;
+  }
+
+  public async updateStatusForum(newStatus: string, idForum: string): Promise<Forum> {
+    const updatedForum = await prisma.forum.update({
+      where: { id: idForum },
+      data: { status: newStatus as Status },
+    });
+    return updatedForum;
+  }
+
+  public async updateStatusComments(newStatus: string, idComments: string): Promise<Comments> {
+    const updatedComment = await prisma.comments.update({
+      where: { id: idComments },
+      data: { status: newStatus as Status },
+    });
+    return updatedComment;
   }
 
   public async deleteComment(idComment: string, idForum: string, idUser: string): Promise<Comments> {
