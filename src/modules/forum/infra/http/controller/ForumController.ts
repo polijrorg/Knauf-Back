@@ -3,6 +3,8 @@ import { container } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
 
 import CreateForumService from '@modules/forum/services/CreateForumService';
+import UpdateForumStatusService from '@modules/forum/services/UpdateForumStatusService';
+import UpdateCommentsStatusService from '@modules/forum/services/UpdateCommentsStatusService';
 import AddCommentsForumService from '@modules/forum/services/AddCommentsForumService';
 import DeleteCommentForumService from '@modules/forum/services/DeleteCommentForumService';
 import GetAllForumService from '@modules/forum/services/GetAllForumService';
@@ -91,6 +93,30 @@ class ForumController {
       const deleteForumService = container.resolve(DeleteForumService);
       const forum = await deleteForumService.execute({ idForum });
       return res.status(200).json(forum);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async updateStatusForum(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idForum } = req.params;
+      const { status } = req.body;
+      const updateForumStatusService = container.resolve(UpdateForumStatusService);
+      const forum = await updateForumStatusService.execute({ idForum, newStatus: status });
+      return res.status(200).json(forum);
+    } catch (error) {
+      throw new AppError(error.message, error.status);
+    }
+  }
+
+  public async updateStatusComments(req: Request, res: Response): Promise<Response> {
+    try {
+      const { idComment } = req.params;
+      const { status } = req.body;
+      const updateCommentsStatusService = container.resolve(UpdateCommentsStatusService);
+      const comment = await updateCommentsStatusService.execute({ idComments: idComment, newStatus: status });
+      return res.status(200).json(comment);
     } catch (error) {
       throw new AppError(error.message, error.status);
     }
