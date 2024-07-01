@@ -1,4 +1,4 @@
-import { Forum, Comments } from '@prisma/client';
+import { Forum, Comments, QuizzQuestions } from '@prisma/client';
 import ICreateForumDTO from '../dtos/ICreateForumDTO';
 
 interface IForumRepository {
