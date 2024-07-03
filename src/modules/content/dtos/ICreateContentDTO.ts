@@ -2,6 +2,7 @@ import { Language } from '@prisma/client';
 
 interface ICreateContentDTO {
   title: string;
+  score: number;
   description: string;
   linkVideo: string;
   linkAudio: string;

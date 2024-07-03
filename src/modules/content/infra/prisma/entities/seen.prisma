@@ -2,9 +2,11 @@ model Seen {
   id          String   @id @default(uuid())
   seen        Boolean  @default(false)
   content     Content  @relation(fields: [contentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  contentId   String   @unique
+  contentId   String
   user        Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId      String   @unique
+  userId      String
+
+  @@unique([userId, contentId])
 }
 
 model Content {

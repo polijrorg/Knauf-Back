@@ -15,7 +15,7 @@ interface IForumRepository {
     idUser: string
   ): Promise<Comments>;
   search(quizzQuestionId: string): Promise<QuizzQuestions[] | null>;
-  updateStatusForum(newStatus: string, idForum: string): Promise<Forum>;
+  updateStatusForum(newStatus: string, idForum: string, score: number): Promise<Forum>;
   updateStatusComments(newStatus: string, idComments: string): Promise<Comments>;
 }
 
