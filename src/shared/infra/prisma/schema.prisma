@@ -118,10 +118,12 @@ model Content {
 model Seen {
   id        String  @id @default(uuid())
   user      Users   @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  userId    String  @unique
+  userId    String
   seen      Boolean @default(false)
   content   Content @relation(fields: [contentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  contentId String  @unique
+  contentId String
+
+  @@unique([userId, contentId])
 }
 
 model Forum {

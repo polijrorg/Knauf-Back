@@ -101,9 +101,11 @@ class ForumController {
   public async updateStatusForum(req: Request, res: Response): Promise<Response> {
     try {
       const { idForum } = req.params;
-      const { status } = req.body;
+      const { status, score } = req.body;
       const updateForumStatusService = container.resolve(UpdateForumStatusService);
-      const forum = await updateForumStatusService.execute({ idForum, newStatus: status });
+      console.log("em controller, SCORE  = " + score); // aqui ta passando 100 certo
+      const forum = await updateForumStatusService.execute({ idForum, newStatus: status, score });
+      // coloca função para atualizar a pontuação
       return res.status(200).json(forum);
     } catch (error) {
       throw new AppError(error.message, error.status);

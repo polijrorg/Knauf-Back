@@ -4,6 +4,7 @@ import {
 } from '@prisma/client';
 import IForumRepository from '@modules/forum/repositories/IForumRepository';
 import ICreateForumDTO from '@modules/forum/dtos/ICreateForumDTO';
+import { stringify } from 'uuid';
 
 class ForumRepository implements IForumRepository {
   private ormRepository: Prisma.ForumDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -12,11 +13,29 @@ class ForumRepository implements IForumRepository {
     this.ormRepository = prisma.forum;
   }
 
-  public async updateStatusForum(newStatus: string, idForum: string): Promise<Forum> {
+  public async updateStatusForum(newStatus: string, idForum: string, score: number): Promise<Forum> {
     const updatedForum = await prisma.forum.update({
       where: { id: idForum },
       data: { status: newStatus as Status },
     });
+
+    const userId = updatedForum.usersId;
+    const user = await prisma.users.findUnique({ where: { id: userId } });
+    const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId, moduleId: updatedForum?.moduleId } });
+
+    const novoStatus = JSON.stringify(newStatus);
+    console.log(novoStatus);
+
+    if (user && newStatus === 'approved') {
+      const newScore = Math.floor(user.score + score);
+      await prisma.users.update({ where: { id: userId }, data: { score: newScore } });
+
+      if (moduleGrade) {
+        const newGrade = Math.floor(moduleGrade.grade + score);
+        await prisma.moduleGrades.update({ where: { id: moduleGrade.id }, data: { grade: newGrade } });
+      }
+    }
+
     return updatedForum;
   }
 

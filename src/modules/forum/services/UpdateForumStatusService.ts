@@ -5,6 +5,7 @@ import IForumRepository from '../repositories/IForumRepository';
 interface IRequest {
   newStatus: Status;
   idForum: string;
+  score: number;
 }
 
 @injectable()
@@ -14,8 +15,9 @@ class UpdateForumStatusService {
     private forumRepository: IForumRepository,
   ) {}
 
-  public async execute({ newStatus, idForum }: IRequest): Promise<Forum | null> {
-    const updatedForum = await this.forumRepository.updateStatusForum(newStatus, idForum);
+  public async execute({ newStatus, idForum, score }: IRequest): Promise<Forum | null> {
+    console.log("NO SERVICE, O VALOR DE SCORE EH = " + score);
+    const updatedForum = await this.forumRepository.updateStatusForum(newStatus, idForum, score);
     return updatedForum;
   }
 }

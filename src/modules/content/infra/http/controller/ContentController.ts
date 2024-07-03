@@ -38,6 +38,7 @@ export default class ContentController {
   public async create(req: Request, res: Response): Promise<Response> {
     const {
       title,
+      score,
       description,
       linkVideo,
       linkAudio,
@@ -62,6 +63,7 @@ export default class ContentController {
 
     const content = await createContent.execute({
       title,
+      score: Number(score),
       description,
       linkVideo,
       linkAudio,
