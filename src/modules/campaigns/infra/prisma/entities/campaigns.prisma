@@ -1,35 +1,28 @@
 model Campaigns {
-  id        String @id @default(uuid())
-  title     String
-  subtitle  String
-  text      String
-  score     Float     @default(0)
-  language  Language  @default(portuguese)
-  created_at DateTime @default(now())
-  module     Module   @relation(fields: [moduleId], references: [id])
-  moduleId   String
+  id            String          @id @default(uuid())
+  title         String
+  subtitle      String
+  text          String
+  score         Float           @default(0)
+  language      Language        @default(portuguese)
+  created_at    DateTime        @default(now())
+  module        Module          @relation(fields: [moduleId], references: [id])
+  moduleId      String
   seenCampaigns SeenCampaigns[]
-  image      String?
-  carrousel  Carrousel?
-}
-
-model Carrousel {
-  id          String     @id @default(uuid())
-  campaign    Campaigns @relation(fields: [campaignId], references: [id])
-  campaignId  String   @unique 
+  image         String?
 }
 
 model SeenCampaigns {
-  id          String @id @default(uuid())
-  seen        Boolean @default(false)
+  id          String    @id @default(uuid())
+  seen        Boolean   @default(false)
   campaignsId String
   campaigns   Campaigns @relation(fields: [campaignsId], references: [id])
   userId      String
-  user        Users @relation(fields: [userId], references: [id])
+  user        Users     @relation(fields: [userId], references: [id])
 }
 
 model Users {
-  id          String @id @default(uuid())
+  id            String          @id @default(uuid())
   seenCampaigns SeenCampaigns[]
 }
 
@@ -40,6 +33,6 @@ enum Language {
 }
 
 model Module {
-  id         String   @id @default(uuid())
-  campaigns  Campaigns[]
+  id        String      @id @default(uuid())
+  campaigns Campaigns[]
 }

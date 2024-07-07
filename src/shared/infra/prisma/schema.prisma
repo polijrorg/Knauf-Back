@@ -79,16 +79,6 @@ model Campaigns {
   image         String?
 }
 
-model Carrousel {
-  id         String    @id @default(uuid())
-  title      String
-  language   Language  @default(portuguese)
-  image      String?
-  subTitle   String?
-  campaign   Campaigns @relation(fields: [campaignId], references: [id])
-  campaignId String    @unique
-}
-
 model SeenCampaigns {
   id          String    @id @default(uuid())
   seen        Boolean   @default(false)
@@ -110,6 +100,16 @@ model Module {
   moduleGrades ModuleGrades[]
   image        String?
   Forum        Forum[]
+}
+
+model Carrousel {
+  id         String    @id @default(uuid())
+  title      String
+  language   Language  @default(portuguese)
+  image      String?
+  subTitle   String?
+  campaign   Campaigns @relation(fields: [campaignId], references: [id])
+  campaignId String    @unique
 }
 
 model Content {

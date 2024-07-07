@@ -1,5 +1,5 @@
 import prisma from '@shared/infra/prisma/client';
-import { Prisma, Carrousel, Language } from '@prisma/client';
+import { Prisma, Carrousel } from '@prisma/client';
 
 import IUCarrouselRepository from '@modules/carrousel/repositories/ICarrouselRepository';
 import ICreateCarrouselDTO from '@modules/carrousel/dtos/ICreateCarrouselDTO';
@@ -12,16 +12,23 @@ export default class CarrouselsRepository implements IUCarrouselRepository {
     this.ormRepository = prisma.carrousel;
   }
 
-  public async create(data: ICreateCarrouselDTO): Promise<Carrousel> {
+  public async create({
+    campaingnId, image, language, subTitle, title,
+  }: ICreateCarrouselDTO): Promise<Carrousel> {
     const campaingnExist = await prisma.campaigns.findFirst({
-      where: { id: data.campaingnId },
+      where: { id: campaingnId },
     });
 
     if (!campaingnExist) {
       throw new Error('Campaingn not exist');
     }
 
-    const carrousel = await this.ormRepository.create({ data });
+    const carrousel = await this.ormRepository.create({
+      data: {
+        title, campaign: { connect: { id: campaingnId } }, language, image, subTitle,
+      },
+      include: { campaign: true },
+    });
 
     return carrousel;
   }
