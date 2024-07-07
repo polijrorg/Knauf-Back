@@ -10,13 +10,6 @@ model Campaigns {
   moduleId      String
   seenCampaigns SeenCampaigns[]
   image         String?
-  Carrousel     Carrousel?
-}
-
-model Carrousel {
-  id         String    @id @default(uuid())
-  campaign   Campaigns @relation(fields: [campaignId], references: [id])
-  campaignId String    @unique
 }
 
 model SeenCampaigns {

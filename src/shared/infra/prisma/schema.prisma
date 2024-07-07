@@ -68,7 +68,7 @@ model Campaigns {
   module        Module          @relation(fields: [moduleId], references: [id])
   moduleId      String
   carrousel     Carrousel?
-  carrouselId   String          @unique
+  carrouselId   String?         @unique
   title         String
   subtitle      String
   text          String
