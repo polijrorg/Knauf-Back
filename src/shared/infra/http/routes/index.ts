@@ -15,6 +15,7 @@ import answersRoutes from '@modules/answers/infra/http/routes/answers.routes';
 import quizzRoutes from '@modules/quizz/infra/http/routes/quizz.routes';
 import quizzGradesRoutes from '@modules/quizz/infra/http/routes/quizzGrades.routes';
 import quizzQuestionsRoutes from '@modules/quizz/infra/http/routes/quizzQuestions.routes';
+import carrouselRoutes from '@modules/carrousel/infra/http/routes/carrousel.routes';
 
 const routes = Router();
 
@@ -50,5 +51,8 @@ routes.use('/answers', answersRoutes);
 routes.use('/quizz', quizzRoutes);
 routes.use('/quizzGrades', quizzGradesRoutes);
 routes.use('/quizzQuestions', quizzQuestionsRoutes);
+
+// Carrousel
+routes.use('/carrousel', carrouselRoutes);
 
 export default routes;

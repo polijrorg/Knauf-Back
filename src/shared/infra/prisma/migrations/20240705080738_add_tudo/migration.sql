@@ -62,6 +62,7 @@ CREATE TABLE "Questions" (
 CREATE TABLE "Campaigns" (
     "id" TEXT NOT NULL,
     "moduleId" TEXT NOT NULL,
+    "carrouselId" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "subtitle" TEXT NOT NULL,
     "text" TEXT NOT NULL,
@@ -71,6 +72,18 @@ CREATE TABLE "Campaigns" (
     "image" TEXT,
 
     CONSTRAINT "Campaigns_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Carrousel" (
+    "id" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "language" "Language" NOT NULL DEFAULT E'portuguese',
+    "image" TEXT,
+    "subTitle" TEXT,
+    "campaignId" TEXT NOT NULL,
+
+    CONSTRAINT "Carrousel_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -203,10 +216,13 @@ CREATE TABLE "Statment" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Seen_userId_key" ON "Seen"("userId");
+CREATE UNIQUE INDEX "Campaigns_carrouselId_key" ON "Campaigns"("carrouselId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Seen_contentId_key" ON "Seen"("contentId");
+CREATE UNIQUE INDEX "Carrousel_campaignId_key" ON "Carrousel"("campaignId");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Seen_userId_contentId_key" ON "Seen"("userId", "contentId");
 
 -- AddForeignKey
 ALTER TABLE "Answers" ADD CONSTRAINT "Answers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -222,6 +238,9 @@ ALTER TABLE "Questions" ADD CONSTRAINT "Questions_moduleId_fkey" FOREIGN KEY ("m
 
 -- AddForeignKey
 ALTER TABLE "Campaigns" ADD CONSTRAINT "Campaigns_moduleId_fkey" FOREIGN KEY ("moduleId") REFERENCES "Module"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Carrousel" ADD CONSTRAINT "Carrousel_campaignId_fkey" FOREIGN KEY ("campaignId") REFERENCES "Campaigns"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "SeenCampaigns" ADD CONSTRAINT "SeenCampaigns_userId_fkey" FOREIGN KEY ("userId") REFERENCES "Users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

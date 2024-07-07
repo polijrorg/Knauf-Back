@@ -67,6 +67,8 @@ model Campaigns {
   id            String          @id @default(uuid())
   module        Module          @relation(fields: [moduleId], references: [id])
   moduleId      String
+  carrousel     Carrousel?
+  carrouselId   String          @unique
   title         String
   subtitle      String
   text          String
@@ -75,6 +77,16 @@ model Campaigns {
   created_at    DateTime        @default(now())
   seenCampaigns SeenCampaigns[]
   image         String?
+}
+
+model Carrousel {
+  id         String    @id @default(uuid())
+  title      String
+  language   Language  @default(portuguese)
+  image      String?
+  subTitle   String?
+  campaign   Campaigns @relation(fields: [campaignId], references: [id])
+  campaignId String    @unique
 }
 
 model SeenCampaigns {
