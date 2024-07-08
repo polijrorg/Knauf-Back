@@ -21,7 +21,12 @@ export default class ContentRepository implements IContentRepository {
   }
 
   public async create(data: ICreateContentDTO): Promise<Content> {
-    const content = await this.ormRepository.create({ data });
+    const content = await this.ormRepository.create({
+      data,
+      include: {
+        seen: true,
+      },
+    });
 
     return content;
   }
@@ -33,7 +38,7 @@ export default class ContentRepository implements IContentRepository {
   }
 
   public async findAll(language: Language): Promise<Content[] | null> {
-    const content = await this.ormRepository.findMany({ where: { language } });
+    const content = await this.ormRepository.findMany({ where: { language }, include: { seen: true } });
 
     return content;
   }
