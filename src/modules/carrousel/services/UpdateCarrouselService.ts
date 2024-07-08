@@ -17,7 +17,7 @@ export default class UpdateUserService {
   public async execute(id: string, data: IUpdateCarrouselDTO): Promise<Carrousel> {
     const carrouselExists = await this.carrouselRepository.findById(id);
 
-    if (!carrouselExists) throw new AppError('A user with this id does not exist');
+    if (!carrouselExists) throw new AppError('A carrousel with this id does not exist');
     const user = await this.carrouselRepository.update(id, data);
 
     return user;
