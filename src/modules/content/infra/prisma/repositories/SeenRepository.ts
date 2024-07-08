@@ -19,30 +19,16 @@ export default class SeenRepository implements ISeenRepository {
     return content;
   }
 
-  // public async create(data: ICreateSeenDTO): Promise<Seen> {
-  //   const content = await this.ormRepository.create({ data });
-
-  //   return content;
-  // }
-
   public async create(data: ICreateSeenDTO): Promise<Seen> {
-    // Verifique se um registro `Seen` já existe para o `userId` e `contentId`
-    console.log("USER ID = " + data.userId);
-    console.log("Content ID = " + data.contentId);
     const existingSeen = await this.ormRepository.findFirst({
       where: { userId: data.userId, contentId: data.contentId },
     });
-
-    console.log(JSON.stringify(existingSeen));
 
     if (existingSeen) {
       return existingSeen;
     }
 
-    // Crie um novo registro `Seen` se não existir
     const newSeen = await this.ormRepository.create({ data });
-
-    console.log(JSON.stringify(newSeen));
 
     return newSeen;
   }
@@ -66,9 +52,6 @@ export default class SeenRepository implements ISeenRepository {
   }
 
   public async markAsSeen(userId: string, contentId: string): Promise<Seen> {
-    // const seen = await this.ormRepository.update({ where: { userId, contentId }, data: { seen: true } });
-
-    // Primeiro, encontre o registro `Seen` com base no `userId` e `contentId`
     const seenRecord = await this.ormRepository.findFirst({
       where: { userId, contentId },
     });
@@ -76,8 +59,6 @@ export default class SeenRepository implements ISeenRepository {
     if (!seenRecord) {
       throw new Error('Seen record not found');
     }
-
-    // Agora, atualize o campo `seen` desse registro
     const seen = await this.ormRepository.update({
       where: { id: seenRecord.id },
       data: { seen: true },

@@ -1,4 +1,4 @@
-import { Carrousel, Language } from '@prisma/client';
+import { Carrousel } from '@prisma/client';
 
 import ICreateCarrouselDTO from '../dtos/ICreateCarrouselDTO';
 import IUpdateCarrouselDTO from '../dtos/IUpdateCarrousel';
