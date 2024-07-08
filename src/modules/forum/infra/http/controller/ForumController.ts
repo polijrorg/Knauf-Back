@@ -103,9 +103,7 @@ class ForumController {
       const { idForum } = req.params;
       const { status, score } = req.body;
       const updateForumStatusService = container.resolve(UpdateForumStatusService);
-      console.log("em controller, SCORE  = " + score); // aqui ta passando 100 certo
       const forum = await updateForumStatusService.execute({ idForum, newStatus: status, score });
-      // coloca função para atualizar a pontuação
       return res.status(200).json(forum);
     } catch (error) {
       throw new AppError(error.message, error.status);

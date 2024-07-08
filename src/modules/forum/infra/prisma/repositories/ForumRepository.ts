@@ -4,7 +4,6 @@ import {
 } from '@prisma/client';
 import IForumRepository from '@modules/forum/repositories/IForumRepository';
 import ICreateForumDTO from '@modules/forum/dtos/ICreateForumDTO';
-import { stringify } from 'uuid';
 
 class ForumRepository implements IForumRepository {
   private ormRepository: Prisma.ForumDelegate<Prisma.RejectOnNotFound | Prisma.RejectPerOperation | undefined>
@@ -22,9 +21,6 @@ class ForumRepository implements IForumRepository {
     const userId = updatedForum.usersId;
     const user = await prisma.users.findUnique({ where: { id: userId } });
     const moduleGrade = await prisma.moduleGrades.findFirst({ where: { userId, moduleId: updatedForum?.moduleId } });
-
-    const novoStatus = JSON.stringify(newStatus);
-    console.log(novoStatus);
 
     if (user && newStatus === 'approved') {
       const newScore = Math.floor(user.score + score);

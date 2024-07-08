@@ -1,0 +1,21 @@
+model Carrousel {
+  id         String    @id @default(uuid())
+  title      String
+  language   Language  @default(portuguese)
+  image      String?
+  subTitle   String?
+  campaign   Campaigns @relation(fields: [campaignId], references: [id])
+  campaignId String    @unique
+}
+
+enum Language {
+  portuguese
+  english
+  spanish
+}
+
+model Campaigns {
+  id          String     @id @default(uuid())
+  carrousel   Carrousel?
+  carrouselId String?    @unique
+}

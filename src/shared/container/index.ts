@@ -43,6 +43,9 @@ import QuizzGradesRepository from '@modules/quizz/infra/prisma/repositories/Quiz
 import IQuizzQuestionsRepository from '@modules/quizz/repositories/IQuizzQuestionsRepository';
 import QuizzQuestionsRepository from '@modules/quizz/infra/prisma/repositories/QuizzQuestionsRepository';
 
+import ICarrouselRepository from '@modules/carrousel/repositories/ICarrouselRepository';
+import CarrouselRepository from '@modules/carrousel/infra/prisma/repositories/CarrouselRepository';
+
 container.registerSingleton<IForumRepository>('ForumRepository', ForumRepository);
 container.registerSingleton<IUsersRepository>('UsersRepository', UsersRepository);
 container.registerSingleton<IModuleRepository>('ModuleRepository', ModuleRepository);
@@ -56,3 +59,4 @@ container.registerSingleton<IAdministratorRepository>('AdministratorRepository',
 container.registerSingleton<IQuizzRepository>('QuizzRepository', QuizzRepository);
 container.registerSingleton<IQuizzGradesRepository>('QuizzGradesRepository', QuizzGradesRepository);
 container.registerSingleton<IQuizzQuestionsRepository>('QuizzQuestionsRepository', QuizzQuestionsRepository);
+container.registerSingleton<ICarrouselRepository>('CarrouselRepository', CarrouselRepository);
