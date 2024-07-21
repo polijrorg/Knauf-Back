@@ -24,6 +24,8 @@ export default class UpdateUserService {
     if (!userExists) throw new AppError('A user with this id does not exist');
     const user = await this.usersRepository.update(id, data);
 
+    user.password = '###';
+
     return user;
   }
 }
