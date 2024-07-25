@@ -44,6 +44,10 @@ export default class UsersRepository implements IUsersRepository {
   }
 
   public async delete(id: string): Promise<Users> {
+    await prisma.moduleGrades.deleteMany({
+      where: { userId: id },
+    });
+
     const user = await this.ormRepository.delete({ where: { id } });
 
     return user;
