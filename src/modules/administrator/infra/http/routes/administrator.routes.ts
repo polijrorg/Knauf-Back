@@ -3,6 +3,7 @@ import { Router } from 'express';
 import multer from 'multer';
 import multerConfig from '@shared/container/providers/AWSProvider/aws_S3/config/multer';
 
+import ensureAuthenticated from '@shared/infra/middlewares/EnsureAuthenticated';
 import AdministratorController from '../controller/AdministratorController';
 
 const upload = multer(multerConfig);
@@ -17,8 +18,12 @@ administratorRoutes.get('/getAdministrator', administratorController.getAdminist
 
 administratorRoutes.post('/login', administratorController.login);
 
-administratorRoutes.patch('/updatePassword/:id', upload.single('image'), administratorController.updatePassword);
+administratorRoutes.patch('/updatePassword/:id', upload.single('image'), ensureAuthenticated, administratorController.updatePassword);
 
-administratorRoutes.patch('/updateLanguage/:id/:newLanguage', administratorController.updateLanguage);
+administratorRoutes.patch('/updateLanguage/:id/:newLanguage', ensureAuthenticated, administratorController.updateLanguage);
+
+administratorRoutes.patch('/resetPasswordUserById/:id', ensureAuthenticated, administratorController.resetPasswordUserById);
+
+administratorRoutes.patch('/resetAllUsersPasswords', ensureAuthenticated, administratorController.resetPasswordsToAllUsers);
 
 export default administratorRoutes;
