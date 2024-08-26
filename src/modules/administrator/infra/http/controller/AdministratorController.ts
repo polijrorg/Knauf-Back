@@ -7,6 +7,8 @@ import GetAdministratorService from '@modules/administrator/services/GetAdminist
 import UpdateLanguageService from '@modules/administrator/services/UpdateLanguageService';
 import UpdatePasswordService from '@modules/administrator/services/UpdatePasswordService';
 import UploadImagesService from '@shared/container/providers/AWSProvider/aws_S3/implementations/UploadImagesService';
+import ResetPasswordUserByIdService from '@modules/administrator/services/ResetPasswordUserByIdService';
+import ResetPasswordForAllUsersService from '@modules/administrator/services/ResetPasswordForAllUsersService';
 
 class AdministratorController {
   public async login(req: Request, res: Response): Promise<Response> {
@@ -79,6 +81,19 @@ class AdministratorController {
     const administratorS = container.resolve(UpdatePasswordService);
     const administrator = await administratorS.execute({ id, newPassword });
     return res.status(200).json(administrator);
+  }
+
+  public async resetPasswordUserById(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const changePasswordUser = container.resolve(ResetPasswordUserByIdService);
+    const user = await changePasswordUser.execute(id);
+    return res.status(200).json(user);
+  }
+
+  public async resetPasswordsToAllUsers(req: Request, res: Response): Promise<Response> {
+    const changePasswordAllUsers = container.resolve(ResetPasswordForAllUsersService);
+    const users = await changePasswordAllUsers.execute();
+    return res.status(200).json(users);
   }
 }
 
