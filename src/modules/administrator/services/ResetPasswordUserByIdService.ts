@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { Users } from '@prisma/client';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 
 @injectable()
 class ResetPasswordUserByIdService {
