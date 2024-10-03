@@ -41,6 +41,10 @@ export default class ModuleRepository implements IModuleRepository {
   }
 
   public async delete(id: string): Promise<Module> {
+    await prisma.moduleGrades.deleteMany({
+      where: { moduleId: id },
+    });
+
     const module = await this.ormRepository.delete({ where: { id } });
 
     return module;
