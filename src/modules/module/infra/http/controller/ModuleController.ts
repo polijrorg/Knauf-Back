@@ -26,7 +26,7 @@ export default class moduleController {
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
       idImage = imageName;
     } else {
-      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+      linkImage = '';
     }
 
     const createModule = container.resolve(CreateModuleService);
