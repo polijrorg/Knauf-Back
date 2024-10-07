@@ -31,7 +31,7 @@ export default class CampaignsController {
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
       idImage = imageName;
     } else {
-      linkImage = 'https://i.imgur.com/4AVhMxk.png';
+      linkImage = '';
     }
 
     const createCampaigns = container.resolve(CreateCampaignsService);
