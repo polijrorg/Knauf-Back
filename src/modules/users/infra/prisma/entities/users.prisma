@@ -43,3 +43,4 @@ model QuizzGrades {
   user       Users    @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId     String
 }
+
