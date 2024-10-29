@@ -48,7 +48,7 @@ export default class UserController {
       linkImage = `https://appsustentabilidade.s3.amazonaws.com/${imageName}`;
       idImage = imageName;
     } else {
-      linkImage = '';
+      linkImage = 'https://appsustentabilidade.s3.amazonaws.com/dcf9f47523abefbdd013-imagePadraoKnauf.jpeg';
     }
 
     const createUser = container.resolve(CreateUserService);
