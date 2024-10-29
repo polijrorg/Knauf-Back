@@ -22,7 +22,7 @@ class ResetPasswordForAllUsersService {
 
     const updatedUsers = await Promise.all(
       users.map(async (user) => {
-        const hashedPassword = await this.hashProvider.generateHash('senha123456789');
+        const hashedPassword = await this.hashProvider.generateHash('Kn4uF@App');
         const updatedUser = await this.usersRepository.changePassword(user.id, hashedPassword);
         return updatedUser;
       }),

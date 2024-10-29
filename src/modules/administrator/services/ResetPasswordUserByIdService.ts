@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import { Users } from '@prisma/client';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import AppError from '@shared/errors/AppError';
+import IHashProvider from '@shared/container/providers/HashProvider/models/IHashProvider';
 
 @injectable()
 class ResetPasswordUserByIdService {
@@ -16,7 +17,7 @@ class ResetPasswordUserByIdService {
   public async execute(id: string): Promise<Users> {
     const user = await this.usersRepository.findById(id);
     if (!user?.password) throw new AppError('Usuário sem senha');
-    user.password = 'senha123456789';
+    user.password = 'Kn4uF@App';
     const hashedPassword = await this.hashProvider.generateHash(user.password);
     const userWithPassword = await this.usersRepository.changePassword(id, hashedPassword);
     return userWithPassword;
